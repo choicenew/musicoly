@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+//import 'package:pyro_music/ads/ad_manager.dart';
+//import 'package:pyro_music/ads/adwidgets/native_ads.dart';
+//import 'package:pyro_music/ads/google_ad.dart';
 import 'package:pyro_music/features/language/provider/language_provider.dart';
-import 'package:pyro_music/l10n/app_localizations.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
+import 'package:world_flags/world_flags.dart';
+
 
 class LanguageSelectionWidget extends StatelessWidget {
   final List<Map<String, dynamic>> supportedLocales;
@@ -8,6 +13,7 @@ class LanguageSelectionWidget extends StatelessWidget {
   final LocaleNotifier localeNotifier; // Riverpod 的 Notifier
   final bool showCurrentLanguage;
   final bool showSelectionList;
+  final bool showAds;
 
   const LanguageSelectionWidget({
     super.key,
@@ -16,6 +22,7 @@ class LanguageSelectionWidget extends StatelessWidget {
     required this.localeNotifier,
     this.showCurrentLanguage = true,
     this.showSelectionList = true,
+    this.showAds = true, // 默认显示广告
   });
 
   @override
@@ -26,7 +33,15 @@ class LanguageSelectionWidget extends StatelessWidget {
           _buildCurrentLanguageCard(context),
           const SizedBox(height: 16)
         ],
+        // if (showAds) ...[
+        //   GoogleAdWidget(adInfo: AdManager.adaptiveBannerAd), //插入广告
+        //   const SizedBox(height: 16),
+        // ],
         if (showSelectionList) _buildLanguageSelectionCard(context),
+        // if (showAds) ...[
+        //   const SizedBox(height: 16),
+        //   nativeAdWidgetMedium(adWidth: 400, adHeight: 320) //插入广告
+        // ]
       ],
     );
   }
@@ -48,7 +63,7 @@ class LanguageSelectionWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!.settings,
+              AppLocalizations.of(context).current_language,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -97,7 +112,7 @@ class LanguageSelectionWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              AppLocalizations.of(context)!.genre,
+              AppLocalizations.of(context).select_language,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -168,14 +183,21 @@ class LanguageSelectionWidget extends StatelessWidget {
   }
 
   Widget _buildFlagImage(String? countryCode) {
-    return Container(
-      width: 32,
+    if (countryCode == null || countryCode.isEmpty) {
+      return Container(
+        width: 32,
+        height: 24,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: const Center(child: Icon(Icons.public, size: 18)),
+      );
+    }
+    return CountryFlag.simplified(
+      WorldCountry.fromCode(countryCode),
       height: 24,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: const Center(child: Icon(Icons.public, size: 18)),
+      aspectRatio: FlagConstants.defaultAspectRatio,
     );
   }
 }

@@ -1,33 +1,29 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/language/config/locale_config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-final localeService = Provider<LocaleService>((ref) => LocaleService());
+import 'package:config_package/config_package.dart';
+import 'package:flutter/material.dart' show Locale;
 
 class LocaleService {
+  final ConfigRepository _configRepository;
   static const String _configKey = 'config_locale_settings';
 
-  LocaleService();
+  LocaleService(this._configRepository);
 
   Future<LocaleConfig?> loadConfig() async {
-    final prefs = await SharedPreferences.getInstance();
-    final languageCode = prefs.getString('${_configKey}_languageCode');
-    final countryCode = prefs.getString('${_configKey}_countryCode');
-    
-    if (languageCode != null) {
-      return LocaleConfig(languageCode: languageCode, countryCode: countryCode ?? 'US');
-    }
-    return null;
+    final configMap = await _configRepository.getConfig(_configKey);
+    return configMap != null 
+      ? LocaleConfig.fromMap(configMap)
+      : LocaleConfig(languageCode: 'en', countryCode: 'US');
   }
 
   Future<void> saveConfig(dynamic configOrLanguageCode, [String? countryCode]) async {
-    final prefs = await SharedPreferences.getInstance();
     if (configOrLanguageCode is LocaleConfig) {
-      await prefs.setString('${_configKey}_languageCode', configOrLanguageCode.languageCode);
-      await prefs.setString('${_configKey}_countryCode', configOrLanguageCode.countryCode);
+      await _configRepository.saveConfig(_configKey, configOrLanguageCode.toMap());
     } else if (configOrLanguageCode is String) {
-      await prefs.setString('${_configKey}_languageCode', configOrLanguageCode);
-      await prefs.setString('${_configKey}_countryCode', countryCode ?? 'US');
+      final config = LocaleConfig(
+        languageCode: configOrLanguageCode,
+        countryCode: countryCode ?? 'US',
+      );
+      await _configRepository.saveConfig(_configKey, config.toMap());
     }
   }
 }

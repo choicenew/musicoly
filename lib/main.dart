@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/providers/user_preferences_provider.dart';
-import 'package:pyro_music/l10n/app_localizations.dart';
-import 'package:pyro_music/l10n/l10n.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
+import 'package:pyro_music/generated/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 void main() async {

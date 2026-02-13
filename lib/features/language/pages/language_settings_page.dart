@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/language/provider/language_provider.dart';
+// 1. 【确保】导入的是新的、经过迁移的 provider
+
 import 'package:pyro_music/features/language/language_data.dart';
 import 'package:pyro_music/features/language/widgets/language_selection_widget.dart';
-import 'package:pyro_music/l10n/app_localizations.dart';
+
+import 'package:pyro_music/generated/app_localizations.dart';
 
 // 使用 ConsumerStatefulWidget 保持不变
 class LanguageSettingsPage extends ConsumerStatefulWidget {
@@ -25,7 +28,7 @@ class _LanguageSettingsPageState extends ConsumerState<LanguageSettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settings),
+        title: Text(AppLocalizations.of(context).language_settings),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
@@ -34,7 +37,7 @@ class _LanguageSettingsPageState extends ConsumerState<LanguageSettingsPage> {
           IconButton(
             icon: const Icon(Icons.check),
             onPressed: () => Navigator.of(context).pop(),
-            tooltip: AppLocalizations.of(context)!.update,
+            tooltip: AppLocalizations.of(context).save,
           ),
         ],
       ),
@@ -77,7 +80,7 @@ class _LanguageSettingsPageState extends ConsumerState<LanguageSettingsPage> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Failed to load language settings:\n$error',
+                '${AppLocalizations.of(context).failed_to_load_language_settings}:\n$error',
                 textAlign: TextAlign.center,
               ),
             ),

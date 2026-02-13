@@ -398,6 +398,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get language => 'Language';
 
   @override
+  String get language_settings => 'Language Settings';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get current_language => 'Current Language';
+
+  @override
+  String get select_language => 'Select Language';
+
+  @override
+  String get failed_to_load_language_settings =>
+      'Failed to load language settings';
+
+  @override
   String get system_default => 'System Default';
 
   @override
@@ -1143,9 +1159,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pick_color_scheme => 'Pick color scheme';
-
-  @override
-  String get save => 'Save';
 
   @override
   String get choose_the_device => 'Choose the device:';

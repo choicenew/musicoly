@@ -1,0 +1,171 @@
+Analyzing lib...                                                
+
+   info - The member 'genres' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\artist_model.dart:11:23 - annotate_overrides
+   info - The member 'popularity' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\artist_model.dart:14:14 - annotate_overrides
+   info - The member 'followersCount' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\artist_model.dart:17:14 - annotate_overrides
+   info - The member 'description' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\artist_model.dart:20:17 - annotate_overrides
+   info - The member 'platformMetadata' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\artist_model.dart:23:30 - annotate_overrides
+   info - The member 'description' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\collection_model.dart:11:17 - annotate_overrides
+   info - The member 'collectionType' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\collection_model.dart:14:16 - annotate_overrides
+   info - The member 'totalItems' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\collection_model.dart:17:13 - annotate_overrides
+   info - The member 'platformMetadata' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\collection_model.dart:20:30 - annotate_overrides
+   info - Field overrides a field inherited from 'BaseModel' - lib\core\base\models\lyrics_model.dart:8:16 - overridden_fields
+   info - The member 'name' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\media_model.dart:11:16 - annotate_overrides
+   info - The member 'imageUrl' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\media_model.dart:14:17 - annotate_overrides
+   info - The member 'description' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:11:17 - annotate_overrides
+   info - The member 'ownerId' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:14:17 - annotate_overrides
+   info - The member 'ownerName' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:17:17 - annotate_overrides
+   info - The member 'isPublic' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:20:14 - annotate_overrides
+   info - The member 'isCollaborative' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:23:14 - annotate_overrides
+   info - The member 'totalTracks' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:26:13 - annotate_overrides
+   info - The member 'platformMetadata' overrides an inherited member but isn't annotated with '@override' - lib\core\base\models\playlist_model.dart:29:30 - annotate_overrides
+   info - Field overrides a field inherited from 'BaseModel' - lib\core\base\models\stats_model.dart:10:16 - overridden_fields
+   info - Field overrides a field inherited from 'BaseModel' - lib\core\base\models\stats_model.dart:106:16 - overridden_fields
+warning - Unused import: 'package:flutter_riverpod/flutter_riverpod.dart' - lib\core\base\providers\lyrics_provider.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter_riverpod/flutter_riverpod.dart' - lib\core\base\providers\stats_provider.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\album_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\artist_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\auth_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\base_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\collection_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\media_service.dart:1:8 - unused_import
+warning - Unused import: '../interfaces/media/collection_interface.dart' - lib\core\base\services\media_service.dart:7:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\playback_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\player_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\playlist_service.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\core\base\services\search_service.dart:1:8 - unused_import
+   info - 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion - lib\core\providers\user_preferences_provider.dart:44:73 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion - lib\core\providers\user_preferences_provider.dart:96:47 - deprecated_member_use
+   info - 'value' is deprecated and shouldn't be used. Use component accessors like .r or .g, or toARGB32 for an explicit conversion - lib\core\providers\user_preferences_provider.dart:97:66 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\core\services\update_service.dart:30:29 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\core\services\update_service.dart:38:29 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\core\services\update_service.dart:42:28 - use_build_context_synchronously
+   info - Unnecessary braces in a string interpolation - lib\core\services\update_service.dart:53:31 - unnecessary_brace_in_string_interps
+   info - Unnecessary 'this.' qualifier - lib\core\storage\cache\cache_config.dart:21:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\core\storage\cache\cache_config.dart:22:9 - unnecessary_this
+   info - Unnecessary 'this.' qualifier - lib\core\storage\cache\cache_config.dart:23:9 - unnecessary_this
+warning - Unused import: 'cache_keys.dart' - lib\core\storage\cache\cache_manager.dart:9:8 - unused_import
+warning - The '!' will have no effect because the receiver can't be null - lib\core\storage\cache\cache_manager.dart:94:44 - unnecessary_non_null_assertion
+warning - The value of the local variable 'completer' isn't used - lib\features\download_manager\services\chunked_download.dart:34:11 - unused_local_variable
+   info - Use interpolation to compose strings and values - lib\features\download_manager\services\chunked_download.dart:143:29 - prefer_interpolation_to_compose_strings
+warning - Unused import: 'package:flutter/material.dart' - lib\features\language\services\locale_service.dart:3:8 - unused_import
+warning - Unused import: 'package:pyro_music/core/base/interfaces/lyrics/lyrics_interface.dart' - lib\features\lyrics\providers\synced_lyrics_provider.dart:4:8 - unused_import
+warning - Unused import: 'package:pyro_music/core/base/models/track_model.dart' - lib\features\lyrics\services\lyrics_service_impl.dart:4:8 - unused_import
+warning - The value of the field '_uuid' isn't used - lib\features\lyrics\services\lyrics_service_impl.dart:61:14 - unused_field
+warning - Unused import: 'package:pyro_music/core/base/services/base_service.dart' - lib\features\lyrics\services\synced_lyrics_service_impl.dart:1:8 - unused_import
+   info - Don't invoke 'print' in production code - lib\features\lyrics\services\synced_lyrics_service_impl.dart:83:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\features\lyrics\services\synced_lyrics_service_impl.dart:171:7 - avoid_print
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\player\controllers\playback_controller.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\player\controllers\player_controller.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\player\controllers\queue_controller.dart:1:8 - unused_import
+   info - The import of 'package:flutter_riverpod/flutter_riverpod.dart' is unnecessary because all of the used elements are also provided by the import of 'package:riverpod_annotation/riverpod_annotation.dart' - lib\features\player\providers\queue_provider.dart:1:8 - unnecessary_import
+warning - Unused import: '../../../core/base/interfaces/player/queue_interface.dart' - lib\features\player\services\player_service_impl.dart:9:8 - unused_import
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: PlayerServiceImpl._activePlayerService - lib\features\player\services\player_service_impl.dart:17:7 - must_be_immutable
+   info - The member 'getCurrentTrack' overrides an inherited member but isn't annotated with '@override' - lib\features\player\services\player_service_impl.dart:343:27 - annotate_overrides
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: PlaybackInterfaceImpl._currentState, PlaybackInterfaceImpl._volume, PlaybackInterfaceImpl._repeatMode, PlaybackInterfaceImpl._shuffleMode - lib\features\player\services\player_service_impl.dart:400:7 - must_be_immutable
+warning - This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: QueueServiceImpl._activeQueueService, QueueServiceImpl._queue, QueueServiceImpl._currentIndex, QueueServiceImpl._history - lib\features\player\services\queue_service_impl.dart:11:7 - must_be_immutable
+warning - Unused import: 'package:pyro_music/core/base/interfaces/media/track_interface.dart' - lib\features\playlist\controllers\playlist_controller.dart:4:8 - unused_import
+   info - The import of 'package:flutter_riverpod/flutter_riverpod.dart' is unnecessary because all of the used elements are also provided by the import of 'package:riverpod_annotation/riverpod_annotation.dart' - lib\features\playlist\providers\playlist_provider.dart:1:8 - unnecessary_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\playlist\services\playlist_service_impl.dart:1:8 - unused_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\search\controllers\search_controller.dart:1:8 - unused_import
+   info - The import of 'package:flutter_riverpod/flutter_riverpod.dart' is unnecessary because all of the used elements are also provided by the import of 'package:riverpod_annotation/riverpod_annotation.dart' - lib\features\search\providers\search_provider.dart:1:8 - unnecessary_import
+warning - Unused import: 'package:flutter/foundation.dart' - lib\features\search\services\search_service_impl.dart:1:8 - unused_import
+warning - Unused import: 'package:pyro_music/core/base/interfaces/media/artist_interface.dart' - lib\features\stats\providers\artist_stats_provider.dart:7:8 - unused_import
+   info - Use 'rethrow' to rethrow a caught exception - lib\features\track_source\sources\invidious.dart:61:9 - use_rethrow_when_possible
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\features\track_source\sources\jiosaavn.dart:36:40 - invalid_null_aware_operator
+warning - The receiver can't be 'null' because of short-circuiting, so the null-aware operator '?.' can't be used - lib\features\track_source\sources\jiosaavn.dart:67:48 - invalid_null_aware_operator
+   info - Use 'rethrow' to rethrow a caught exception - lib\features\track_source\sources\piped.dart:54:36 - use_rethrow_when_possible
+   info - Use 'rethrow' to rethrow a caught exception - lib\features\track_source\sources\youtube.dart:52:9 - use_rethrow_when_possible
+warning - The left operand can't be null, so the right operand is never executed - lib\platforms\spotify\adapters\spotify_user_adapter.dart:35:50 - dead_null_aware_expression
+warning - The value of the field '_clientId' isn't used - lib\platforms\spotify\services\spotify_platform_service.dart:22:16 - unused_field
+warning - The value of the field '_clientSecret' isn't used - lib\platforms\spotify\services\spotify_platform_service.dart:25:16 - unused_field
+warning - The left operand can't be null, so the right operand is never executed - lib\platforms\youtube_music\adapters\youtube_user_adapter.dart:35:50 - dead_null_aware_expression
+warning - The field doesn't override an inherited getter or setter - lib\platforms\youtube_music\models\youtube_artist.dart:46:14 - override_on_non_overriding_member
+warning - The value of the field '_apiKey' isn't used - lib\platforms\youtube_music\services\youtube_music_platform_service.dart:22:16 - unused_field
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_playback_service.dart:54:18 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_playback_service.dart:55:20 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_playlist_service.dart:131:26 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_playlist_service.dart:132:28 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_search_service.dart:92:26 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_search_service.dart:93:28 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_search_service.dart:108:26 - prefer_const_literals_to_create_immutables
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\platforms\youtube_music\services\youtube_music_search_service.dart:109:28 - prefer_const_literals_to_create_immutables
+warning - The value of the local variable 'isLoading' isn't used - lib\presentation\pages\album\widgets\album_tracks.dart:23:16 - unused_local_variable
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\getting_started\getting_started_page.dart:10:9 - use_super_parameters
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\getting_started\getting_started_page.dart:14:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\getting_started\getting_started_page.dart:15:13 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\getting_started\getting_started_page.dart:16:16 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\getting_started\getting_started_page.dart:18:18 - prefer_const_constructors
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\home\home_page.dart:9:9 - use_super_parameters
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:13:12 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:14:13 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:15:16 - prefer_const_constructors
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\presentation\pages\home\home_page.dart:16:20 - prefer_const_literals_to_create_immutables
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:25:13 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:26:22 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\presentation\pages\home\home_page.dart:28:24 - prefer_const_constructors
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\home\widgets\featured_playlists.dart:8:9 - use_super_parameters
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\home\widgets\featured_playlists.dart:14:5 - prefer_const_declarations
+warning - Dead code - lib\presentation\pages\home\widgets\featured_playlists.dart:42:24 - dead_code
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\home\widgets\featured_playlists.dart:85:46 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\home\widgets\home_header.dart:5:9 - use_super_parameters
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\home\widgets\home_header.dart:11:5 - prefer_const_declarations
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\home\widgets\home_header.dart:26:56 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\home\widgets\recent_tracks.dart:8:9 - use_super_parameters
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\home\widgets\recent_tracks.dart:14:5 - prefer_const_declarations
+warning - Dead code - lib\presentation\pages\home\widgets\recent_tracks.dart:42:24 - dead_code
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\home\widgets\recent_tracks.dart:78:46 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\home\widgets\recommended_artists.dart:8:9 - use_super_parameters
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\home\widgets\recommended_artists.dart:14:5 - prefer_const_declarations
+warning - Dead code - lib\presentation\pages\home\widgets\recommended_artists.dart:42:24 - dead_code
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\home\widgets\recommended_artists.dart:85:46 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\lastfm_login\lastfm_login_page.dart:6:9 - use_super_parameters
+warning - Unused import: 'package:pyro_music/core/base/interfaces/media/track_interface.dart' - lib\presentation\pages\lyrics\lyrics_page.dart:5:8 - unused_import
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:200:28 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:202:36 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:256:38 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:264:17 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:281:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\lyrics\lyrics_page.dart:282:50 - use_build_context_synchronously
+warning - The operand can't be 'null', so the condition is always 'true' - lib\presentation\pages\mobile_login\mobile_login_page.dart:66:16 - unnecessary_null_comparison
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\playlist\playlist_page.dart:21:5 - prefer_const_declarations
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\playlist\widgets\playlist_header.dart:10:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\playlist\widgets\playlist_info.dart:10:9 - use_super_parameters
+warning - Unused import: 'package:pyro_music/core/base/models/playlist_model.dart' - lib\presentation\pages\playlist\widgets\playlist_tracks_list.dart:2:8 - unused_import
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\search\search_page.dart:8:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\search\search_page.dart:79:58 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\search\widgets\search_bar.dart:11:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\search\widgets\search_bar.dart:47:33 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\search\widgets\search_filters.dart:11:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\search\widgets\search_results.dart:20:9 - use_super_parameters
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\search\widgets\search_results.dart:30:5 - prefer_const_declarations
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\search\widgets\search_results.dart:31:5 - prefer_const_declarations
+   info - Use 'const' for final variables initialized to a constant value - lib\presentation\pages\search\widgets\search_results.dart:32:5 - prefer_const_declarations
+warning - Dead code - lib\presentation\pages\search\widgets\search_results.dart:40:20 - dead_code
+warning - Dead code - lib\presentation\pages\search\widgets\search_results.dart:44:19 - dead_code
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\pages\search\widgets\search_results.dart:240:46 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\settings\settings_page.dart:5:9 - use_super_parameters
+   info - Don't use 'BuildContext's across async gaps - lib\presentation\pages\settings\widgets\about_settings.dart:30:28 - use_build_context_synchronously
+warning - The value of the local variable 'packageInfo' isn't used - lib\presentation\pages\settings\widgets\about_settings.dart:47:15 - unused_local_variable
+   info - Parameter 'key' could be a super parameter - lib\presentation\pages\settings\widgets\desktop_settings.dart:4:9 - use_super_parameters
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\presentation\pages\settings\widgets\developers_settings.dart:29:30 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\presentation\pages\settings\widgets\developers_settings.dart:35:30 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\presentation\pages\settings\widgets\developers_settings.dart:82:32 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\presentation\pages\settings\widgets\developers_settings.dart:97:32 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\presentation\pages\settings\widgets\developers_settings.dart:104:30 - use_build_context_synchronously
+warning - The '!' will have no effect because the receiver can't be null - lib\presentation\pages\settings\widgets\language_region_settings.dart:59:33 - unnecessary_non_null_assertion
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\common\album_card.dart:24:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\common\loading_indicator.dart:20:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\common\playlist_card.dart:24:9 - use_super_parameters
+warning - Unused import: 'package:pyro_music/features/player/providers/player_state_provider.dart' - lib\presentation\widgets\player\player_bar.dart:3:8 - unused_import
+   info - Use 'const' with the constructor to improve performance - lib\presentation\widgets\player\player_bar.dart:98:25 - prefer_const_constructors
+warning - Dead code - lib\presentation\widgets\player\player_bar.dart:98:56 - dead_code
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\player\player_controls.dart:29:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\player\player_queue.dart:22:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\widgets\player\player_queue.dart:43:48 - deprecated_member_use
+   info - Parameter 'key' could be a super parameter - lib\presentation\widgets\player\volume_slider.dart:17:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\widgets\player\volume_slider.dart:46:61 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\presentation\widgets\player\volume_slider.dart:48:55 - deprecated_member_use
+   info - 'v' is deprecated and shouldn't be used. [Level.verbose] is being deprecated in favor of [Level.trace], use [t] instead - lib\services\logger\logger.dart:34:50 - deprecated_member_use
+
+167 issues found. (ran in 6.7s)

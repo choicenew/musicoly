@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:pyro_music/core/providers/user_preferences_provider.dart';
 import 'package:pyro_music/features/language/provider/language_provider.dart';
-import 'package:pyro_music/l10n/app_localizations.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class LanguageRegionSettings extends ConsumerStatefulWidget {
   const LanguageRegionSettings({super.key});

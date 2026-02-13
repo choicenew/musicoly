@@ -1,0 +1,21 @@
+{
+  "guest": "访客",
+  "browse": "浏览",
+  "search": "搜索",
+  "library": "媒体库",
+  "lyrics": "歌词",
+  "settings": "设置",
+  "language": "语言",
+  "language_settings": "语言设置",
+  "save": "保存",
+  "current_language": "当前语言",
+  "select_language": "选择语言",
+  "failed_to_load_language_settings": "加载语言设置失败",
+  "system_default": "系统默认",
+  "error": "错误 {error}",
+  "loading": "加载中...",
+  "cancel": "取消",
+  "done": "完成",
+  "ok": "确定",
+  "retry": "重试"
+}
