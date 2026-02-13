@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter
+enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <!-- == PACKAGE SPECIFIC SECTION == -->
+    <id>pyro_music</id>
+    <version>%{{SPOTUBE_VERSION}}%</version>
+    <packageSourceUrl>https://github.com/KRTirtho/pyro_music/tree/master/choco-struct</packageSourceUrl>
+    <owners>Kingkor Roy Tirtho</owners>
+    <!-- ============================== -->
+
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>pyro_music (Install)</title>
+    <authors>Kingkor Roy Tirtho</authors>
+    <projectUrl>https://pyro_music.krtirtho.dev</projectUrl>
+    <iconUrl>
+      https://rawcdn.githack.com/KRTirtho/pyro_music/7edb0bb834eb18c05551e30a891720a6abf53dbe/assets/pyro_music-logo.png</iconUrl>
+    <copyright>2022 Pyro Music</copyright>
+    <!-- If there is a license Url available, it is required for the community feed -->
+    <licenseUrl>https://github.com/KRTirtho/pyro_music/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/KRTirtho/pyro_music</projectSourceUrl>
+    <docsUrl>https://pyro_music.krtirtho.dev</docsUrl>
+    <bugTrackerUrl>https://github.com/KRTirtho/pyro_music/issues/new</bugTrackerUrl>
+    <tags>pyro_music music audio spotify youtube flutter</tags>
+    <summary>🎧 Open source Spotify client that doesn't require Premium nor uses Electron! Available
+      for both desktop &amp; mobile! </summary>
+    <description>
+      Pyro Music is a Flutter based lightweight spotify client. It utilizes the power
+      of Spotify &amp; Youtube's public API &amp; creates a hazardless, performant &amp; resource
+      friendly User Experience
+
+      # Features
+      - Open source/libre software
+      - Anonymous/guest login
+      - Cross platform support
+      - No telemetry, diagnostics or user data collection
+      - Lightweight &amp; resource-friendly
+      - Native performance (Thanks to Flutter+Skia)
+      - Playback control is done locally instead of on the server
+      - Small size &amp; less data usage
+      - No Spotify or YouTube ads since it uses all public &amp; free APIs (It is still recommended
+      to support the creators by watching/liking/subscribing to the artists' YouTube channels or
+      liking their tracks on Spotify. Purchasing Spotify Premium is usually the best way to support
+      their valuable creations.)
+      - Time synced lyrics
+      - Downloadable tracks
+    </description>
+    <releaseNotes>https://github.com/KRTirtho/pyro_music/releases/tag/v%{{SPOTUBE_VERSION}}%</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

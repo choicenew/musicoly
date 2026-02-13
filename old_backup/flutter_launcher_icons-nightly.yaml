@@ -1,0 +1,6 @@
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/pyro_music-nightly-logo.png"
+  adaptive_icon_foreground: "assets/pyro_music-nightly-logo-foreground.jpg"
+  adaptive_icon_background: "#242832"

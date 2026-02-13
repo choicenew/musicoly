@@ -1,0 +1,17 @@
+name: piped_client
+description: API Client for piped.video
+version: 0.1.2
+homepage: https://github.com/KRTirtho/piped_client
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  dio: ^5.1.2
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  test: ^1.24.2
+  lints: ^2.1.0
+  json_serializable: ^6.6.2
+  build_runner: ^2.4.4

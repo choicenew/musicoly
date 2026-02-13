@@ -1,0 +1,40 @@
+# Maintainer: Kingkor Roy Tirtho <krtirho@gmail.com>
+pkgname=pyro_music-bin
+pkgver=%{{SPOTUBE_VERSION}}%
+pkgrel=%{{PKGREL}}%
+epoch=
+pkgdesc="Open source Spotify client that doesn't require Premium nor uses Electron! Available for both desktop & mobile!"
+arch=(x86_64)
+url="https://pyro_music.krtirtho.dev"
+license=('BSD-4-Clause')
+groups=()
+depends=('mpv' 'libappindicator-gtk3' 'libsecret' 'jsoncpp' 'libnotify' 'xdg-user-dirs' 'webkit2gtk-4.1')
+makedepends=()
+checkdepends=()
+optdepends=('yt-dlp-git')
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("https://github.com/KRTirtho/pyro_music/releases/download/v${pkgver}/pyro_music-linux-${pkgver}-x86_64.tar.xz")
+noextract=()
+md5sums=(%{{LINUX_MD5}}%)
+validpgpkeys=()
+
+package() {
+  install -dm755 "${pkgdir}/usr/share/icons/pyro_music"
+  install -dm755 "${pkgdir}/usr/share/applications"
+  install -dm755 "${pkgdir}/usr/share/appdata"
+  install -dm755 "${pkgdir}/usr/share/${pkgname}"
+  install -dm755 "${pkgdir}/usr/bin"
+
+  mv ./pyro_music.desktop "${pkgdir}/usr/share/applications"
+  mv ./pyro_music-logo.png "${pkgdir}/usr/share/icons/pyro_music/"
+  mv ./com.github.KRTirtho.Pyro Music.appdata.xml "${pkgdir}/usr/share/appdata/pyro_music.appdata.xml"
+  cp -ra ./data ./lib ./pyro_music "${pkgdir}/usr/share/${pkgname}"
+  sed -i 's|com.github.KRTirtho.Pyro Music|pyro_music|' "${pkgdir}/usr/share/appdata/pyro_music.appdata.xml"
+  ln -s "/usr/share/${pkgname}/pyro_music" "${pkgdir}/usr/bin/pyro_music"
+}

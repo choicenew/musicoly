@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Pyro Music
+Exec=/usr/bin/pyro_music
+Icon=/usr/share/icons/pyro_music/pyro_music-logo.png
+Comment=A music streaming app combining the power of Spotify & YouTube
+Terminal=false
+Categories=Audio;Music;Player;AudioVideo;
+MimeType=x-scheme-handler/spotify;

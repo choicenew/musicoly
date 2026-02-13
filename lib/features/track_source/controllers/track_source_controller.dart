@@ -1,0 +1,70 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
+import 'package:pyro_music/features/track_source/providers/track_source_provider.dart';
+
+final trackSourceControllerProvider = Provider((ref) => TrackSourceController(ref));
+
+/// 音轨源控制器
+/// 负责处理音轨源的用户交互逻辑
+class TrackSourceController {
+  final Ref _ref;
+
+  TrackSourceController(this._ref);
+
+  TrackSourceNotifier get _notifier => _ref.read(trackSourceProvider.notifier);
+  TrackSourceState get _state => _ref.read(trackSourceProvider);
+
+  /// 获取当前音频源
+  AudioSource get currentSource => _state.currentSource;
+
+  /// 获取当前音频质量
+  SourceQualities get quality => _state.quality;
+
+  /// 获取当前音频编解码器
+  SourceCodecs get codec => _state.codec;
+
+  /// 设置音频源
+  void setSource(AudioSource source) {
+    _notifier.setSource(source);
+  }
+
+  /// 设置音频质量
+  void setQuality(SourceQualities quality) {
+    _notifier.setQuality(quality);
+  }
+
+  /// 设置音频编解码器
+  void setCodec(SourceCodecs codec) {
+    _notifier.setCodec(codec);
+  }
+
+  /// 搜索音源
+  Future<List<SourceInfo>> search(String query) {
+    return _notifier.search(query);
+  }
+
+  /// 从轨道获取音源
+  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) {
+    return _notifier.fetchFromTrack(track: track);
+  }
+
+  /// 从备选音源获取轨道
+  Future<SourcedTrack> fetchFromTrackAltSource(
+      {required TrackInterface track}) {
+    return _notifier.fetchFromTrackAltSource(track: track);
+  }
+
+  /// 切换到下一个可用音源
+  void switchToNextSource() {
+    const sources = AudioSource.values;
+    final currentIndex = sources.indexOf(currentSource);
+    final nextIndex = (currentIndex + 1) % sources.length;
+    setSource(sources[nextIndex]);
+  }
+
+  /// 获取所有可用音源
+  List<AudioSource> getAvailableSources() {
+    return AudioSource.values;
+  }
+}
