@@ -24,7 +24,7 @@ class SearchController {
 
   /// Perform a search with the current query
   Future<void> search({int limit = 20, int offset = 0}) async {
-    await _notifier.search(limit: limit, offset: offset);
+    await _notifier.search(null, limit, offset);
   }
 
   /// Clear the current search results

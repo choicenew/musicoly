@@ -91,6 +91,18 @@ class PlaybackStateNotifier extends _$PlaybackStateNotifier {
     await _playbackService.playTrack(trackId);
   }
 
+  /// 播放曲目列表
+  Future<void> playTracks(List<String> trackIds, {int initialIndex = 0}) async {
+    await _playbackService.playTracks(trackIds, initialIndex: initialIndex);
+  }
+
+  /// 随机播放列表
+  Future<void> shufflePlay(List<String> trackIds) async {
+    if (trackIds.isEmpty) return;
+    final shuffledIds = List<String>.from(trackIds)..shuffle();
+    await _playbackService.playTracks(shuffledIds);
+  }
+
   /// 暂停播放
   Future<void> pause() async {
     await _playbackService.pausePlayback();
@@ -134,5 +146,20 @@ class PlaybackStateNotifier extends _$PlaybackStateNotifier {
   /// 设置随机播放
   Future<void> setShuffleMode(bool enabled) async {
     await _playbackService.setShuffleMode(enabled);
+  }
+
+  /// 切换随机播放
+  Future<void> toggleShuffle() async {
+    await _playbackService.setShuffleMode(!state.shuffleMode);
+  }
+
+  /// 切换循环模式
+  Future<void> toggleRepeatMode() async {
+    final nextMode = switch (state.repeatMode) {
+      RepeatMode.off => RepeatMode.all,
+      RepeatMode.all => RepeatMode.one,
+      RepeatMode.one => RepeatMode.off,
+    };
+    await _playbackService.setRepeatMode(nextMode);
   }
 }

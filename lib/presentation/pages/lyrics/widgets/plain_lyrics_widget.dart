@@ -8,11 +8,40 @@ class PlainLyricsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = lyrics.lines.map((e) => e.text).join('\n');
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(text),
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+      child: Center(
+        child: Column(
+          children: lyrics.lines.map((line) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                  Text(
+                    line.text,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  if (line.translation != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      line.translation!,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ],
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

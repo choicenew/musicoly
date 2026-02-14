@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/presentation/pages/search/widgets/search_bar.dart';
 import 'package:pyro_music/presentation/pages/search/widgets/search_results.dart';
 import 'package:pyro_music/presentation/pages/search/widgets/search_filters.dart';
-
+import 'package:pyro_music/features/search/providers/search_provider.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 /// The search page of the application
-class SearchPage extends StatefulWidget {
+class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  ConsumerState<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
-  String _query = '';
+class _SearchPageState extends ConsumerState<SearchPage> {
   String _selectedFilter = 'All';
-  bool _isSearching = false;
 
   void _onSearch(String query) {
-    setState(() {
-      _query = query;
-      _isSearching = query.isNotEmpty;
-    });
-    // Trigger search using the query
+    if (query.trim().isEmpty) {
+      ref.read(searchProvider.notifier).clearResults();
+      return;
+    }
+    ref.read(searchProvider.notifier).updateQuery(query);
+    ref.read(searchProvider.notifier).search();
   }
 
   void _onFilterChanged(String filter) {
@@ -36,6 +36,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final searchState = ref.watch(searchProvider);
+    final isSearching = searchState.query.isNotEmpty;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -45,12 +48,12 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.all(16.0),
               child: CustomSearchBar(
                 onSearch: _onSearch,
-                initialQuery: _query,
+                initialQuery: searchState.query,
               ),
             ),
 
             // Search filters
-            if (_isSearching)
+            if (isSearching)
               SearchFilters(
                 selectedFilter: _selectedFilter,
                 onFilterChanged: _onFilterChanged,
@@ -58,9 +61,9 @@ class _SearchPageState extends State<SearchPage> {
 
             // Search results or suggestions
             Expanded(
-              child: _isSearching
+              child: isSearching
                   ? SearchResults(
-                      query: _query,
+                      query: searchState.query,
                       filter: _selectedFilter,
                     )
                   : _buildSearchSuggestions(l10n),

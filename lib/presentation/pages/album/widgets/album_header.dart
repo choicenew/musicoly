@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pyro_music/features/player/providers/playback_provider.dart';
 import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays the album header with cover art and basic info
-class AlbumHeader extends StatelessWidget {
+class AlbumHeader extends ConsumerWidget {
   /// The album to display
   final AlbumModel album;
 
+  /// The tracks in this album
+  final List<TrackInterface> tracks;
+
   /// Creates a new album header widget
-  const AlbumHeader({super.key, required this.album});
+  const AlbumHeader({super.key, required this.album, required this.tracks});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
 
@@ -82,8 +88,9 @@ class AlbumHeader extends StatelessWidget {
 
                     // Play button
                     ElevatedButton.icon(
-                      onPressed: () {
-                        // TODO: Implement play functionality
+                      onPressed: tracks.isEmpty ? null : () {
+                        final trackIds = tracks.map((t) => t.id).toList();
+                        ref.read(playbackStateProvider.notifier).playTracks(trackIds);
                       },
                       icon: const Icon(Icons.play_arrow),
                       label: Text(l10n.play),

@@ -40,6 +40,9 @@ abstract class PlaybackInterface {
 
   /// Get the current shuffle mode
   bool get shuffleMode;
+
+  /// Get the current total duration
+  Duration get duration;
 }
 
 /// Enum representing the current state of playback

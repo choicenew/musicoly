@@ -3,9 +3,12 @@ import 'package:pyro_music/presentation/pages/home/home_page.dart';
 import 'package:pyro_music/presentation/pages/search/search_page.dart';
 import 'package:pyro_music/presentation/pages/settings/settings_page.dart';
 import 'package:pyro_music/presentation/pages/lyrics/lyrics_page.dart';
+import 'package:pyro_music/presentation/pages/player/player_page.dart';
 import 'package:pyro_music/presentation/pages/album/album_page.dart';
 import 'package:pyro_music/presentation/pages/artist/artist_page.dart';
 import 'package:pyro_music/presentation/pages/playlist/playlist_page.dart';
+import 'package:pyro_music/presentation/pages/local_music/local_music_page.dart';
+import 'package:pyro_music/presentation/pages/favorites/favorites_page.dart';
 import 'package:pyro_music/presentation/widgets/layout/main_layout.dart';
 
 final router = GoRouter(
@@ -27,6 +30,14 @@ final router = GoRouter(
               builder: (context, state) => const SettingsPage(),
             ),
             GoRoute(
+              path: 'local-music',
+              builder: (context, state) => const LocalMusicPage(),
+            ),
+            GoRoute(
+              path: 'favorites',
+              builder: (context, state) => const FavoritesPage(),
+            ),
+            GoRoute(
               path: 'album/:id',
               builder: (context, state) => AlbumPage(albumId: state.pathParameters['id']!),
             ),
@@ -46,6 +57,11 @@ final router = GoRouter(
     GoRoute(
       path: '/lyrics',
       builder: (context, state) => const LyricsPage(),
+    ),
+    // 全屏播放器页
+    GoRoute(
+      path: '/player',
+      builder: (context, state) => const PlayerPage(),
     ),
   ],
 );

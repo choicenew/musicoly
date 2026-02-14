@@ -36,11 +36,16 @@ class PlayStatsNotifier extends _$PlayStatsNotifier with BaseProviderMixin<Stats
   @override
   PlayStatsState build() {
     _serviceImpl = PlayStatsServiceImpl();
+    _init();
     
     _listenToPlayerState();
-    loadStats();
 
     return const PlayStatsState();
+  }
+
+  Future<void> _init() async {
+    await _serviceImpl.initialize();
+    await loadStats();
   }
 
   /// 加载统计数据
@@ -70,7 +75,7 @@ class PlayStatsNotifier extends _$PlayStatsNotifier with BaseProviderMixin<Stats
 
     // Watch playback state
     ref.listen(playerStateProvider.select((s) => s.isPlaying), (previous, isPlaying) {
-       _onPlaybackStateChanged(isPlaying);
+      _onPlaybackStateChanged(isPlaying);
     });
   }
 

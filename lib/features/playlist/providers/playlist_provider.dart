@@ -6,16 +6,17 @@ import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/services/playlist_service.dart';
 import '../services/playlist_service_impl.dart';
 
+import 'package:pyro_music/core/services/service_registry.dart';
+
 part 'playlist_provider.freezed.dart';
 part 'playlist_provider.g.dart';
 
 /// Provider for the playlist service implementation
 @Riverpod(keepAlive: true)
 PlaylistServiceImpl playlistService(Ref ref) {
-  // Get platform-specific playlist services from their respective providers
-  final platformServices = <PlaylistService>[];
-
-  return PlaylistServiceImpl(platformServices: platformServices);
+  final registry = ServiceRegistry();
+  final service = registry.getService<PlaylistService>('playlist_service');
+  return service as PlaylistServiceImpl;
 }
 
 /// Playlist state data class
@@ -96,6 +97,46 @@ class PlaylistNotifier extends _$PlaylistNotifier with BaseProviderMixin<Playlis
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e);
       return null;
+    }
+  }
+
+  /// Delete a playlist
+  Future<bool> deletePlaylist(String playlistId) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final success = await _playlistService.deletePlaylist(playlistId);
+      state = state.copyWith(isLoading: false);
+      return success;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e);
+      return false;
+    }
+  }
+
+  /// Remove tracks from a playlist
+  Future<bool> removeTracksFromPlaylist({
+    required String playlistId,
+    required List<String> trackIds,
+  }) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final success = await _playlistService.removeTracksFromPlaylist(
+        playlistId: playlistId,
+        trackIds: trackIds,
+      );
+      
+      if (success && state.selectedPlaylist?.id == playlistId) {
+        // Refresh the tracks list
+        await loadPlaylistTracks(playlistId);
+      }
+      
+      state = state.copyWith(isLoading: false);
+      return success;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e);
+      return false;
     }
   }
 
@@ -185,32 +226,6 @@ class PlaylistNotifier extends _$PlaylistNotifier with BaseProviderMixin<Playlis
     }
   }
 
-  /// Remove tracks from a playlist
-  Future<bool> removeTracksFromPlaylist({
-    required String playlistId,
-    required List<String> trackIds,
-  }) async {
-    state = state.copyWith(isLoading: true, error: null);
-
-    try {
-      final success = await _playlistService.removeTracksFromPlaylist(
-        playlistId: playlistId,
-        trackIds: trackIds,
-      );
-
-      // Reload the playlist tracks if update was successful and it's the selected playlist
-      if (success && state.selectedPlaylist?.id == playlistId) {
-        await loadPlaylistTracks(playlistId);
-      }
-
-      state = state.copyWith(isLoading: false);
-      return success;
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e);
-      return false;
-    }
-  }
-
   /// Follow a playlist
   Future<bool> followPlaylist(String playlistId) async {
     state = state.copyWith(isLoading: true, error: null);
@@ -229,19 +244,6 @@ class PlaylistNotifier extends _$PlaylistNotifier with BaseProviderMixin<Playlis
     state = state.copyWith(isLoading: true, error: null);
     try {
       final success = await _playlistService.unfollowPlaylist(playlistId);
-      state = state.copyWith(isLoading: false);
-      return success;
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e);
-      return false;
-    }
-  }
-
-  /// Delete a playlist
-  Future<bool> deletePlaylist(String playlistId) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final success = await _playlistService.deletePlaylist(playlistId);
       state = state.copyWith(isLoading: false);
       return success;
     } catch (e) {

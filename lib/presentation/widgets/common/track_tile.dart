@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/base/models/track_model.dart';
+import 'package:pyro_music/core/providers/multi_select_provider.dart';
+import 'package:pyro_music/features/playlist/providers/playlist_provider.dart';
+import 'package:pyro_music/presentation/pages/local_music/local_music_page.dart';
+import 'package:pyro_music/presentation/widgets/dialogs/tag_editor_dialog.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// A reusable widget for displaying a track item in lists
-class TrackTile extends StatelessWidget {
+class TrackTile extends ConsumerWidget {
   /// The track data to display
   final TrackModel track;
 
@@ -30,6 +36,9 @@ class TrackTile extends StatelessWidget {
   /// Whether to show track options menu
   final bool showOptions;
 
+  /// Optional trailing widget to override the default options menu
+  final Widget? trailing;
+
   const TrackTile({
     super.key,
     required this.track,
@@ -41,17 +50,29 @@ class TrackTile extends StatelessWidget {
     this.showAlbum = false,
     this.showDuration = true,
     this.showOptions = true,
+    this.trailing,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final selectedItems = ref.watch(multiSelectProvider);
+    final isSelected = selectedItems.contains(track.id);
+    final isSelectionMode = selectedItems.isNotEmpty;
 
     return ListTile(
-      onTap: onTap,
-      selected: isPlaying,
+      onTap: isSelectionMode 
+        ? () => ref.read(multiSelectProvider.notifier).toggle(track.id)
+        : onTap,
+      onLongPress: () => ref.read(multiSelectProvider.notifier).toggle(track.id),
+      selected: isSelected || isPlaying,
       selectedTileColor: theme.colorScheme.primaryContainer.withAlpha(0x33),
-      leading: showAlbumArt ? _buildLeading() : null,
+      leading: isSelectionMode 
+        ? Checkbox(
+            value: isSelected,
+            onChanged: (_) => ref.read(multiSelectProvider.notifier).toggle(track.id),
+          )
+        : (showAlbumArt ? _buildLeading() : null),
       title: Text(
         track.name,
         maxLines: 1,
@@ -62,7 +83,7 @@ class TrackTile extends StatelessWidget {
         ),
       ),
       subtitle: showArtist ? _buildSubtitle() : null,
-      trailing: _buildTrailing(),
+      trailing: trailing ?? _buildTrailing(context, ref),
     );
   }
 
@@ -103,18 +124,88 @@ class TrackTile extends StatelessWidget {
     );
   }
 
-  Widget _buildTrailing() {
+  Widget _buildTrailing(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final playlistService = ref.read(playlistServiceProvider);
+    
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        IconButton(
+          icon: Icon(
+            track.isFavorite ? Icons.favorite : Icons.favorite_border,
+            color: track.isFavorite ? Colors.red : null,
+            size: 20,
+          ),
+          onPressed: () async {
+            await playlistService.toggleFavorite(track.id);
+            // Since this is a stateless-like component in terms of the track model,
+            // the parent will need to rebuild or we need a way to notify.
+            // For now, we rely on the fact that most pages will refresh on data changes.
+          },
+        ),
         if (showDuration)
-          Text(_formatDuration(Duration(milliseconds: track.durationMs))),
+          Text(
+            _formatDuration(Duration(milliseconds: track.durationMs)),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
         if (showOptions)
-          IconButton(
+          PopupMenuButton<String>(
             icon: const Icon(Icons.more_vert),
-            onPressed: () {
-              // Show track options menu
+            onSelected: (value) async {
+              if (value == 'edit_tags') {
+                showDialog(
+                  context: context,
+                  builder: (context) => TagEditorDialog(track: track),
+                );
+              } else if (value == 'add_to_playlist') {
+                final playlistId = await LocalMusicPage.showPlaylistSelectionDialog(context, ref);
+                if (playlistId != null) {
+                  final success = await playlistService.addTracksToPlaylist(
+                    playlistId: playlistId,
+                    trackIds: [track.id],
+                  );
+                  if (success && context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l10n.added_to_playlist)),
+                    );
+                  }
+                }
+              }
             },
+            itemBuilder: (context) => [
+              if (track.localPath != null)
+                PopupMenuItem(
+                  value: 'edit_tags',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.edit_outlined, size: 20),
+                      const SizedBox(width: 12),
+                      Text(l10n.edit_tags),
+                    ],
+                  ),
+                ),
+              PopupMenuItem(
+                value: 'add_to_playlist',
+                child: Row(
+                  children: [
+                    const Icon(Icons.playlist_add, size: 20),
+                    const SizedBox(width: 12),
+                    Text(l10n.add_to_playlist),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 'share',
+                child: Row(
+                  children: [
+                    const Icon(Icons.share_outlined, size: 20),
+                    const SizedBox(width: 12),
+                    Text(l10n.share),
+                  ],
+                ),
+              ),
+            ],
           ),
       ],
     );

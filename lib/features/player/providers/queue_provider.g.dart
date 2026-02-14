@@ -45,7 +45,7 @@ final class QueueStateNotifierProvider
 }
 
 String _$queueStateNotifierHash() =>
-    r'a8f991a28044f1ac658d9ec6ce82993a5bd3e501';
+    r'b5e9902a36f7031c6d9d176d48bebff80308f4dc';
 
 /// 队列状态提供者 - 管理播放队列状态
 

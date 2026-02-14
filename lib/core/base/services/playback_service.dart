@@ -7,6 +7,9 @@ abstract class PlaybackService extends BaseService {
   /// 播放曲目
   Future<void> playTrack(String trackId);
 
+  /// 播放曲目列表
+  Future<void> playTracks(List<String> trackIds, {int initialIndex = 0});
+
   /// 暂停播放
   Future<void> pausePlayback();
 

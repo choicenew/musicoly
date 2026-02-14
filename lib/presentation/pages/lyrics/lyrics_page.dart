@@ -203,7 +203,7 @@ class LyricsPage extends ConsumerWidget {
               if (context.mounted) {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(success ? l10n.import_success : l10n.import_failed(''))),
+                  SnackBar(content: Text(success ? l10n.lyrics_imported_successfully : l10n.failed_to_import_lyrics)),
                 );
               }
             },

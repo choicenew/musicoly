@@ -10,10 +10,22 @@ import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/features/lyric/services/lyric_manager_impl.dart';
 import 'package:pyro_music/features/track_source/services/track_source_manager_impl.dart';
 import 'package:pyro_music/features/track_source/sources/local.dart';
+import 'package:pyro_music/core/services/sleep_timer_service.dart';
+import 'package:pyro_music/core/services/local_scanner_service.dart';
+import 'package:pyro_music/core/services/backup_service.dart';
+import 'package:pyro_music/core/services/equalizer_service.dart';
+import 'package:pyro_music/core/services/desktop_service.dart';
+import 'package:pyro_music/features/stats/services/play_stats_service_impl.dart';
+import 'package:pyro_music/core/base/services/stats_service.dart';
+import 'package:metadata_god/metadata_god.dart';
 
 import 'package:pyro_music/core/base/services/player_service.dart';
 import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
+
+import 'package:pyro_music/features/playlist/services/local_playlist_service.dart';
+import 'package:pyro_music/core/base/services/playlist_service.dart' as base_playlist;
+import 'package:pyro_music/features/playlist/services/playlist_service_impl.dart' as playlist_impl;
 
 /// 系统服务初始化器
 class ServiceInitializer {
@@ -21,6 +33,9 @@ class ServiceInitializer {
   static Future<void> initialize(Isar isar) async {
     final registry = ServiceRegistry();
     final platformRegistry = PlatformRegistry();
+
+    // 初始化 MetadataGod
+    MetadataGod.initialize();
 
     // 0. 注册底层数据库
     GetIt.instance.registerSingleton<Isar>(isar);
@@ -49,6 +64,46 @@ class ServiceInitializer {
       () => LyricManagerImpl(),
     );
 
+    // 4.5 注册睡眠定时器
+    registry.registerServiceFactory<SleepTimerService>(
+      'sleep_timer',
+      () => SleepTimerService(),
+    );
+
+    // 4.6 注册本地扫描器
+    registry.registerServiceFactory<LocalScannerService>(
+      'local_scanner',
+      () => LocalScannerService(),
+    );
+
+    // 4.7 注册备份服务
+    registry.registerServiceFactory<BackupService>(
+      'backup_service',
+      () => BackupService(),
+    );
+
+    // 4.8 注册均衡器服务
+    registry.registerServiceFactory<EqualizerService>(
+      'equalizer_service',
+      () => EqualizerService(),
+    );
+
+    // 4.9 注册播放列表服务
+    registry.registerPlatformService<base_playlist.PlaylistService>(
+      'local',
+      () => LocalPlaylistService(isar),
+    );
+
+    registry.registerServiceFactory<base_playlist.PlaylistService>(
+      'playlist_service',
+      () {
+        final localService = registry.getService<base_playlist.PlaylistService>('local');
+        return playlist_impl.PlaylistServiceImpl(
+          platformServices: [if (localService != null) localService],
+        );
+      },
+    );
+
     // 5. 注册播放器平台服务 (Native)
     registry.registerPlatformService<PlayerService>(
       'native',
@@ -72,6 +127,36 @@ class ServiceInitializer {
 
     // 设置默认活跃平台
     platformRegistry.activePlatformId = 'native';
+
+    // 4.10 注册桌面集成服务
+    registry.registerServiceFactory<DesktopService>(
+      'desktop_service',
+      () => DesktopService(),
+    );
+
+    // 4.11 注册播放统计服务
+    registry.registerServiceFactory<StatsService>(
+      'play_stats_service',
+      () => PlayStatsServiceImpl(),
+    );
+
+    // 5. 启动基础服务
+    final playerService = registry.getService<PlayerService>('player_service');
+    if (playerService != null) {
+      await playerService.initialize();
+    }
+
+    // 初始化桌面服务
+    final desktopService = registry.getService<DesktopService>('desktop_service');
+    if (desktopService != null) {
+      await desktopService.initialize();
+    }
+
+    // 初始化统计服务
+    final statsService = registry.getService<StatsService>('play_stats_service');
+    if (statsService != null) {
+      await statsService.initialize();
+    }
 
     debugPrint('核心服务初始化完成 (Pure Core)');
   }

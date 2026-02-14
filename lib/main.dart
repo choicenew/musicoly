@@ -10,6 +10,10 @@ import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
 import 'package:pyro_music/core/storage/isar/entities/playlist_entity.dart';
 import 'package:pyro_music/core/storage/isar/entities/lyrics_entity.dart';
 import 'package:pyro_music/core/init/service_initializer.dart';
+import 'package:pyro_music/core/services/pyro_audio_handler.dart';
+import 'package:audio_service/audio_service.dart';
+
+late AudioHandler audioHandler;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +31,16 @@ void main() async {
 
   // 初始化核心服务
   await ServiceInitializer.initialize(isar);
+
+  // 初始化 AudioService
+  audioHandler = await AudioService.init(
+    builder: () => PyroAudioHandler(),
+    config: const AudioServiceConfig(
+      androidNotificationChannelId: 'com.pyromusic.app.channel.audio',
+      androidNotificationChannelName: 'Pyro Music Playback',
+      androidNotificationOngoing: true,
+    ),
+  );
 
   runApp(const ProviderScope(child: PyroMusicApp()));
 }

@@ -100,7 +100,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
         await logFile.copy(savePath);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.logs_exported)),
+            SnackBar(content: Text(l10n.logs_exported(savePath))),
           );
         }
       }

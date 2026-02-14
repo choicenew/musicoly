@@ -45,7 +45,7 @@ final class PlayerStateNotifierProvider
 }
 
 String _$playerStateNotifierHash() =>
-    r'a238776243e50a4925f51c7e60897b3ef25eb98e';
+    r'2bf7b2424ad43e98e981ef93adaaa682aaf8d690';
 
 /// 播放器状态提供者 - 管理播放器状态
 

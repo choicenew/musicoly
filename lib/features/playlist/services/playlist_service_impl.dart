@@ -49,6 +49,19 @@ class PlaylistServiceImpl extends PlaylistService {
   }
 
   @override
+  Future<List<TrackInterface>> getSmartPlaylistTracks(String type, {int limit = 50}) async {
+    for (final service in platformServices) {
+      try {
+        final tracks = await service.getSmartPlaylistTracks(type, limit: limit);
+        if (tracks.isNotEmpty) return tracks;
+      } catch (e) {
+        // Continue
+      }
+    }
+    return [];
+  }
+
+  @override
   Future<void> dispose() async {
     for (final service in platformServices) {
       await service.dispose();
@@ -299,14 +312,15 @@ class PlaylistServiceImpl extends PlaylistService {
   @override
   Future<List<PlaylistInterface>> getFeaturedPlaylists(
       {int limit = 20, int offset = 0}) async {
-    // Collect featured playlists from all platforms
-    final allPlaylists = await Future.wait(
-      platformServices.map((service) =>
-          service.getFeaturedPlaylists(limit: limit, offset: offset)),
-    );
-
-    // Combine and limit the results
-    return allPlaylists.expand((playlists) => playlists).take(limit).toList();
+    for (final service in platformServices) {
+      try {
+        final playlists = await service.getFeaturedPlaylists(limit: limit, offset: offset);
+        if (playlists.isNotEmpty) return playlists;
+      } catch (e) {
+        // Continue
+      }
+    }
+    return [];
   }
 
   // Fix the getCategoryPlaylists method
@@ -333,5 +347,31 @@ class PlaylistServiceImpl extends PlaylistService {
 
     // Limit the results
     return allPlaylists.take(limit).toList();
+  }
+
+  @override
+  Future<bool> toggleFavorite(String trackId) async {
+    for (final service in platformServices) {
+      try {
+        final success = await service.toggleFavorite(trackId);
+        if (success) return true;
+      } catch (e) {
+        // Continue
+      }
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> isFavorite(String trackId) async {
+    for (final service in platformServices) {
+      try {
+        final favorite = await service.isFavorite(trackId);
+        if (favorite) return true;
+      } catch (e) {
+        // Continue
+      }
+    }
+    return false;
   }
 }

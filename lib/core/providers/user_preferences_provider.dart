@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
+import 'package:pyro_music/core/services/desktop_service.dart';
 
 part 'user_preferences_provider.freezed.dart';
 part 'user_preferences_provider.g.dart';
@@ -21,6 +23,10 @@ abstract class UserPreferencesState with _$UserPreferencesState {
     @Default(false) bool skipSilence,
     @Default(0) int crossfadeDuration,
     String? localeCode,
+    @Default(false) bool autoStart,
+    @Default(true) bool minimizeToTray,
+    @Default(true) bool mediaKeyControl,
+    @Default(true) bool systemNotifications,
   }) = _UserPreferencesState;
 
   const UserPreferencesState._();
@@ -50,6 +56,10 @@ class UserPreferences extends _$UserPreferences {
     final skipSilence = prefs.getBool('skipSilence') ?? false;
     final crossfadeDuration = prefs.getInt('crossfadeDuration') ?? 0;
     final localeCode = prefs.getString('locale');
+    final autoStart = prefs.getBool('autoStart') ?? false;
+    final minimizeToTray = prefs.getBool('minimizeToTray') ?? true;
+    final mediaKeyControl = prefs.getBool('mediaKeyControl') ?? true;
+    final systemNotifications = prefs.getBool('systemNotifications') ?? true;
 
     return UserPreferencesState(
       themeMode: ThemeMode.values[themeModeIndex],
@@ -63,6 +73,10 @@ class UserPreferences extends _$UserPreferences {
       skipSilence: skipSilence,
       crossfadeDuration: crossfadeDuration,
       localeCode: localeCode,
+      autoStart: autoStart,
+      minimizeToTray: minimizeToTray,
+      mediaKeyControl: mediaKeyControl,
+      systemNotifications: systemNotifications,
     );
   }
 
@@ -95,6 +109,43 @@ class UserPreferences extends _$UserPreferences {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt('accentColor', color.toARGB32());
       return state.requireValue.copyWith(accentColorValue: color.toARGB32());
+    });
+  }
+
+  Future<void> setAutoStart(bool value) async {
+    state = await AsyncValue.guard(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('autoStart', value);
+      
+      // Sync with DesktopService
+      final desktopService = ServiceRegistry().getService<DesktopService>('desktop_service');
+      await desktopService?.setAutoStart(value);
+      
+      return state.requireValue.copyWith(autoStart: value);
+    });
+  }
+
+  Future<void> setMinimizeToTray(bool value) async {
+    state = await AsyncValue.guard(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('minimizeToTray', value);
+      return state.requireValue.copyWith(minimizeToTray: value);
+    });
+  }
+
+  Future<void> setMediaKeyControl(bool value) async {
+    state = await AsyncValue.guard(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('mediaKeyControl', value);
+      return state.requireValue.copyWith(mediaKeyControl: value);
+    });
+  }
+
+  Future<void> setSystemNotifications(bool value) async {
+    state = await AsyncValue.guard(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('systemNotifications', value);
+      return state.requireValue.copyWith(systemNotifications: value);
     });
   }
 
@@ -146,15 +197,15 @@ class UserPreferences extends _$UserPreferences {
     });
   }
 
-  Future<void> setLocale(String? value) async {
+  Future<void> setLocale(String? localeCode) async {
     state = await AsyncValue.guard(() async {
       final prefs = await SharedPreferences.getInstance();
-      if (value != null) {
-        await prefs.setString('locale', value);
-      } else {
+      if (localeCode == null) {
         await prefs.remove('locale');
+      } else {
+        await prefs.setString('locale', localeCode);
       }
-      return state.requireValue.copyWith(localeCode: value);
+      return state.requireValue.copyWith(localeCode: localeCode);
     });
   }
 }

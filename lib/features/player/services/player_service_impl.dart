@@ -1,14 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:isar_community/isar.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-
 import 'package:pyro_music/core/base/services/base_service.dart';
 import 'package:pyro_music/core/base/services/player_service.dart';
 import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
 import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
+import 'package:pyro_music/core/services/desktop_service.dart';
+import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
 
 /// 播放器服务实现 - 整合多平台播放功能
 ///
@@ -41,8 +44,51 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
         _activePlayerService = service;
         _playback.setSource(service.playback);
         debugPrint('已设置活跃播放器服务: $platformId');
+        
+        // Listen to playback changes to update DesktopService
+        _setupDesktopIntegration();
       }
     }
+  }
+
+  void _setupDesktopIntegration() {
+    final desktopService = _serviceRegistry.getService<DesktopService>('desktop_service');
+    if (desktopService == null) return;
+
+    _playback.playbackStateStream.listen((state) {
+      desktopService.updatePlaybackState(state == PlaybackState.playing);
+      desktopService.setTaskbarStatus(state == PlaybackState.playing);
+    });
+
+    _playback.positionStream.listen((pos) {
+      if (_playback.duration.inMilliseconds > 0) {
+        desktopService.updateTaskbarProgress(
+          pos.inMilliseconds / _playback.duration.inMilliseconds,
+        );
+      }
+    });
+
+    _playback.currentTrackStream.listen((trackId) async {
+      if (trackId == null) return;
+      
+      final isar = GetIt.instance<Isar>();
+      final track = await isar.trackEntitys.filter().trackIdEqualTo(trackId).findFirst();
+      if (track != null) {
+        desktopService.updateMetadata(
+          track.name,
+          track.artistNames?.join(', ') ?? 'Unknown Artist',
+          album: track.albumName,
+          imageUrl: track.imageUrl,
+        );
+        
+        // Also show notification if needed
+        await desktopService.showNotification(
+          track.name,
+          track.artistNames?.join(', ') ?? 'Unknown Artist',
+          imagePath: track.imageUrl,
+        );
+      }
+    });
   }
 
   @override
@@ -303,6 +349,13 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
   }
 
   @override
+  Future<void> addTracksNext(List<String> trackIds) async {
+    if (_activePlayerService != null) {
+      await _activePlayerService!.addTracksNext(trackIds);
+    }
+  }
+
+  @override
   Future<void> removeTrack(String trackId) async {
     if (_activePlayerService != null) {
       await _activePlayerService!.removeTrack(trackId);
@@ -421,6 +474,9 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
   /// 当前随机播放模式
   bool _shuffleMode = false;
 
+  /// 当前总时长
+  Duration _duration = Duration.zero;
+
   /// 当前订阅
   final List<StreamSubscription> _subscriptions = [];
 
@@ -435,7 +491,10 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
     // 订阅新数据源
     _subscriptions.add(source.positionStream.listen((p) => _positionController.add(p)));
     _subscriptions.add(source.bufferedPositionStream.listen((p) => _bufferedPositionController.add(p)));
-    _subscriptions.add(source.durationStream.listen((p) => _durationController.add(p)));
+    _subscriptions.add(source.durationStream.listen((p) {
+      _duration = p;
+      _durationController.add(p);
+    }));
     _subscriptions.add(source.playbackStateStream.listen((s) {
       _currentState = s;
       _playbackStateController.add(s);
@@ -459,6 +518,7 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
     _volume = source.volume;
     _repeatMode = source.repeatMode;
     _shuffleMode = source.shuffleMode;
+    _duration = source.duration;
   }
 
   @override
@@ -498,6 +558,9 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
 
   @override
   bool get shuffleMode => _shuffleMode;
+
+  @override
+  Duration get duration => _duration;
 
   /// 更新播放位置
   void updatePosition(Duration position) {

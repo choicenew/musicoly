@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:pyro_music/core/base/services/audio_service.dart';
 import 'package:pyro_music/core/providers/user_preferences_provider.dart';
+import 'package:pyro_music/core/providers/sleep_timer_provider.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 class PlaybackSettings extends ConsumerStatefulWidget {
@@ -13,11 +14,40 @@ class PlaybackSettings extends ConsumerStatefulWidget {
 }
 
 class _PlaybackSettingsState extends ConsumerState<PlaybackSettings> {
+  void _showSleepTimerDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.sleep_timer),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text(l10n.off),
+              onTap: () {
+                ref.read(sleepTimerProvider.notifier).stop();
+                Navigator.pop(context);
+              },
+            ),
+            ...[15, 30, 45, 60, 90].map((mins) => ListTile(
+              title: Text(l10n.minutes(mins)),
+              onTap: () {
+                ref.read(sleepTimerProvider.notifier).start(Duration(minutes: mins));
+                Navigator.pop(context);
+              },
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final preferencesAsync = ref.watch(userPreferencesProvider);
     final audioService = provider.Provider.of<AudioService>(context, listen: false);
+    final remainingTime = ref.watch(sleepTimerProvider);
 
     return Card(
       child: Padding(
@@ -59,6 +89,14 @@ class _PlaybackSettingsState extends ConsumerState<PlaybackSettings> {
                     }
                   },
                 ),
+              ),
+              ListTile(
+                title: Text(l10n.sleep_timer),
+                subtitle: Text(remainingTime != null 
+                  ? '${l10n.sleep_timer_description} (${remainingTime.inMinutes}:${(remainingTime.inSeconds % 60).toString().padLeft(2, '0')})'
+                  : l10n.sleep_timer_description),
+                trailing: const Icon(Icons.timer),
+                onTap: () => _showSleepTimerDialog(context, l10n),
               ),
             ],
           ),

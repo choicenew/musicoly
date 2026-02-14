@@ -218,7 +218,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get all_tracks => '全部曲目';
 
   @override
-  String songs_count(num count) {
+  String songs_count(Object count) {
     return '$count 首歌曲';
   }
 
@@ -451,6 +451,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get language_settings => '语言设置';
 
   @override
+  String get timeZone => '时区';
+
+  @override
+  String get timeFormat => '时间格式';
+
+  @override
+  String get use24HourFormat => '使用24小时格式';
+
+  @override
   String get save => '保存';
 
   @override
@@ -637,6 +646,52 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get wait_for_download_to_finish =>
       'Please wait for the current download to finish';
+
+  @override
+  String get local_music => '本地音乐';
+
+  @override
+  String get recently_added => 'Recently Added';
+
+  @override
+  String get most_played => 'Most Played';
+
+  @override
+  String get shuffle_all => 'Shuffle All';
+
+  @override
+  String get play_all => '播放全部';
+
+  @override
+  String get scan_local_music => '扫描本地音乐';
+
+  @override
+  String get scanning => '正在扫描...';
+
+  @override
+  String get no_playlists => '未找到歌单';
+
+  @override
+  String track_count(num count) {
+    return '$count 首歌曲';
+  }
+
+  @override
+  String get edit_tags => 'Edit Tags';
+
+  @override
+  String get added_to_playlist => '已添加到歌单';
+
+  @override
+  String confirm_delete_tracks(Object count) {
+    return '确定要从曲库中移除这 $count 首歌曲吗？';
+  }
+
+  @override
+  String get home => '首页';
+
+  @override
+  String get favorites => 'Favorites';
 
   @override
   String get close_behavior => 'Close Behavior';
@@ -826,36 +881,134 @@ class AppLocalizationsZh extends AppLocalizations {
       'and Login/Signup if you are not logged in';
 
   @override
-  String get step_2 => 'Step 2';
+  String get export_logs => '导出日志';
 
   @override
-  String get step_2_steps =>
-      '1. Once you\'re logged in, press F12 or Mouse Right Click > Inspect to Open the Browser devtools.\n2. Then go the \"Application\" Tab (Chrome, Edge, Brave etc..) or \"Storage\" Tab (Firefox, Palemoon etc..)\n3. Go to the \"Cookies\" section then the \"https://accounts.spotify.com\" subsection';
+  String get export_logs_description => '导出应用日志文件';
 
   @override
-  String get step_3 => 'Step 3';
+  String get scan_completed => '扫描完成';
 
   @override
-  String get step_3_steps => 'Copy the value of \"sp_dc\" Cookie';
+  String get equalizer => '均衡器';
 
   @override
-  String get success_emoji => 'Success🥳';
+  String get enable_equalizer => '启用均衡器';
 
   @override
-  String get success_message =>
-      'Now you\'ve successfully Logged in with your Spotify account. Good Job, mate!';
+  String get sleep_timer => '睡眠定时器';
 
   @override
-  String get step_4 => 'Step 4';
+  String minutes(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 分钟',
+      one: '1 分钟',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get step_4_steps => 'Paste the copied \"sp_dc\" value';
+  String get sleep_timer_description => '设置定时停止播放音乐';
 
   @override
-  String get something_went_wrong => 'Something went wrong';
+  String get accounts => '账户';
 
   @override
-  String get developers_settings => '开发者设置';
+  String get backup_restore => '备份与恢复';
+
+  @override
+  String get developers_options => '开发者选项';
+
+  @override
+  String get cookie_management => 'Cookie管理';
+
+  @override
+  String by_author(Object author) {
+    return '作者: $author';
+  }
+
+  @override
+  String selected_count(Object count) {
+    return '已选择 $count 项';
+  }
+
+  @override
+  String get pause => '暂停';
+
+  @override
+  String get repeat => '重复播放';
+
+  @override
+  String get queue_is_empty => '队列为空';
+
+  @override
+  String get add_tracks_to_get_started => '添加一些歌曲以开始播放';
+
+  @override
+  String queue_count(Object count) {
+    return '$count 首歌曲';
+  }
+
+  @override
+  String get no_tracks => 'No tracks';
+
+  @override
+  String get removed_from_playlist => 'Removed from playlist';
+
+  @override
+  String import_success(Object count) {
+    return '导入成功';
+  }
+
+  @override
+  String import_failed(Object error) {
+    return '导入失败: $error';
+  }
+
+  @override
+  String export_success(Object path) {
+    return 'Successfully exported to $path';
+  }
+
+  @override
+  String export_failed(Object error) {
+    return '导出失败: $error';
+  }
+
+  @override
+  String get cookie_cleared => 'Cookie 已清除';
+
+  @override
+  String clear_failed(Object error) {
+    return '清除失败: $error';
+  }
+
+  @override
+  String get clear => '清理';
+
+  @override
+  String get cache_cleared => '缓存清理完成';
+
+  @override
+  String clearing_failed(Object error) {
+    return '清理失败: $error';
+  }
+
+  @override
+  String get api_endpoint_config => 'API端点配置';
+
+  @override
+  String get api_server_address => 'API服务器地址';
+
+  @override
+  String get no_logs_to_export => '没有可导出的日志';
+
+  @override
+  String logs_exported(Object path) {
+    return '日志导出成功';
+  }
 
   @override
   String get debug_mode => '调试模式';
@@ -870,16 +1023,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get verbose_logging_description => '记录更详细的应用日志';
 
   @override
-  String get api_endpoint_config => 'API端点配置';
-
-  @override
   String get use_default_server => '使用默认服务器';
 
   @override
   String get configure => '配置';
-
-  @override
-  String get api_server_address => 'API服务器地址';
 
   @override
   String get cache_management => '缓存管理';
@@ -888,896 +1035,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cache_management_description => '清理应用临时缓存数据';
 
   @override
-  String get clear => '清理';
-
-  @override
-  String get export_logs => '导出日志';
-
-  @override
-  String get export_logs_description => '导出应用日志文件';
-
-  @override
-  String get cache_cleared => '缓存清理完成';
-
-  @override
-  String clearing_failed(Object error) {
-    return '清理失败: $error';
+  String logged_in(Object name) {
+    return '已登录: $name';
   }
-
-  @override
-  String get no_logs_to_export => '没有可导出的日志';
-
-  @override
-  String get logs_exported => '日志导出成功';
-
-  @override
-  String export_failed(Object error) {
-    return '导出失败: $error';
-  }
-
-  @override
-  String get piped_instance => 'Piped Server Instance';
-
-  @override
-  String get piped_description =>
-      'The Piped server instance to use for track matching';
-
-  @override
-  String get piped_warning =>
-      'Some of them might not work well. So use at your own risk';
-
-  @override
-  String get invidious_instance => 'Invidious Server Instance';
-
-  @override
-  String get invidious_description =>
-      'The Invidious server instance to use for track matching';
-
-  @override
-  String get invidious_warning =>
-      'Some of them might not work well. So use at your own risk';
-
-  @override
-  String get generate_playlist => 'Generate Playlist';
-
-  @override
-  String track_exists(Object track) {
-    return 'Track $track already exists';
-  }
-
-  @override
-  String get replace_downloaded_tracks => 'Replace all downloaded tracks';
-
-  @override
-  String get skip_download_tracks => 'Skip downloading all downloaded tracks';
-
-  @override
-  String get do_you_want_to_replace =>
-      'Do you want to replace the existing track??';
-
-  @override
-  String get replace => 'Replace';
-
-  @override
-  String get skip => 'Skip';
-
-  @override
-  String select_up_to_count_type(Object count, Object type) {
-    return 'Select up to $count $type';
-  }
-
-  @override
-  String get select_genres => 'Select Genres';
-
-  @override
-  String get add_genres => 'Add Genres';
-
-  @override
-  String get country => 'Country';
-
-  @override
-  String get number_of_tracks_generate => 'Number of tracks to generate';
-
-  @override
-  String get acousticness => 'Acousticness';
-
-  @override
-  String get danceability => 'Danceability';
-
-  @override
-  String get energy => 'Energy';
-
-  @override
-  String get instrumentalness => 'Instrumentalness';
-
-  @override
-  String get liveness => 'Liveness';
-
-  @override
-  String get loudness => 'Loudness';
-
-  @override
-  String get speechiness => 'Speechiness';
-
-  @override
-  String get valence => 'Valence';
-
-  @override
-  String get popularity => 'Popularity';
-
-  @override
-  String get key => 'Key';
-
-  @override
-  String get duration => 'Duration (s)';
-
-  @override
-  String get tempo => 'Tempo (BPM)';
-
-  @override
-  String get mode => 'Mode';
-
-  @override
-  String get time_signature => 'Time Signature';
-
-  @override
-  String get short => 'Short';
-
-  @override
-  String get medium => 'Medium';
-
-  @override
-  String get long => 'Long';
-
-  @override
-  String get min => 'Min';
-
-  @override
-  String get max => 'Max';
-
-  @override
-  String get target => 'Target';
-
-  @override
-  String get moderate => 'Moderate';
-
-  @override
-  String get deselect_all => 'Deselect All';
-
-  @override
-  String get select_all => 'Select All';
-
-  @override
-  String get are_you_sure => 'Are you sure?';
-
-  @override
-  String get generating_playlist => 'Generating your custom playlist...';
-
-  @override
-  String selected_count_tracks(Object count) {
-    return 'Selected $count tracks';
-  }
-
-  @override
-  String get download_warning =>
-      'If you download all Tracks at bulk you\'re clearly pirating Music & causing damage to the creative society of Music. I hope you are aware of this. Always, try respecting & supporting Artist\'s hard work';
-
-  @override
-  String get download_ip_ban_warning =>
-      'BTW, your IP can get blocked on YouTube due excessive download requests than usual. IP block means you can\'t use YouTube (even if you\'re logged in) for at least 2-3 months from that IP device. And Pyro Music doesn\'t hold any responsibility if this ever happens';
-
-  @override
-  String get by_clicking_accept_terms =>
-      'By clicking \'accept\' you agree to following terms:';
-
-  @override
-  String get download_agreement_1 => 'I know I\'m pirating Music. I\'m bad';
-
-  @override
-  String get download_agreement_2 =>
-      'I\'ll support the Artist wherever I can and I\'m only doing this because I don\'t have money to buy their art';
-
-  @override
-  String get download_agreement_3 =>
-      'I\'m completely aware that my IP can get blocked on YouTube & I don\'t hold Pyro Music or his owners/contributors responsible for any accidents caused by my current action';
-
-  @override
-  String get decline => 'Decline';
-
-  @override
-  String get accept => 'Accept';
-
-  @override
-  String get details => 'Details';
-
-  @override
-  String get youtube => 'YouTube';
-
-  @override
-  String get channel => 'Channel';
-
-  @override
-  String get likes => 'Likes';
-
-  @override
-  String get dislikes => 'Dislikes';
-
-  @override
-  String get views => 'Views';
-
-  @override
-  String get streamUrl => 'Stream URL';
-
-  @override
-  String get stop => 'Stop';
-
-  @override
-  String get sort_newest => 'Sort by newest added';
-
-  @override
-  String get sort_oldest => 'Sort by oldest added';
-
-  @override
-  String get sleep_timer => 'Sleep Timer';
-
-  @override
-  String mins(Object minutes) {
-    return '$minutes Minutes';
-  }
-
-  @override
-  String hours(Object hours) {
-    return '$hours Hours';
-  }
-
-  @override
-  String hour(Object hours) {
-    return '$hours Hour';
-  }
-
-  @override
-  String get custom_hours => 'Custom Hours';
-
-  @override
-  String get logs => 'Logs';
-
-  @override
-  String get developers => 'Developers';
 
   @override
   String get not_logged_in => '未登录';
-
-  @override
-  String get search_mode => 'Search Mode';
-
-  @override
-  String get audio_source => 'Audio Source';
-
-  @override
-  String get ok => '确定';
-
-  @override
-  String get failed_to_encrypt => 'Failed to encrypt';
-
-  @override
-  String get encryption_failed_warning =>
-      'Pyro Music uses encryption to securely store your data. But failed to do so. So it\'ll fallback to insecure storage\nIf you\'re using linux, please make sure you\'ve any secret-service (gnome-keyring, kde-wallet, keepassxc etc) installed';
-
-  @override
-  String get querying_info => 'Querying info...';
-
-  @override
-  String get piped_api_down => 'Piped API is down';
-
-  @override
-  String piped_down_error_instructions(Object pipedInstance) {
-    return 'The Piped instance $pipedInstance is currently down\n\nEither change the instance or change the \'API type\' to official YouTube API\n\nMake sure to restart the app after change';
-  }
-
-  @override
-  String get you_are_offline => 'You are currently offline';
-
-  @override
-  String get connection_restored => 'Your internet connection was restored';
-
-  @override
-  String get use_system_title_bar => 'Use system title bar';
-
-  @override
-  String get crunching_results => 'Crunching results...';
-
-  @override
-  String get search_to_get_results => 'Search to get results';
-
-  @override
-  String get use_amoled_mode => 'Pitch black dark theme';
-
-  @override
-  String get pitch_dark_theme => 'AMOLED Mode';
-
-  @override
-  String get normalize_audio => 'Normalize audio';
-
-  @override
-  String get change_cover => 'Change cover';
-
-  @override
-  String get add_cover => 'Add cover';
-
-  @override
-  String get restore_defaults => 'Restore defaults';
-
-  @override
-  String get download_music_codec => 'Download music codec';
-
-  @override
-  String get streaming_music_codec => 'Streaming music codec';
-
-  @override
-  String get login_with_lastfm => 'Login with Last.fm';
-
-  @override
-  String get connect => 'Connect';
-
-  @override
-  String get disconnect_lastfm => 'Disconnect Last.fm';
-
-  @override
-  String get disconnect => 'Disconnect';
-
-  @override
-  String get username => 'Username';
-
-  @override
-  String get password => 'Password';
-
-  @override
-  String get login => 'Login';
-
-  @override
-  String get login_with_your_lastfm => 'Login with your Last.fm account';
-
-  @override
-  String get scrobble_to_lastfm => 'Scrobble to Last.fm';
-
-  @override
-  String get go_to_album => 'Go to Album';
-
-  @override
-  String get discord_rich_presence => 'Discord Rich Presence';
-
-  @override
-  String get browse_all => 'Browse All';
-
-  @override
-  String get genres => 'Genres';
-
-  @override
-  String get explore_genres => 'Explore Genres';
-
-  @override
-  String get friends => 'Friends';
-
-  @override
-  String get no_lyrics_available => 'Sorry, unable find lyrics for this track';
-
-  @override
-  String get start_a_radio => 'Start a Radio';
-
-  @override
-  String get how_to_start_radio => 'How do you want to start the radio?';
-
-  @override
-  String get replace_queue_question =>
-      'Do you want to replace the current queue or append to it?';
-
-  @override
-  String get endless_playback => 'Endless Playback';
-
-  @override
-  String get delete_playlist => 'Delete Playlist';
-
-  @override
-  String get delete_playlist_confirmation =>
-      'Are you sure you want to delete this playlist?';
-
-  @override
-  String get local_tracks => 'Local Tracks';
-
-  @override
-  String get local_tab => 'Local';
-
-  @override
-  String get song_link => 'Song Link';
-
-  @override
-  String get skip_this_nonsense => 'Skip this nonsense';
-
-  @override
-  String get freedom_of_music => '“Freedom of Music”';
-
-  @override
-  String get freedom_of_music_palm =>
-      '“Freedom of Music in the palm of your hand”';
-
-  @override
-  String get get_started => 'Let\'s get started';
-
-  @override
-  String get youtube_source_description => 'Recommended and works best.';
-
-  @override
-  String get piped_source_description =>
-      'Feeling free? Same as YouTube but a lot free.';
-
-  @override
-  String get jiosaavn_source_description => 'Best for South Asian region.';
-
-  @override
-  String get invidious_source_description =>
-      'Similar to Piped but with higher availability.';
-
-  @override
-  String get soundcloud_source_description =>
-      'Stream and listen to music online.';
-
-  @override
-  String highest_quality(Object quality) {
-    return 'Highest Quality: $quality';
-  }
-
-  @override
-  String get select_audio_source => 'Select Audio Source';
-
-  @override
-  String get endless_playback_description =>
-      'Automatically append new songs\nto the end of the queue';
-
-  @override
-  String get choose_your_region => 'Choose your region';
-
-  @override
-  String get choose_your_region_description =>
-      'This will help Pyro Music show you the right content\nfor your location.';
-
-  @override
-  String get choose_your_language => 'Choose your language';
-
-  @override
-  String get help_project_grow => 'Help this project grow';
-
-  @override
-  String get help_project_grow_description =>
-      'Pyro Music is an open-source project. You can help this project grow by contributing to the project, reporting bugs, or suggesting new features.';
-
-  @override
-  String get contribute_on_github => 'Contribute on GitHub';
-
-  @override
-  String get donate_on_open_collective => 'Donate on Open Collective';
-
-  @override
-  String get browse_anonymously => 'Browse Anonymously';
-
-  @override
-  String get enable_connect => 'Enable Connect';
-
-  @override
-  String get enable_connect_description =>
-      'Control Pyro Music from other devices';
-
-  @override
-  String get devices => 'Devices';
-
-  @override
-  String get select => 'Select';
-
-  @override
-  String connect_client_alert(Object client) {
-    return 'You\'re being controlled by $client';
-  }
-
-  @override
-  String get this_device => 'This Device';
-
-  @override
-  String get remote => 'Remote';
-
-  @override
-  String get stats => 'Stats';
-
-  @override
-  String and_n_more(Object count) {
-    return 'and $count more';
-  }
-
-  @override
-  String get recently_played => 'Recently Played';
-
-  @override
-  String get browse_more => 'Browse More';
-
-  @override
-  String get no_title => 'No Title';
-
-  @override
-  String get not_playing => 'Not playing';
-
-  @override
-  String get epic_failure => 'Epic failure!';
-
-  @override
-  String added_num_tracks_to_queue(Object tracks_length) {
-    return 'Added $tracks_length tracks to queue';
-  }
-
-  @override
-  String get pyro_music_has_an_update => 'Pyro Music has an update';
-
-  @override
-  String get download_now => 'Download Now';
-
-  @override
-  String nightly_version(Object nightlyBuildNum) {
-    return 'Pyro Music Nightly $nightlyBuildNum has been released';
-  }
-
-  @override
-  String release_version(Object version) {
-    return 'Pyro Music v$version has been released';
-  }
-
-  @override
-  String get read_the_latest => 'Read the latest ';
-
-  @override
-  String get release_notes => 'release notes';
-
-  @override
-  String get pick_color_scheme => 'Pick color scheme';
-
-  @override
-  String get choose_the_device => 'Choose the device:';
-
-  @override
-  String get multiple_device_connected =>
-      'There are multiple device connected.\nChoose the device you want this action to take place';
-
-  @override
-  String get nothing_found => 'Nothing found';
-
-  @override
-  String get the_box_is_empty => 'The box is empty';
-
-  @override
-  String get top_artists => 'Top Artists';
-
-  @override
-  String get top_albums => 'Top Albums';
-
-  @override
-  String get this_week => 'This week';
-
-  @override
-  String get this_month => 'This month';
-
-  @override
-  String get last_6_months => 'Last 6 months';
-
-  @override
-  String get this_year => 'This year';
-
-  @override
-  String get last_2_years => 'Last 2 years';
-
-  @override
-  String get all_time => 'All time';
-
-  @override
-  String powered_by_provider(Object providerName) {
-    return 'Powered by $providerName';
-  }
-
-  @override
-  String get email => 'Email';
-
-  @override
-  String get profile_followers => 'Followers';
-
-  @override
-  String get birthday => 'Birthday';
-
-  @override
-  String get subscription => 'Subscription';
-
-  @override
-  String get not_born => 'Not born';
-
-  @override
-  String get hacker => 'Hacker';
-
-  @override
-  String get profile => 'Profile';
-
-  @override
-  String get no_name => 'No Name';
-
-  @override
-  String get edit => 'Edit';
-
-  @override
-  String get user_profile => 'User Profile';
-
-  @override
-  String count_plays(Object count) {
-    return '$count plays';
-  }
-
-  @override
-  String get streaming_fees_hypothetical => 'Streaming fees (hypothetical)';
-
-  @override
-  String get minutes_listened => 'Minutes listened';
-
-  @override
-  String get streamed_songs => '已播歌曲';
-
-  @override
-  String count_streams(Object count) {
-    return '$count streams';
-  }
-
-  @override
-  String get owned_by_you => 'Owned by you';
-
-  @override
-  String copied_shareurl_to_clipboard(Object shareUrl) {
-    return 'Copied $shareUrl to clipboard';
-  }
-
-  @override
-  String get spotify_hipotetical_calculation =>
-      '*This is calculated based on Spotify\'s per stream\npayout of \$0.003 to \$0.005. This is a hypothetical\ncalculation to give user insight about how much they\nwould have paid to the artists if they were to listen\ntheir song in Spotify.';
-
-  @override
-  String count_mins(Object minutes) {
-    return '$minutes mins';
-  }
-
-  @override
-  String get summary_minutes => 'minutes';
-
-  @override
-  String get summary_listened_to_music => 'Listened to music';
-
-  @override
-  String get summary_songs => 'songs';
-
-  @override
-  String get summary_streamed_overall => 'Streamed overall';
-
-  @override
-  String get summary_owed_to_artists => 'Owed to artists\nthis month';
-
-  @override
-  String get summary_artists => 'artist\'s';
-
-  @override
-  String get summary_music_reached_you => 'Music reached you';
-
-  @override
-  String get summary_full_albums => 'full albums';
-
-  @override
-  String get summary_got_your_love => 'Got your love';
-
-  @override
-  String get summary_playlists => 'playlists';
-
-  @override
-  String get summary_were_on_repeat => 'Were on repeat';
-
-  @override
-  String total_money(Object money) {
-    return 'Total $money';
-  }
-
-  @override
-  String get webview_not_found => 'Webview not found';
-
-  @override
-  String get webview_not_found_description =>
-      'No webview runtime is installed in your device.\nIf it\'s installed make sure it\'s in the Environment PATH\n\nAfter installing, restart the app';
-
-  @override
-  String get unsupported_platform => 'Unsupported platform';
-
-  @override
-  String get cache_music => 'Cache music';
-
-  @override
-  String get open => 'Open';
-
-  @override
-  String get cache_folder => 'Cache folder';
-
-  @override
-  String get open_cache_folder => 'Open Cache folder';
-
-  @override
-  String get clear_cache => 'Clear cache';
-
-  @override
-  String get clear_cache_confirmation => 'Do you want to clear the cache?';
-
-  @override
-  String get export_cache_files => 'Export Cached Files';
-
-  @override
-  String found_n_files(Object count) {
-    return 'Found $count files';
-  }
-
-  @override
-  String get export_cache_confirmation =>
-      'Do you want to export these files to';
-
-  @override
-  String exported_n_out_of_m_files(Object files, Object filesExported) {
-    return 'Exported $filesExported out of $files files';
-  }
-
-  @override
-  String get undo => 'Undo';
-
-  @override
-  String get download_all => 'Download all';
-
-  @override
-  String get add_all_to_playlist => 'Add all to playlist';
-
-  @override
-  String get add_all_to_queue => 'Add all to queue';
-
-  @override
-  String get play_all_next => 'Play all next';
-
-  @override
-  String get pause => '暂停';
-
-  @override
-  String get view_all => 'View all';
-
-  @override
-  String get no_tracks_added_yet =>
-      'Looks like you haven\'t added any tracks yet';
-
-  @override
-  String get no_tracks => 'Looks like there are no tracks here';
-
-  @override
-  String get no_tracks_listened_yet =>
-      'Looks like you haven\'t listened to anything yet';
-
-  @override
-  String get not_following_artists => 'You\'re not following any artists';
-
-  @override
-  String get no_favorite_albums_yet =>
-      'Looks like you haven\'t added any albums to your favorites yet';
-
-  @override
-  String get no_logs_found => 'No logs found';
-
-  @override
-  String get youtube_engine => 'YouTube Engine';
-
-  @override
-  String youtube_engine_not_installed_title(Object engine) {
-    return '$engine is not installed';
-  }
-
-  @override
-  String youtube_engine_not_installed_message(Object engine) {
-    return '$engine is not installed in your system.';
-  }
-
-  @override
-  String youtube_engine_set_path(Object engine) {
-    return 'Make sure it\'s available in the PATH variable or\nset the absolute path to the $engine executable below';
-  }
-
-  @override
-  String get youtube_engine_unix_issue_message =>
-      'In macOS/Linux/unix like OS\'s, setting path on .zshrc/.bashrc/.bash_profile etc. won\'t work.\nYou need to set the path in the shell configuration file';
-
-  @override
-  String get download => 'Download';
-
-  @override
-  String get file_not_found => 'File not found';
-
-  @override
-  String get custom => 'Custom';
-
-  @override
-  String get add_custom_url => 'Add custom URL';
-
-  @override
-  String get remove => '移除';
-
-  @override
-  String get clear_queue => 'Clear Queue';
-
-  @override
-  String get generate => 'Generate';
-
-  @override
-  String get timeZone => '时区';
-
-  @override
-  String get timeFormat => '时间格式';
-
-  @override
-  String get use24HourFormat => '使用24小时格式';
-
-  @override
-  String get chinese => '中文';
-
-  @override
-  String get english => '英文';
-
-  @override
-  String get japanese => '日文';
-
-  @override
-  String get cookie_import_success => 'Cookie 导入成功';
-
-  @override
-  String import_failed(Object error) {
-    return '导入失败: $error';
-  }
-
-  @override
-  String get cookie_export_success => 'Cookie 导出成功';
-
-  @override
-  String get cookie_cleared => 'Cookie 已清除';
-
-  @override
-  String clear_failed(Object error) {
-    return '清除失败: $error';
-  }
-
-  @override
-  String get audio_quality_description => 'Select audio playback quality';
-
-  @override
-  String get accounts => '账户';
-
-  @override
-  String get developers_options => '开发者选项';
-
-  @override
-  String get cookie_management => 'Cookie管理';
-
-  @override
-  String get account_management => '账户管理';
-
-  @override
-  String logged_out(Object platform) {
-    return '$platform 已登出';
-  }
-
-  @override
-  String logout_failed(Object error) {
-    return '登出失败: $error';
-  }
-
-  @override
-  String logged_in(Object user) {
-    return '已登录: $user';
-  }
 
   @override
   String get choose_theme_mode => '选择应用的主题模式';
@@ -1801,13 +1064,105 @@ class AppLocalizationsZh extends AppLocalizations {
   String get choose_accent_color => '选择应用的强调色方案';
 
   @override
+  String get export_backup => '导出备份';
+
+  @override
+  String get backup_description => '将您的曲库和歌单导出到文件';
+
+  @override
+  String get backup_success => '备份导出成功';
+
+  @override
+  String backup_failed(Object error) {
+    return '备份失败: $error';
+  }
+
+  @override
+  String get import_backup => '导入备份';
+
+  @override
+  String get restore_description => '从文件导入您的曲库和歌单';
+
+  @override
+  String get restore_success => '备份导入成功';
+
+  @override
+  String restore_failed(Object error) {
+    return '恢复失败: $error';
+  }
+
+  @override
+  String get cookie_import_success => 'Cookie 导入成功';
+
+  @override
+  String get cookie_export_success => 'Cookie 导出成功';
+
+  @override
+  String get text_size => 'Text Size';
+
+  @override
+  String get line_spacing => '行间距';
+
+  @override
+  String get ok => '确定';
+
+  @override
+  String get playlist_not_found => '未找到歌单';
+
+  @override
+  String get something_went_wrong => 'Something went wrong';
+
+  @override
+  String get edit_playlist => 'Edit Playlist';
+
+  @override
+  String get delete_playlist => 'Delete Playlist';
+
+  @override
+  String delete_playlist_confirm(Object name) {
+    return 'Are you sure you want to delete the playlist \'$name\'?';
+  }
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get search_for_music => '搜索音乐';
+
+  @override
+  String get search_hint => '查找你喜欢的歌曲、艺人、专辑和歌单';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String no_results_found(Object query) {
+    return '未找到 \"$query\" 的结果';
+  }
+
+  @override
+  String logged_out(Object platform) {
+    return '$platform 已登出';
+  }
+
+  @override
+  String logout_failed(Object error) {
+    return '登出失败: $error';
+  }
+
+  @override
+  String get account_management => '账户管理';
+
+  @override
+  String logged_in_on(Object name, Object platform) {
+    return 'Logged in as $name on $platform';
+  }
+
+  @override
   String get paste_lrc_here => '粘贴LRC格式歌词...';
 
   @override
   String get lyrics_content_cannot_be_empty => '歌词内容不能为空';
-
-  @override
-  String get import_success => '导入成功';
 
   @override
   String get input_search_keywords => '输入搜索关键词...';
@@ -1837,130 +1192,37 @@ class AppLocalizationsZh extends AppLocalizations {
   String get font_size => '字体大小';
 
   @override
-  String get line_spacing => '行间距';
+  String get username => 'Username';
 
   @override
-  String cookie_import_failed(Object error) {
-    return 'Cookie import failed: $error';
-  }
+  String get password => 'Password';
 
   @override
-  String cookie_export_failed(Object error) {
-    return 'Cookie export failed: $error';
-  }
+  String get login => 'Login';
 
   @override
-  String get home => '首页';
+  String get recently_played => 'Recently Played';
 
   @override
-  String get good_morning => '早上好';
+  String get lyrics_imported_successfully => 'Lyrics imported successfully';
 
   @override
-  String get good_afternoon => '下午好';
-
-  @override
-  String get good_evening => '晚上好';
-
-  @override
-  String welcome_back(Object username) {
-    return '欢迎回来, $username';
-  }
-
-  @override
-  String get search_for_music => '搜索音乐';
-
-  @override
-  String get search_hint => '查找你喜欢的歌曲、艺人、专辑和歌单';
-
-  @override
-  String get all => '全部';
-
-  @override
-  String get featured_playlists => '推荐歌单';
-
-  @override
-  String get see_all => '查看全部';
-
-  @override
-  String get loading_playlists => '正在加载歌单...';
-
-  @override
-  String get no_featured_playlists => '暂无推荐歌单';
+  String get failed_to_import_lyrics => 'Failed to import lyrics';
 
   @override
   String get recent_tracks => '最近播放';
 
   @override
-  String get loading_tracks => '正在加载歌曲...';
+  String get see_all => '查看全部';
 
   @override
   String get no_recent_tracks => '暂无最近播放记录';
 
   @override
-  String get recommended_artists => '推荐艺人';
-
-  @override
-  String get loading_artists => '正在加载艺人...';
-
-  @override
-  String get no_recommended_artists => '暂无推荐艺人';
-
-  @override
   String get start_listening_hint => '开始听歌以在此处查看历史记录';
 
   @override
-  String no_results_found(Object query) {
-    return '未找到 \"$query\" 的结果';
-  }
-
-  @override
-  String search_failed(Object error) {
-    return '搜索失败: $error';
-  }
-
-  @override
-  String by_author(Object author) {
-    return '作者: $author';
-  }
-
-  @override
-  String get queue_is_empty => '队列为空';
-
-  @override
-  String get add_tracks_to_get_started => '添加一些歌曲以开始播放';
-
-  @override
-  String queue_count(Object count) {
-    return '$count 首歌曲';
-  }
-
-  @override
-  String get playlist => '歌单';
-
-  @override
-  String get loading_playlist => '正在加载歌单...';
-
-  @override
-  String get playlist_not_found => '未找到歌单';
-
-  @override
-  String tracks_count(Object count) {
-    return '$count 首歌曲';
-  }
-
-  @override
-  String duration_total(Object duration) {
-    return '总时长: $duration';
-  }
-
-  @override
-  String get shuffle_play => '随机播放';
-
-  @override
-  String get play_all => '播放全部';
-
-  @override
-  String get repeat => '重复播放';
+  String get login_with_lastfm => '使用 Last.fm 登录';
 
   @override
   String get go_back => '返回';
@@ -1972,4 +1234,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String followers_count(Object count) {
     return '$count 位关注者';
   }
+
+  @override
+  String get featured_playlists => '推荐歌单';
+
+  @override
+  String get no_featured_playlists => '暂无推荐歌单';
+
+  @override
+  String welcome_back(Object name) {
+    return '欢迎回来, $name';
+  }
+
+  @override
+  String get good_morning => '早上好';
+
+  @override
+  String get good_afternoon => '下午好';
+
+  @override
+  String get good_evening => '晚上好';
+
+  @override
+  String get recommended_artists => '推荐艺人';
+
+  @override
+  String get no_recommended_artists => '暂无推荐艺人';
 }

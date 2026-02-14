@@ -53,38 +53,63 @@ const TrackEntitySchema = CollectionSchema(
       name: r'isExplicit',
       type: IsarType.bool,
     ),
-    r'isPlayable': PropertySchema(
+    r'isFavorite': PropertySchema(
       id: 8,
+      name: r'isFavorite',
+      type: IsarType.bool,
+    ),
+    r'isPlayable': PropertySchema(
+      id: 9,
       name: r'isPlayable',
       type: IsarType.bool,
     ),
+    r'lastPlayedAt': PropertySchema(
+      id: 10,
+      name: r'lastPlayedAt',
+      type: IsarType.dateTime,
+    ),
     r'localPath': PropertySchema(
-      id: 9,
+      id: 11,
       name: r'localPath',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(id: 10, name: r'name', type: IsarType.string),
+    r'name': PropertySchema(id: 12, name: r'name', type: IsarType.string),
     r'platform': PropertySchema(
-      id: 11,
+      id: 13,
       name: r'platform',
       type: IsarType.string,
     ),
     r'platformMetadata': PropertySchema(
-      id: 12,
+      id: 14,
       name: r'platformMetadata',
       type: IsarType.string,
     ),
+    r'playCount': PropertySchema(
+      id: 15,
+      name: r'playCount',
+      type: IsarType.long,
+    ),
     r'popularity': PropertySchema(
-      id: 13,
+      id: 16,
       name: r'popularity',
       type: IsarType.long,
     ),
     r'previewUrl': PropertySchema(
-      id: 14,
+      id: 17,
       name: r'previewUrl',
       type: IsarType.string,
     ),
-    r'trackId': PropertySchema(id: 15, name: r'trackId', type: IsarType.string),
+    r'skipCount': PropertySchema(
+      id: 18,
+      name: r'skipCount',
+      type: IsarType.long,
+    ),
+    r'totalPlayDuration': PropertySchema(
+      id: 19,
+      name: r'totalPlayDuration',
+      type: IsarType.long,
+    ),
+    r'trackId': PropertySchema(id: 20, name: r'trackId', type: IsarType.string),
   },
 
   estimateSize: _trackEntityEstimateSize,
@@ -119,6 +144,19 @@ const TrackEntitySchema = CollectionSchema(
         ),
       ],
     ),
+    r'isFavorite': IndexSchema(
+      id: 5742774614603939776,
+      name: r'isFavorite',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'isFavorite',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
     r'createdAt': IndexSchema(
       id: -3433535483987302584,
       name: r'createdAt',
@@ -127,6 +165,58 @@ const TrackEntitySchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'createdAt',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+    r'lastPlayedAt': IndexSchema(
+      id: 1709968845012040220,
+      name: r'lastPlayedAt',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'lastPlayedAt',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+    r'playCount': IndexSchema(
+      id: -4991726430503965029,
+      name: r'playCount',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'playCount',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+    r'skipCount': IndexSchema(
+      id: 7417595170318334754,
+      name: r'skipCount',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'skipCount',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+    r'totalPlayDuration': IndexSchema(
+      id: -4982408128143929151,
+      name: r'totalPlayDuration',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'totalPlayDuration',
           type: IndexType.value,
           caseSensitive: false,
         ),
@@ -228,14 +318,19 @@ void _trackEntitySerialize(
   writer.writeLong(offsets[5], object.durationMs);
   writer.writeString(offsets[6], object.imageUrl);
   writer.writeBool(offsets[7], object.isExplicit);
-  writer.writeBool(offsets[8], object.isPlayable);
-  writer.writeString(offsets[9], object.localPath);
-  writer.writeString(offsets[10], object.name);
-  writer.writeString(offsets[11], object.platform);
-  writer.writeString(offsets[12], object.platformMetadata);
-  writer.writeLong(offsets[13], object.popularity);
-  writer.writeString(offsets[14], object.previewUrl);
-  writer.writeString(offsets[15], object.trackId);
+  writer.writeBool(offsets[8], object.isFavorite);
+  writer.writeBool(offsets[9], object.isPlayable);
+  writer.writeDateTime(offsets[10], object.lastPlayedAt);
+  writer.writeString(offsets[11], object.localPath);
+  writer.writeString(offsets[12], object.name);
+  writer.writeString(offsets[13], object.platform);
+  writer.writeString(offsets[14], object.platformMetadata);
+  writer.writeLong(offsets[15], object.playCount);
+  writer.writeLong(offsets[16], object.popularity);
+  writer.writeString(offsets[17], object.previewUrl);
+  writer.writeLong(offsets[18], object.skipCount);
+  writer.writeLong(offsets[19], object.totalPlayDuration);
+  writer.writeString(offsets[20], object.trackId);
 }
 
 TrackEntity _trackEntityDeserialize(
@@ -254,14 +349,19 @@ TrackEntity _trackEntityDeserialize(
   object.id = id;
   object.imageUrl = reader.readStringOrNull(offsets[6]);
   object.isExplicit = reader.readBool(offsets[7]);
-  object.isPlayable = reader.readBool(offsets[8]);
-  object.localPath = reader.readStringOrNull(offsets[9]);
-  object.name = reader.readString(offsets[10]);
-  object.platform = reader.readString(offsets[11]);
-  object.platformMetadata = reader.readStringOrNull(offsets[12]);
-  object.popularity = reader.readLongOrNull(offsets[13]);
-  object.previewUrl = reader.readStringOrNull(offsets[14]);
-  object.trackId = reader.readString(offsets[15]);
+  object.isFavorite = reader.readBool(offsets[8]);
+  object.isPlayable = reader.readBool(offsets[9]);
+  object.lastPlayedAt = reader.readDateTimeOrNull(offsets[10]);
+  object.localPath = reader.readStringOrNull(offsets[11]);
+  object.name = reader.readString(offsets[12]);
+  object.platform = reader.readString(offsets[13]);
+  object.platformMetadata = reader.readStringOrNull(offsets[14]);
+  object.playCount = reader.readLong(offsets[15]);
+  object.popularity = reader.readLongOrNull(offsets[16]);
+  object.previewUrl = reader.readStringOrNull(offsets[17]);
+  object.skipCount = reader.readLong(offsets[18]);
+  object.totalPlayDuration = reader.readLong(offsets[19]);
+  object.trackId = reader.readString(offsets[20]);
   return object;
 }
 
@@ -291,18 +391,28 @@ P _trackEntityDeserializeProp<P>(
     case 8:
       return (reader.readBool(offset)) as P;
     case 9:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 10:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 11:
-      return (reader.readString(offset)) as P;
-    case 12:
       return (reader.readStringOrNull(offset)) as P;
+    case 12:
+      return (reader.readString(offset)) as P;
     case 13:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 14:
       return (reader.readStringOrNull(offset)) as P;
     case 15:
+      return (reader.readLong(offset)) as P;
+    case 16:
+      return (reader.readLongOrNull(offset)) as P;
+    case 17:
+      return (reader.readStringOrNull(offset)) as P;
+    case 18:
+      return (reader.readLong(offset)) as P;
+    case 19:
+      return (reader.readLong(offset)) as P;
+    case 20:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -349,10 +459,50 @@ extension TrackEntityQueryWhereSort
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anyIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'isFavorite'),
+      );
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anyCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'createdAt'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anyLastPlayedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'lastPlayedAt'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anyPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'playCount'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anySkipCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'skipCount'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhere> anyTotalPlayDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'totalPlayDuration'),
       );
     });
   }
@@ -729,6 +879,59 @@ extension TrackEntityQueryWhere
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> isFavoriteEqualTo(
+    bool isFavorite,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'isFavorite', value: [isFavorite]),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  isFavoriteNotEqualTo(bool isFavorite) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorite',
+                lower: [],
+                upper: [isFavorite],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorite',
+                lower: [isFavorite],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorite',
+                lower: [isFavorite],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'isFavorite',
+                lower: [],
+                upper: [isFavorite],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> createdAtEqualTo(
     DateTime createdAt,
   ) {
@@ -826,6 +1029,441 @@ extension TrackEntityQueryWhere
           lower: [lowerCreatedAt],
           includeLower: includeLower,
           upper: [upperCreatedAt],
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  lastPlayedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'lastPlayedAt', value: [null]),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  lastPlayedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'lastPlayedAt',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> lastPlayedAtEqualTo(
+    DateTime? lastPlayedAt,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'lastPlayedAt',
+          value: [lastPlayedAt],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  lastPlayedAtNotEqualTo(DateTime? lastPlayedAt) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'lastPlayedAt',
+                lower: [],
+                upper: [lastPlayedAt],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'lastPlayedAt',
+                lower: [lastPlayedAt],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'lastPlayedAt',
+                lower: [lastPlayedAt],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'lastPlayedAt',
+                lower: [],
+                upper: [lastPlayedAt],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  lastPlayedAtGreaterThan(DateTime? lastPlayedAt, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'lastPlayedAt',
+          lower: [lastPlayedAt],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  lastPlayedAtLessThan(DateTime? lastPlayedAt, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'lastPlayedAt',
+          lower: [],
+          upper: [lastPlayedAt],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> lastPlayedAtBetween(
+    DateTime? lowerLastPlayedAt,
+    DateTime? upperLastPlayedAt, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'lastPlayedAt',
+          lower: [lowerLastPlayedAt],
+          includeLower: includeLower,
+          upper: [upperLastPlayedAt],
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> playCountEqualTo(
+    int playCount,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'playCount', value: [playCount]),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> playCountNotEqualTo(
+    int playCount,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'playCount',
+                lower: [],
+                upper: [playCount],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'playCount',
+                lower: [playCount],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'playCount',
+                lower: [playCount],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'playCount',
+                lower: [],
+                upper: [playCount],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  playCountGreaterThan(int playCount, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'playCount',
+          lower: [playCount],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> playCountLessThan(
+    int playCount, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'playCount',
+          lower: [],
+          upper: [playCount],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> playCountBetween(
+    int lowerPlayCount,
+    int upperPlayCount, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'playCount',
+          lower: [lowerPlayCount],
+          includeLower: includeLower,
+          upper: [upperPlayCount],
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> skipCountEqualTo(
+    int skipCount,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'skipCount', value: [skipCount]),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> skipCountNotEqualTo(
+    int skipCount,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'skipCount',
+                lower: [],
+                upper: [skipCount],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'skipCount',
+                lower: [skipCount],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'skipCount',
+                lower: [skipCount],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'skipCount',
+                lower: [],
+                upper: [skipCount],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  skipCountGreaterThan(int skipCount, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'skipCount',
+          lower: [skipCount],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> skipCountLessThan(
+    int skipCount, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'skipCount',
+          lower: [],
+          upper: [skipCount],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause> skipCountBetween(
+    int lowerSkipCount,
+    int upperSkipCount, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'skipCount',
+          lower: [lowerSkipCount],
+          includeLower: includeLower,
+          upper: [upperSkipCount],
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  totalPlayDurationEqualTo(int totalPlayDuration) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'totalPlayDuration',
+          value: [totalPlayDuration],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  totalPlayDurationNotEqualTo(int totalPlayDuration) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'totalPlayDuration',
+                lower: [],
+                upper: [totalPlayDuration],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'totalPlayDuration',
+                lower: [totalPlayDuration],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'totalPlayDuration',
+                lower: [totalPlayDuration],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'totalPlayDuration',
+                lower: [],
+                upper: [totalPlayDuration],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  totalPlayDurationGreaterThan(int totalPlayDuration, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'totalPlayDuration',
+          lower: [totalPlayDuration],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  totalPlayDurationLessThan(int totalPlayDuration, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'totalPlayDuration',
+          lower: [],
+          upper: [totalPlayDuration],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterWhereClause>
+  totalPlayDurationBetween(
+    int lowerTotalPlayDuration,
+    int upperTotalPlayDuration, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'totalPlayDuration',
+          lower: [lowerTotalPlayDuration],
+          includeLower: includeLower,
+          upper: [upperTotalPlayDuration],
           includeUpper: includeUpper,
         ),
       );
@@ -1924,10 +2562,92 @@ extension TrackEntityQueryFilter
   }
 
   QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  isFavoriteEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isFavorite', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
   isPlayableEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         FilterCondition.equalTo(property: r'isPlayable', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'lastPlayedAt'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'lastPlayedAt'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtEqualTo(DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'lastPlayedAt', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtGreaterThan(DateTime? value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'lastPlayedAt',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtLessThan(DateTime? value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'lastPlayedAt',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  lastPlayedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'lastPlayedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
       );
     });
   }
@@ -2542,6 +3262,61 @@ extension TrackEntityQueryFilter
   }
 
   QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  playCountEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'playCount', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  playCountGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'playCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  playCountLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'playCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  playCountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'playCount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
   popularityIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -2769,6 +3544,116 @@ extension TrackEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         FilterCondition.greaterThan(property: r'previewUrl', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  skipCountEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'skipCount', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  skipCountGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'skipCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  skipCountLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'skipCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  skipCountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'skipCount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  totalPlayDurationEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'totalPlayDuration', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  totalPlayDurationGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'totalPlayDuration',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  totalPlayDurationLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'totalPlayDuration',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  totalPlayDurationBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'totalPlayDuration',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
       );
     });
   }
@@ -3001,6 +3886,18 @@ extension TrackEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByIsPlayable() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPlayable', Sort.asc);
@@ -3010,6 +3907,19 @@ extension TrackEntityQuerySortBy
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByIsPlayableDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPlayable', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByLastPlayedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastPlayedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  sortByLastPlayedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastPlayedAt', Sort.desc);
     });
   }
 
@@ -3063,6 +3973,18 @@ extension TrackEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByPlayCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByPopularity() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'popularity', Sort.asc);
@@ -3084,6 +4006,32 @@ extension TrackEntityQuerySortBy
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByPreviewUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'previewUrl', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortBySkipCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skipCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortBySkipCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skipCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  sortByTotalPlayDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalPlayDuration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  sortByTotalPlayDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalPlayDuration', Sort.desc);
     });
   }
 
@@ -3186,6 +4134,18 @@ extension TrackEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByIsFavoriteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFavorite', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByIsPlayable() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPlayable', Sort.asc);
@@ -3195,6 +4155,19 @@ extension TrackEntityQuerySortThenBy
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByIsPlayableDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPlayable', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByLastPlayedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastPlayedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  thenByLastPlayedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastPlayedAt', Sort.desc);
     });
   }
 
@@ -3248,6 +4221,18 @@ extension TrackEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByPlayCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playCount', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByPopularity() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'popularity', Sort.asc);
@@ -3269,6 +4254,32 @@ extension TrackEntityQuerySortThenBy
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByPreviewUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'previewUrl', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenBySkipCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skipCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenBySkipCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'skipCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  thenByTotalPlayDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalPlayDuration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy>
+  thenByTotalPlayDurationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'totalPlayDuration', Sort.desc);
     });
   }
 
@@ -3341,9 +4352,21 @@ extension TrackEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByIsFavorite() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isFavorite');
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByIsPlayable() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isPlayable');
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByLastPlayedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastPlayedAt');
     });
   }
 
@@ -3382,6 +4405,12 @@ extension TrackEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByPlayCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'playCount');
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByPopularity() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'popularity');
@@ -3393,6 +4422,19 @@ extension TrackEntityQueryWhereDistinct
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'previewUrl', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctBySkipCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'skipCount');
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct>
+  distinctByTotalPlayDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'totalPlayDuration');
     });
   }
 
@@ -3463,9 +4505,22 @@ extension TrackEntityQueryProperty
     });
   }
 
+  QueryBuilder<TrackEntity, bool, QQueryOperations> isFavoriteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isFavorite');
+    });
+  }
+
   QueryBuilder<TrackEntity, bool, QQueryOperations> isPlayableProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isPlayable');
+    });
+  }
+
+  QueryBuilder<TrackEntity, DateTime?, QQueryOperations>
+  lastPlayedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastPlayedAt');
     });
   }
 
@@ -3494,6 +4549,12 @@ extension TrackEntityQueryProperty
     });
   }
 
+  QueryBuilder<TrackEntity, int, QQueryOperations> playCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'playCount');
+    });
+  }
+
   QueryBuilder<TrackEntity, int?, QQueryOperations> popularityProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'popularity');
@@ -3503,6 +4564,18 @@ extension TrackEntityQueryProperty
   QueryBuilder<TrackEntity, String?, QQueryOperations> previewUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'previewUrl');
+    });
+  }
+
+  QueryBuilder<TrackEntity, int, QQueryOperations> skipCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'skipCount');
+    });
+  }
+
+  QueryBuilder<TrackEntity, int, QQueryOperations> totalPlayDurationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'totalPlayDuration');
     });
   }
 

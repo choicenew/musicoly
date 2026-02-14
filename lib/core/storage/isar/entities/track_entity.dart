@@ -38,5 +38,20 @@ class TrackEntity {
   String? platformMetadata;
 
   @Index()
+  bool isFavorite = false;
+
+  @Index()
   DateTime createdAt = DateTime.now();
+
+  @Index()
+  DateTime? lastPlayedAt;
+
+  @Index()
+  int playCount = 0;
+
+  @Index()
+  int skipCount = 0;
+
+  @Index()
+  int totalPlayDuration = 0;
 }

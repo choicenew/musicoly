@@ -1,17 +1,23 @@
+import 'package:get_it/get_it.dart';
+import 'package:isar_community/isar.dart';
 import 'package:pyro_music/core/base/interfaces/media/artist_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/stats/artist_stats_interface.dart';
 import 'package:pyro_music/core/base/interfaces/stats/play_stats_interface.dart';
 import 'package:pyro_music/core/base/models/stats_model.dart';
+import 'package:pyro_music/core/base/models/track_model.dart';
 import 'package:pyro_music/core/base/services/base_service.dart';
 import 'package:pyro_music/core/base/services/stats_service.dart';
+import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
 
-/// 播放统计服务实现
+/// 播放统计服务实现 - 使用 Isar 持久化
 class PlayStatsServiceImpl extends BaseService implements StatsService {
   // 单例模式
   static final PlayStatsServiceImpl _instance = PlayStatsServiceImpl._();
   factory PlayStatsServiceImpl() => _instance;
   PlayStatsServiceImpl._();
+
+  late final Isar _isar;
 
   @override
   String get serviceId => 'play_stats_service';
@@ -23,132 +29,145 @@ class PlayStatsServiceImpl extends BaseService implements StatsService {
   String get serviceVersion => '1.0.0';
 
   @override
-  String? get platform => null; // 不依赖特定平台
+  String? get platform => null;
 
-  // 内存中存储播放统计数据
-  final Map<String, PlayStatsModel> _playStats = {};
-  final List<PlayStatsModel> _recentPlays = [];
+  @override
+  Future<void> initialize() async {
+    _isar = GetIt.instance<Isar>();
+  }
 
   @override
   Future<PlayStatsInterface> recordPlay(TrackInterface track,
       {int duration = 0, bool isComplete = false}) async {
-    final trackId = track.id;
     final now = DateTime.now();
+    
+    return await _isar.writeTxn(() async {
+      var entity = await _isar.trackEntitys
+          .filter()
+          .trackIdEqualTo(track.id)
+          .findFirst();
 
-    // 检查是否已有该曲目的统计
-    if (_playStats.containsKey(trackId)) {
-      final stats = _playStats[trackId]!;
+      if (entity == null) {
+        // 如果轨道不在库中，先创建一个（通常应该在库中）
+        entity = TrackEntity()
+          ..trackId = track.id
+          ..name = track.name
+          ..platform = track.platform
+          ..imageUrl = track.imageUrl
+          ..artistIds = track.artistIds
+          ..artistNames = track.artistNames
+          ..albumId = track.albumId
+          ..albumName = track.albumName
+          ..durationMs = track.durationMs
+          ..playCount = 1
+          ..lastPlayedAt = now
+          ..totalPlayDuration = duration
+          ..skipCount = isComplete ? 0 : 1;
+      } else {
+        entity.playCount++;
+        entity.lastPlayedAt = now;
+        entity.totalPlayDuration += duration;
+        if (!isComplete) {
+          entity.skipCount++;
+        }
+      }
 
-      // 更新统计数据
-      final updatedStats = PlayStatsModel(
-        id: stats.id,
-        track: track,
-        playCount: stats.playCount + 1,
-        firstPlayed: stats.firstPlayed,
-        lastPlayed: now,
-        playDuration: stats.playDuration + duration,
-        isCompletePlay: isComplete,
-        skipCount: !isComplete ? stats.skipCount + 1 : stats.skipCount,
-        platform: stats.platform,
-      );
-
-      _playStats[trackId] = updatedStats;
-
-      // 更新最近播放列表
-      _recentPlays.removeWhere((item) => item.track.id == trackId);
-      _recentPlays.insert(0, updatedStats);
-
-      return updatedStats;
-    } else {
-      // 创建新的统计数据
-      final newStats = PlayStatsModel(
-        id: 'play-stats-$trackId',
-        track: track,
-        playCount: 1,
-        firstPlayed: now,
-        lastPlayed: now,
-        playDuration: duration,
-        isCompletePlay: false,
-        skipCount: !isComplete ? 1 : 0,
-        platform: 'default',
-      );
-
-      _playStats[trackId] = newStats;
-      _recentPlays.insert(0, newStats);
-
-      return newStats;
-    }
+      await _isar.trackEntitys.put(entity);
+      return _entityToStats(entity, track);
+    });
   }
 
   @override
   Future<PlayStatsInterface?> getTrackStats(TrackInterface track) async {
-    return _playStats[track.id];
+    final entity = await _isar.trackEntitys
+        .filter()
+        .trackIdEqualTo(track.id)
+        .findFirst();
+    
+    if (entity == null) return null;
+    return _entityToStats(entity, track);
   }
 
   @override
   Future<List<PlayStatsInterface>> getRecentPlays(
       {int limit = 20, int offset = 0}) async {
-    final end = (offset + limit) > _recentPlays.length
-        ? _recentPlays.length
-        : offset + limit;
+    final entities = await _isar.trackEntitys
+        .where()
+        .lastPlayedAtIsNotNull()
+        .sortByLastPlayedAtDesc()
+        .offset(offset)
+        .limit(limit)
+        .findAll();
 
-    if (offset >= _recentPlays.length) return [];
-
-    return _recentPlays.sublist(offset, end);
+    return entities.map((e) => _entityToStats(e)).toList();
   }
 
   @override
   Future<List<PlayStatsInterface>> getTopTracks(
       {int limit = 20, int offset = 0}) async {
-    // 按播放次数排序
-    final sorted = _playStats.values.toList()
-      ..sort((a, b) => b.playCount.compareTo(a.playCount));
+    final entities = await _isar.trackEntitys
+        .where()
+        .sortByPlayCountDesc()
+        .offset(offset)
+        .limit(limit)
+        .findAll();
 
-    final end =
-        (offset + limit) > sorted.length ? sorted.length : offset + limit;
-
-    if (offset >= sorted.length) return [];
-
-    return sorted.sublist(offset, end);
+    return entities.map((e) => _entityToStats(e)).toList();
   }
 
   @override
   Future<int> getTotalPlayDuration() async {
-    // Use int for accumulation to avoid FutureOr<int> type error
-    final total = _playStats.values
-        .fold<int>(0, (sum, stats) => sum + stats.playDuration);
-    return total;
+    final entities = await _isar.trackEntitys.where().findAll();
+    return entities.fold<int>(0, (sum, e) => sum + e.totalPlayDuration);
   }
 
   @override
   Future<int> getTotalPlayCount() async {
-    // Use int for accumulation to avoid FutureOr<int> type error
-    final total =
-        _playStats.values.fold<int>(0, (sum, stats) => sum + stats.playCount);
-    return total;
+    final entities = await _isar.trackEntitys.where().findAll();
+    return entities.fold<int>(0, (sum, e) => sum + e.playCount);
+  }
+
+  PlayStatsInterface _entityToStats(TrackEntity entity, [TrackInterface? track]) {
+    final trackModel = track ?? TrackModel(
+      id: entity.trackId,
+      platform: entity.platform,
+      name: entity.name,
+      imageUrl: entity.imageUrl,
+      artistIds: entity.artistIds ?? [],
+      artistNames: entity.artistNames ?? [],
+      albumId: entity.albumId,
+      albumName: entity.albumName,
+      durationMs: entity.durationMs,
+      isPlayable: true,
+      localPath: entity.localPath,
+    );
+
+    return PlayStatsModel(
+      id: 'stats-${entity.trackId}',
+      track: trackModel,
+      playCount: entity.playCount,
+      firstPlayed: entity.createdAt,
+      lastPlayed: entity.lastPlayedAt ?? entity.createdAt,
+      playDuration: entity.totalPlayDuration,
+      isCompletePlay: true, // 简化处理
+      skipCount: entity.skipCount,
+      platform: entity.platform,
+    );
   }
 
   @override
   Future<ArtistStatsInterface?> getArtistStats(ArtistInterface artist) async {
-    // 委托给ArtistStatsServiceImpl处理
-    throw UnimplementedError('请使用ArtistStatsServiceImpl');
+    throw UnimplementedError('Artist stats not implemented in PlayStatsServiceImpl');
   }
 
   @override
   Future<List<ArtistStatsInterface>> getTopArtists(
       {int limit = 20, int offset = 0}) async {
-    // 委托给ArtistStatsServiceImpl处理
-    throw UnimplementedError('请使用ArtistStatsServiceImpl');
+    throw UnimplementedError('Artist stats not implemented in PlayStatsServiceImpl');
   }
 
   @override
-  Future<void> initialize() async {
-    // 初始化逻辑，例如从数据库加载数据
-    // 这里简化为空实现
-  }
-
-  @override
-  List<Type> getDependencies() => [];
+  List<Type> getDependencies() => [Isar];
 
   @override
   ServiceStatus getStatus() => ServiceStatus.available;
@@ -163,9 +182,5 @@ class PlayStatsServiceImpl extends BaseService implements StatsService {
   Future<bool> isAvailable() async => true;
 
   @override
-  Future<void> dispose() async {
-    // 清理资源
-    _playStats.clear();
-    _recentPlays.clear();
-  }
+  Future<void> dispose() async {}
 }

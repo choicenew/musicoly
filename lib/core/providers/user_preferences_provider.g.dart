@@ -33,7 +33,7 @@ final class UserPreferencesProvider
   UserPreferences create() => UserPreferences();
 }
 
-String _$userPreferencesHash() => r'6a79dea15ae3e9a2d1b1802ca71fe4c2b5465019';
+String _$userPreferencesHash() => r'894527a76e0badb318723531f37e24b5705b246d';
 
 abstract class _$UserPreferences extends $AsyncNotifier<UserPreferencesState> {
   FutureOr<UserPreferencesState> build();

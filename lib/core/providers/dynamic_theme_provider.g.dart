@@ -45,7 +45,7 @@ final class DynamicThemeNotifierProvider
 }
 
 String _$dynamicThemeNotifierHash() =>
-    r'53c3a39d3fb191f81f38193558df3523f5519955';
+    r'f136a06855d71930e20004fac8de92e4ccaa0a8f';
 
 /// 动态主题状态 - 存储从封面提取的颜色
 

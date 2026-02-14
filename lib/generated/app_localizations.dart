@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @fans_also_like.
   ///
   /// In en, this message translates to:
-  /// **'Fans Also Like'**
+  /// **'Fans also like'**
   String get fans_also_like;
 
   /// No description provided for @loading.
@@ -431,7 +431,7 @@ abstract class AppLocalizations {
   /// No description provided for @album_not_found_hint.
   ///
   /// In en, this message translates to:
-  /// **'The album you are looking for could not be found'**
+  /// **'The album you\'re looking for doesn\'t exist or has been removed.'**
   String get album_not_found_hint;
 
   /// No description provided for @artist_not_found.
@@ -503,8 +503,8 @@ abstract class AppLocalizations {
   /// No description provided for @songs_count.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 song} other{{count} songs}}'**
-  String songs_count(num count);
+  /// **'{count} songs'**
+  String songs_count(Object count);
 
   /// No description provided for @artist.
   ///
@@ -899,7 +899,7 @@ abstract class AppLocalizations {
   /// No description provided for @language_region.
   ///
   /// In en, this message translates to:
-  /// **'Language and Region'**
+  /// **'Language & Region'**
   String get language_region;
 
   /// No description provided for @language.
@@ -913,6 +913,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language Settings'**
   String get language_settings;
+
+  /// No description provided for @timeZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Time Zone'**
+  String get timeZone;
+
+  /// No description provided for @timeFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Time Format'**
+  String get timeFormat;
+
+  /// No description provided for @use24HourFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 24-hour Format'**
+  String get use24HourFormat;
 
   /// No description provided for @save.
   ///
@@ -1025,13 +1043,13 @@ abstract class AppLocalizations {
   /// No description provided for @sync_album_color.
   ///
   /// In en, this message translates to:
-  /// **'Sync Album Color'**
+  /// **'Sync album color'**
   String get sync_album_color;
 
   /// No description provided for @sync_album_color_description.
   ///
   /// In en, this message translates to:
-  /// **'Sync UI color based on album artwork'**
+  /// **'Uses the dominant color of the album art as the accent color'**
   String get sync_album_color_description;
 
   /// No description provided for @playback.
@@ -1091,7 +1109,7 @@ abstract class AppLocalizations {
   /// No description provided for @seconds.
   ///
   /// In en, this message translates to:
-  /// **'{count} seconds'**
+  /// **'{count} Seconds'**
   String seconds(Object count);
 
   /// No description provided for @download_path.
@@ -1187,7 +1205,7 @@ abstract class AppLocalizations {
   /// No description provided for @minimize_to_tray.
   ///
   /// In en, this message translates to:
-  /// **'Minimize to tray'**
+  /// **'Minimize to Tray'**
   String get minimize_to_tray;
 
   /// No description provided for @minimize_to_tray_description.
@@ -1279,6 +1297,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please wait for the current download to finish'**
   String get wait_for_download_to_finish;
+
+  /// No description provided for @local_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Local Music'**
+  String get local_music;
+
+  /// No description provided for @recently_added.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently Added'**
+  String get recently_added;
+
+  /// No description provided for @most_played.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Played'**
+  String get most_played;
+
+  /// No description provided for @shuffle_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuffle All'**
+  String get shuffle_all;
+
+  /// No description provided for @play_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Play All'**
+  String get play_all;
+
+  /// No description provided for @scan_local_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Local Music'**
+  String get scan_local_music;
+
+  /// No description provided for @scanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanning...'**
+  String get scanning;
+
+  /// No description provided for @no_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'No playlists found'**
+  String get no_playlists;
+
+  /// No description provided for @track_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No tracks} =1{1 track} other{{count} tracks}}'**
+  String track_count(num count);
+
+  /// No description provided for @edit_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Tags'**
+  String get edit_tags;
+
+  /// No description provided for @added_to_playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to playlist'**
+  String get added_to_playlist;
+
+  /// No description provided for @confirm_delete_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete {count} tracks from your library?'**
+  String confirm_delete_tracks(Object count);
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
 
   /// No description provided for @close_behavior.
   ///
@@ -1475,7 +1577,7 @@ abstract class AppLocalizations {
   /// No description provided for @bug_issues.
   ///
   /// In en, this message translates to:
-  /// **'Bug+Issues'**
+  /// **'Bug Issues'**
   String get bug_issues;
 
   /// No description provided for @license.
@@ -1487,7 +1589,7 @@ abstract class AppLocalizations {
   /// No description provided for @pyro_music_description.
   ///
   /// In en, this message translates to:
-  /// **'Pyro Music, a lightweight, cross-platform, free-for-all spotify client'**
+  /// **'An open source music player built with Flutter'**
   String get pyro_music_description;
 
   /// No description provided for @blacklist.
@@ -1628,132 +1730,6 @@ abstract class AppLocalizations {
   /// **'and Login/Signup if you are not logged in'**
   String get login_if_not_logged_in;
 
-  /// No description provided for @step_2.
-  ///
-  /// In en, this message translates to:
-  /// **'Step 2'**
-  String get step_2;
-
-  /// No description provided for @step_2_steps.
-  ///
-  /// In en, this message translates to:
-  /// **'1. Once you\'re logged in, press F12 or Mouse Right Click > Inspect to Open the Browser devtools.\n2. Then go the \"Application\" Tab (Chrome, Edge, Brave etc..) or \"Storage\" Tab (Firefox, Palemoon etc..)\n3. Go to the \"Cookies\" section then the \"https://accounts.spotify.com\" subsection'**
-  String get step_2_steps;
-
-  /// No description provided for @step_3.
-  ///
-  /// In en, this message translates to:
-  /// **'Step 3'**
-  String get step_3;
-
-  /// No description provided for @step_3_steps.
-  ///
-  /// In en, this message translates to:
-  /// **'Copy the value of \"sp_dc\" Cookie'**
-  String get step_3_steps;
-
-  /// No description provided for @success_emoji.
-  ///
-  /// In en, this message translates to:
-  /// **'Success🥳'**
-  String get success_emoji;
-
-  /// No description provided for @success_message.
-  ///
-  /// In en, this message translates to:
-  /// **'Now you\'ve successfully Logged in with your Spotify account. Good Job, mate!'**
-  String get success_message;
-
-  /// No description provided for @step_4.
-  ///
-  /// In en, this message translates to:
-  /// **'Step 4'**
-  String get step_4;
-
-  /// No description provided for @step_4_steps.
-  ///
-  /// In en, this message translates to:
-  /// **'Paste the copied \"sp_dc\" value'**
-  String get step_4_steps;
-
-  /// No description provided for @something_went_wrong.
-  ///
-  /// In en, this message translates to:
-  /// **'Something went wrong'**
-  String get something_went_wrong;
-
-  /// No description provided for @developers_settings.
-  ///
-  /// In en, this message translates to:
-  /// **'Developers Settings'**
-  String get developers_settings;
-
-  /// No description provided for @debug_mode.
-  ///
-  /// In en, this message translates to:
-  /// **'Debug Mode'**
-  String get debug_mode;
-
-  /// No description provided for @debug_mode_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable developer tools and verbose logging'**
-  String get debug_mode_description;
-
-  /// No description provided for @verbose_logging.
-  ///
-  /// In en, this message translates to:
-  /// **'Verbose Logging'**
-  String get verbose_logging;
-
-  /// No description provided for @verbose_logging_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Record more detailed application logs'**
-  String get verbose_logging_description;
-
-  /// No description provided for @api_endpoint_config.
-  ///
-  /// In en, this message translates to:
-  /// **'API Endpoint Configuration'**
-  String get api_endpoint_config;
-
-  /// No description provided for @use_default_server.
-  ///
-  /// In en, this message translates to:
-  /// **'Use default server'**
-  String get use_default_server;
-
-  /// No description provided for @configure.
-  ///
-  /// In en, this message translates to:
-  /// **'Configure'**
-  String get configure;
-
-  /// No description provided for @api_server_address.
-  ///
-  /// In en, this message translates to:
-  /// **'API Server Address'**
-  String get api_server_address;
-
-  /// No description provided for @cache_management.
-  ///
-  /// In en, this message translates to:
-  /// **'Cache Management'**
-  String get cache_management;
-
-  /// No description provided for @cache_management_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear application temporary cache data'**
-  String get cache_management_description;
-
-  /// No description provided for @clear.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear'**
-  String get clear;
-
   /// No description provided for @export_logs.
   ///
   /// In en, this message translates to:
@@ -1763,410 +1739,26 @@ abstract class AppLocalizations {
   /// No description provided for @export_logs_description.
   ///
   /// In en, this message translates to:
-  /// **'Export application log files'**
+  /// **'Export application logs for debugging'**
   String get export_logs_description;
 
-  /// No description provided for @cache_cleared.
+  /// No description provided for @scan_completed.
   ///
   /// In en, this message translates to:
-  /// **'Cache clearing completed'**
-  String get cache_cleared;
+  /// **'Scan Completed'**
+  String get scan_completed;
 
-  /// No description provided for @clearing_failed.
+  /// No description provided for @equalizer.
   ///
   /// In en, this message translates to:
-  /// **'Clearing failed: {error}'**
-  String clearing_failed(Object error);
+  /// **'Equalizer'**
+  String get equalizer;
 
-  /// No description provided for @no_logs_to_export.
+  /// No description provided for @enable_equalizer.
   ///
   /// In en, this message translates to:
-  /// **'No logs available to export'**
-  String get no_logs_to_export;
-
-  /// No description provided for @logs_exported.
-  ///
-  /// In en, this message translates to:
-  /// **'Logs exported successfully'**
-  String get logs_exported;
-
-  /// No description provided for @export_failed.
-  ///
-  /// In en, this message translates to:
-  /// **'Export failed: {error}'**
-  String export_failed(Object error);
-
-  /// No description provided for @piped_instance.
-  ///
-  /// In en, this message translates to:
-  /// **'Piped Server Instance'**
-  String get piped_instance;
-
-  /// No description provided for @piped_description.
-  ///
-  /// In en, this message translates to:
-  /// **'The Piped server instance to use for track matching'**
-  String get piped_description;
-
-  /// No description provided for @piped_warning.
-  ///
-  /// In en, this message translates to:
-  /// **'Some of them might not work well. So use at your own risk'**
-  String get piped_warning;
-
-  /// No description provided for @invidious_instance.
-  ///
-  /// In en, this message translates to:
-  /// **'Invidious Server Instance'**
-  String get invidious_instance;
-
-  /// No description provided for @invidious_description.
-  ///
-  /// In en, this message translates to:
-  /// **'The Invidious server instance to use for track matching'**
-  String get invidious_description;
-
-  /// No description provided for @invidious_warning.
-  ///
-  /// In en, this message translates to:
-  /// **'Some of them might not work well. So use at your own risk'**
-  String get invidious_warning;
-
-  /// No description provided for @generate_playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Generate Playlist'**
-  String get generate_playlist;
-
-  /// No description provided for @track_exists.
-  ///
-  /// In en, this message translates to:
-  /// **'Track {track} already exists'**
-  String track_exists(Object track);
-
-  /// No description provided for @replace_downloaded_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Replace all downloaded tracks'**
-  String get replace_downloaded_tracks;
-
-  /// No description provided for @skip_download_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip downloading all downloaded tracks'**
-  String get skip_download_tracks;
-
-  /// No description provided for @do_you_want_to_replace.
-  ///
-  /// In en, this message translates to:
-  /// **'Do you want to replace the existing track??'**
-  String get do_you_want_to_replace;
-
-  /// No description provided for @replace.
-  ///
-  /// In en, this message translates to:
-  /// **'Replace'**
-  String get replace;
-
-  /// No description provided for @skip.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip'**
-  String get skip;
-
-  /// No description provided for @select_up_to_count_type.
-  ///
-  /// In en, this message translates to:
-  /// **'Select up to {count} {type}'**
-  String select_up_to_count_type(Object count, Object type);
-
-  /// No description provided for @select_genres.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Genres'**
-  String get select_genres;
-
-  /// No description provided for @add_genres.
-  ///
-  /// In en, this message translates to:
-  /// **'Add Genres'**
-  String get add_genres;
-
-  /// No description provided for @country.
-  ///
-  /// In en, this message translates to:
-  /// **'Country'**
-  String get country;
-
-  /// No description provided for @number_of_tracks_generate.
-  ///
-  /// In en, this message translates to:
-  /// **'Number of tracks to generate'**
-  String get number_of_tracks_generate;
-
-  /// No description provided for @acousticness.
-  ///
-  /// In en, this message translates to:
-  /// **'Acousticness'**
-  String get acousticness;
-
-  /// No description provided for @danceability.
-  ///
-  /// In en, this message translates to:
-  /// **'Danceability'**
-  String get danceability;
-
-  /// No description provided for @energy.
-  ///
-  /// In en, this message translates to:
-  /// **'Energy'**
-  String get energy;
-
-  /// No description provided for @instrumentalness.
-  ///
-  /// In en, this message translates to:
-  /// **'Instrumentalness'**
-  String get instrumentalness;
-
-  /// No description provided for @liveness.
-  ///
-  /// In en, this message translates to:
-  /// **'Liveness'**
-  String get liveness;
-
-  /// No description provided for @loudness.
-  ///
-  /// In en, this message translates to:
-  /// **'Loudness'**
-  String get loudness;
-
-  /// No description provided for @speechiness.
-  ///
-  /// In en, this message translates to:
-  /// **'Speechiness'**
-  String get speechiness;
-
-  /// No description provided for @valence.
-  ///
-  /// In en, this message translates to:
-  /// **'Valence'**
-  String get valence;
-
-  /// No description provided for @popularity.
-  ///
-  /// In en, this message translates to:
-  /// **'Popularity'**
-  String get popularity;
-
-  /// No description provided for @key.
-  ///
-  /// In en, this message translates to:
-  /// **'Key'**
-  String get key;
-
-  /// No description provided for @duration.
-  ///
-  /// In en, this message translates to:
-  /// **'Duration (s)'**
-  String get duration;
-
-  /// No description provided for @tempo.
-  ///
-  /// In en, this message translates to:
-  /// **'Tempo (BPM)'**
-  String get tempo;
-
-  /// No description provided for @mode.
-  ///
-  /// In en, this message translates to:
-  /// **'Mode'**
-  String get mode;
-
-  /// No description provided for @time_signature.
-  ///
-  /// In en, this message translates to:
-  /// **'Time Signature'**
-  String get time_signature;
-
-  /// No description provided for @short.
-  ///
-  /// In en, this message translates to:
-  /// **'Short'**
-  String get short;
-
-  /// No description provided for @medium.
-  ///
-  /// In en, this message translates to:
-  /// **'Medium'**
-  String get medium;
-
-  /// No description provided for @long.
-  ///
-  /// In en, this message translates to:
-  /// **'Long'**
-  String get long;
-
-  /// No description provided for @min.
-  ///
-  /// In en, this message translates to:
-  /// **'Min'**
-  String get min;
-
-  /// No description provided for @max.
-  ///
-  /// In en, this message translates to:
-  /// **'Max'**
-  String get max;
-
-  /// No description provided for @target.
-  ///
-  /// In en, this message translates to:
-  /// **'Target'**
-  String get target;
-
-  /// No description provided for @moderate.
-  ///
-  /// In en, this message translates to:
-  /// **'Moderate'**
-  String get moderate;
-
-  /// No description provided for @deselect_all.
-  ///
-  /// In en, this message translates to:
-  /// **'Deselect All'**
-  String get deselect_all;
-
-  /// No description provided for @select_all.
-  ///
-  /// In en, this message translates to:
-  /// **'Select All'**
-  String get select_all;
-
-  /// No description provided for @are_you_sure.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure?'**
-  String get are_you_sure;
-
-  /// No description provided for @generating_playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Generating your custom playlist...'**
-  String get generating_playlist;
-
-  /// No description provided for @selected_count_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Selected {count} tracks'**
-  String selected_count_tracks(Object count);
-
-  /// No description provided for @download_warning.
-  ///
-  /// In en, this message translates to:
-  /// **'If you download all Tracks at bulk you\'re clearly pirating Music & causing damage to the creative society of Music. I hope you are aware of this. Always, try respecting & supporting Artist\'s hard work'**
-  String get download_warning;
-
-  /// No description provided for @download_ip_ban_warning.
-  ///
-  /// In en, this message translates to:
-  /// **'BTW, your IP can get blocked on YouTube due excessive download requests than usual. IP block means you can\'t use YouTube (even if you\'re logged in) for at least 2-3 months from that IP device. And Pyro Music doesn\'t hold any responsibility if this ever happens'**
-  String get download_ip_ban_warning;
-
-  /// No description provided for @by_clicking_accept_terms.
-  ///
-  /// In en, this message translates to:
-  /// **'By clicking \'accept\' you agree to following terms:'**
-  String get by_clicking_accept_terms;
-
-  /// No description provided for @download_agreement_1.
-  ///
-  /// In en, this message translates to:
-  /// **'I know I\'m pirating Music. I\'m bad'**
-  String get download_agreement_1;
-
-  /// No description provided for @download_agreement_2.
-  ///
-  /// In en, this message translates to:
-  /// **'I\'ll support the Artist wherever I can and I\'m only doing this because I don\'t have money to buy their art'**
-  String get download_agreement_2;
-
-  /// No description provided for @download_agreement_3.
-  ///
-  /// In en, this message translates to:
-  /// **'I\'m completely aware that my IP can get blocked on YouTube & I don\'t hold Pyro Music or his owners/contributors responsible for any accidents caused by my current action'**
-  String get download_agreement_3;
-
-  /// No description provided for @decline.
-  ///
-  /// In en, this message translates to:
-  /// **'Decline'**
-  String get decline;
-
-  /// No description provided for @accept.
-  ///
-  /// In en, this message translates to:
-  /// **'Accept'**
-  String get accept;
-
-  /// No description provided for @details.
-  ///
-  /// In en, this message translates to:
-  /// **'Details'**
-  String get details;
-
-  /// No description provided for @youtube.
-  ///
-  /// In en, this message translates to:
-  /// **'YouTube'**
-  String get youtube;
-
-  /// No description provided for @channel.
-  ///
-  /// In en, this message translates to:
-  /// **'Channel'**
-  String get channel;
-
-  /// No description provided for @likes.
-  ///
-  /// In en, this message translates to:
-  /// **'Likes'**
-  String get likes;
-
-  /// No description provided for @dislikes.
-  ///
-  /// In en, this message translates to:
-  /// **'Dislikes'**
-  String get dislikes;
-
-  /// No description provided for @views.
-  ///
-  /// In en, this message translates to:
-  /// **'Views'**
-  String get views;
-
-  /// No description provided for @streamUrl.
-  ///
-  /// In en, this message translates to:
-  /// **'Stream URL'**
-  String get streamUrl;
-
-  /// No description provided for @stop.
-  ///
-  /// In en, this message translates to:
-  /// **'Stop'**
-  String get stop;
-
-  /// No description provided for @sort_newest.
-  ///
-  /// In en, this message translates to:
-  /// **'Sort by newest added'**
-  String get sort_newest;
-
-  /// No description provided for @sort_oldest.
-  ///
-  /// In en, this message translates to:
-  /// **'Sort by oldest added'**
-  String get sort_oldest;
+  /// **'Enable Equalizer'**
+  String get enable_equalizer;
 
   /// No description provided for @sleep_timer.
   ///
@@ -2174,1145 +1766,29 @@ abstract class AppLocalizations {
   /// **'Sleep Timer'**
   String get sleep_timer;
 
-  /// No description provided for @mins.
+  /// No description provided for @minutes.
   ///
   /// In en, this message translates to:
-  /// **'{minutes} Minutes'**
-  String mins(Object minutes);
+  /// **'{count} minutes'**
+  String minutes(num count);
 
-  /// No description provided for @hours.
+  /// No description provided for @sleep_timer_description.
   ///
   /// In en, this message translates to:
-  /// **'{hours} Hours'**
-  String hours(Object hours);
-
-  /// No description provided for @hour.
-  ///
-  /// In en, this message translates to:
-  /// **'{hours} Hour'**
-  String hour(Object hours);
-
-  /// No description provided for @custom_hours.
-  ///
-  /// In en, this message translates to:
-  /// **'Custom Hours'**
-  String get custom_hours;
-
-  /// No description provided for @logs.
-  ///
-  /// In en, this message translates to:
-  /// **'Logs'**
-  String get logs;
-
-  /// No description provided for @developers.
-  ///
-  /// In en, this message translates to:
-  /// **'Developers'**
-  String get developers;
-
-  /// No description provided for @not_logged_in.
-  ///
-  /// In en, this message translates to:
-  /// **'Not logged in'**
-  String get not_logged_in;
-
-  /// No description provided for @search_mode.
-  ///
-  /// In en, this message translates to:
-  /// **'Search Mode'**
-  String get search_mode;
-
-  /// No description provided for @audio_source.
-  ///
-  /// In en, this message translates to:
-  /// **'Audio Source'**
-  String get audio_source;
-
-  /// No description provided for @ok.
-  ///
-  /// In en, this message translates to:
-  /// **'Ok'**
-  String get ok;
-
-  /// No description provided for @failed_to_encrypt.
-  ///
-  /// In en, this message translates to:
-  /// **'Failed to encrypt'**
-  String get failed_to_encrypt;
-
-  /// No description provided for @encryption_failed_warning.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music uses encryption to securely store your data. But failed to do so. So it\'ll fallback to insecure storage\nIf you\'re using linux, please make sure you\'ve any secret-service (gnome-keyring, kde-wallet, keepassxc etc) installed'**
-  String get encryption_failed_warning;
-
-  /// No description provided for @querying_info.
-  ///
-  /// In en, this message translates to:
-  /// **'Querying info...'**
-  String get querying_info;
-
-  /// No description provided for @piped_api_down.
-  ///
-  /// In en, this message translates to:
-  /// **'Piped API is down'**
-  String get piped_api_down;
-
-  /// No description provided for @piped_down_error_instructions.
-  ///
-  /// In en, this message translates to:
-  /// **'The Piped instance {pipedInstance} is currently down\n\nEither change the instance or change the \'API type\' to official YouTube API\n\nMake sure to restart the app after change'**
-  String piped_down_error_instructions(Object pipedInstance);
-
-  /// No description provided for @you_are_offline.
-  ///
-  /// In en, this message translates to:
-  /// **'You are currently offline'**
-  String get you_are_offline;
-
-  /// No description provided for @connection_restored.
-  ///
-  /// In en, this message translates to:
-  /// **'Your internet connection was restored'**
-  String get connection_restored;
-
-  /// No description provided for @use_system_title_bar.
-  ///
-  /// In en, this message translates to:
-  /// **'Use system title bar'**
-  String get use_system_title_bar;
-
-  /// No description provided for @crunching_results.
-  ///
-  /// In en, this message translates to:
-  /// **'Crunching results...'**
-  String get crunching_results;
-
-  /// No description provided for @search_to_get_results.
-  ///
-  /// In en, this message translates to:
-  /// **'Search to get results'**
-  String get search_to_get_results;
-
-  /// No description provided for @use_amoled_mode.
-  ///
-  /// In en, this message translates to:
-  /// **'Pitch black dark theme'**
-  String get use_amoled_mode;
-
-  /// No description provided for @pitch_dark_theme.
-  ///
-  /// In en, this message translates to:
-  /// **'AMOLED Mode'**
-  String get pitch_dark_theme;
-
-  /// No description provided for @normalize_audio.
-  ///
-  /// In en, this message translates to:
-  /// **'Normalize audio'**
-  String get normalize_audio;
-
-  /// No description provided for @change_cover.
-  ///
-  /// In en, this message translates to:
-  /// **'Change cover'**
-  String get change_cover;
-
-  /// No description provided for @add_cover.
-  ///
-  /// In en, this message translates to:
-  /// **'Add cover'**
-  String get add_cover;
-
-  /// No description provided for @restore_defaults.
-  ///
-  /// In en, this message translates to:
-  /// **'Restore defaults'**
-  String get restore_defaults;
-
-  /// No description provided for @download_music_codec.
-  ///
-  /// In en, this message translates to:
-  /// **'Download music codec'**
-  String get download_music_codec;
-
-  /// No description provided for @streaming_music_codec.
-  ///
-  /// In en, this message translates to:
-  /// **'Streaming music codec'**
-  String get streaming_music_codec;
-
-  /// No description provided for @login_with_lastfm.
-  ///
-  /// In en, this message translates to:
-  /// **'Login with Last.fm'**
-  String get login_with_lastfm;
-
-  /// No description provided for @connect.
-  ///
-  /// In en, this message translates to:
-  /// **'Connect'**
-  String get connect;
-
-  /// No description provided for @disconnect_lastfm.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect Last.fm'**
-  String get disconnect_lastfm;
-
-  /// No description provided for @disconnect.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnect'**
-  String get disconnect;
-
-  /// No description provided for @username.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @login.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
-  /// No description provided for @login_with_your_lastfm.
-  ///
-  /// In en, this message translates to:
-  /// **'Login with your Last.fm account'**
-  String get login_with_your_lastfm;
-
-  /// No description provided for @scrobble_to_lastfm.
-  ///
-  /// In en, this message translates to:
-  /// **'Scrobble to Last.fm'**
-  String get scrobble_to_lastfm;
-
-  /// No description provided for @go_to_album.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Album'**
-  String get go_to_album;
-
-  /// No description provided for @discord_rich_presence.
-  ///
-  /// In en, this message translates to:
-  /// **'Discord Rich Presence'**
-  String get discord_rich_presence;
-
-  /// No description provided for @browse_all.
-  ///
-  /// In en, this message translates to:
-  /// **'Browse All'**
-  String get browse_all;
-
-  /// No description provided for @genres.
-  ///
-  /// In en, this message translates to:
-  /// **'Genres'**
-  String get genres;
-
-  /// No description provided for @explore_genres.
-  ///
-  /// In en, this message translates to:
-  /// **'Explore Genres'**
-  String get explore_genres;
-
-  /// No description provided for @friends.
-  ///
-  /// In en, this message translates to:
-  /// **'Friends'**
-  String get friends;
-
-  /// No description provided for @no_lyrics_available.
-  ///
-  /// In en, this message translates to:
-  /// **'Sorry, unable find lyrics for this track'**
-  String get no_lyrics_available;
-
-  /// No description provided for @start_a_radio.
-  ///
-  /// In en, this message translates to:
-  /// **'Start a Radio'**
-  String get start_a_radio;
-
-  /// No description provided for @how_to_start_radio.
-  ///
-  /// In en, this message translates to:
-  /// **'How do you want to start the radio?'**
-  String get how_to_start_radio;
-
-  /// No description provided for @replace_queue_question.
-  ///
-  /// In en, this message translates to:
-  /// **'Do you want to replace the current queue or append to it?'**
-  String get replace_queue_question;
-
-  /// No description provided for @endless_playback.
-  ///
-  /// In en, this message translates to:
-  /// **'Endless Playback'**
-  String get endless_playback;
-
-  /// No description provided for @delete_playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete Playlist'**
-  String get delete_playlist;
-
-  /// No description provided for @delete_playlist_confirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete this playlist?'**
-  String get delete_playlist_confirmation;
-
-  /// No description provided for @local_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Local Tracks'**
-  String get local_tracks;
-
-  /// No description provided for @local_tab.
-  ///
-  /// In en, this message translates to:
-  /// **'Local'**
-  String get local_tab;
-
-  /// No description provided for @song_link.
-  ///
-  /// In en, this message translates to:
-  /// **'Song Link'**
-  String get song_link;
-
-  /// No description provided for @skip_this_nonsense.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip this nonsense'**
-  String get skip_this_nonsense;
-
-  /// No description provided for @freedom_of_music.
-  ///
-  /// In en, this message translates to:
-  /// **'“Freedom of Music”'**
-  String get freedom_of_music;
-
-  /// No description provided for @freedom_of_music_palm.
-  ///
-  /// In en, this message translates to:
-  /// **'“Freedom of Music in the palm of your hand”'**
-  String get freedom_of_music_palm;
-
-  /// No description provided for @get_started.
-  ///
-  /// In en, this message translates to:
-  /// **'Let\'s get started'**
-  String get get_started;
-
-  /// No description provided for @youtube_source_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Recommended and works best.'**
-  String get youtube_source_description;
-
-  /// No description provided for @piped_source_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Feeling free? Same as YouTube but a lot free.'**
-  String get piped_source_description;
-
-  /// No description provided for @jiosaavn_source_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Best for South Asian region.'**
-  String get jiosaavn_source_description;
-
-  /// No description provided for @invidious_source_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Similar to Piped but with higher availability.'**
-  String get invidious_source_description;
-
-  /// No description provided for @soundcloud_source_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Stream and listen to music online.'**
-  String get soundcloud_source_description;
-
-  /// No description provided for @highest_quality.
-  ///
-  /// In en, this message translates to:
-  /// **'Highest Quality: {quality}'**
-  String highest_quality(Object quality);
-
-  /// No description provided for @select_audio_source.
-  ///
-  /// In en, this message translates to:
-  /// **'Select Audio Source'**
-  String get select_audio_source;
-
-  /// No description provided for @endless_playback_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Automatically append new songs\nto the end of the queue'**
-  String get endless_playback_description;
-
-  /// No description provided for @choose_your_region.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose your region'**
-  String get choose_your_region;
-
-  /// No description provided for @choose_your_region_description.
-  ///
-  /// In en, this message translates to:
-  /// **'This will help Pyro Music show you the right content\nfor your location.'**
-  String get choose_your_region_description;
-
-  /// No description provided for @choose_your_language.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose your language'**
-  String get choose_your_language;
-
-  /// No description provided for @help_project_grow.
-  ///
-  /// In en, this message translates to:
-  /// **'Help this project grow'**
-  String get help_project_grow;
-
-  /// No description provided for @help_project_grow_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music is an open-source project. You can help this project grow by contributing to the project, reporting bugs, or suggesting new features.'**
-  String get help_project_grow_description;
-
-  /// No description provided for @contribute_on_github.
-  ///
-  /// In en, this message translates to:
-  /// **'Contribute on GitHub'**
-  String get contribute_on_github;
-
-  /// No description provided for @donate_on_open_collective.
-  ///
-  /// In en, this message translates to:
-  /// **'Donate on Open Collective'**
-  String get donate_on_open_collective;
-
-  /// No description provided for @browse_anonymously.
-  ///
-  /// In en, this message translates to:
-  /// **'Browse Anonymously'**
-  String get browse_anonymously;
-
-  /// No description provided for @enable_connect.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable Connect'**
-  String get enable_connect;
-
-  /// No description provided for @enable_connect_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Control Pyro Music from other devices'**
-  String get enable_connect_description;
-
-  /// No description provided for @devices.
-  ///
-  /// In en, this message translates to:
-  /// **'Devices'**
-  String get devices;
-
-  /// No description provided for @select.
-  ///
-  /// In en, this message translates to:
-  /// **'Select'**
-  String get select;
-
-  /// No description provided for @connect_client_alert.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'re being controlled by {client}'**
-  String connect_client_alert(Object client);
-
-  /// No description provided for @this_device.
-  ///
-  /// In en, this message translates to:
-  /// **'This Device'**
-  String get this_device;
-
-  /// No description provided for @remote.
-  ///
-  /// In en, this message translates to:
-  /// **'Remote'**
-  String get remote;
-
-  /// No description provided for @stats.
-  ///
-  /// In en, this message translates to:
-  /// **'Stats'**
-  String get stats;
-
-  /// No description provided for @and_n_more.
-  ///
-  /// In en, this message translates to:
-  /// **'and {count} more'**
-  String and_n_more(Object count);
-
-  /// No description provided for @recently_played.
-  ///
-  /// In en, this message translates to:
-  /// **'Recently Played'**
-  String get recently_played;
-
-  /// No description provided for @browse_more.
-  ///
-  /// In en, this message translates to:
-  /// **'Browse More'**
-  String get browse_more;
-
-  /// No description provided for @no_title.
-  ///
-  /// In en, this message translates to:
-  /// **'No Title'**
-  String get no_title;
-
-  /// No description provided for @not_playing.
-  ///
-  /// In en, this message translates to:
-  /// **'Not playing'**
-  String get not_playing;
-
-  /// No description provided for @epic_failure.
-  ///
-  /// In en, this message translates to:
-  /// **'Epic failure!'**
-  String get epic_failure;
-
-  /// No description provided for @added_num_tracks_to_queue.
-  ///
-  /// In en, this message translates to:
-  /// **'Added {tracks_length} tracks to queue'**
-  String added_num_tracks_to_queue(Object tracks_length);
-
-  /// No description provided for @pyro_music_has_an_update.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music has an update'**
-  String get pyro_music_has_an_update;
-
-  /// No description provided for @download_now.
-  ///
-  /// In en, this message translates to:
-  /// **'Download Now'**
-  String get download_now;
-
-  /// No description provided for @nightly_version.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music Nightly {nightlyBuildNum} has been released'**
-  String nightly_version(Object nightlyBuildNum);
-
-  /// No description provided for @release_version.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music v{version} has been released'**
-  String release_version(Object version);
-
-  /// No description provided for @read_the_latest.
-  ///
-  /// In en, this message translates to:
-  /// **'Read the latest '**
-  String get read_the_latest;
-
-  /// No description provided for @release_notes.
-  ///
-  /// In en, this message translates to:
-  /// **'release notes'**
-  String get release_notes;
-
-  /// No description provided for @pick_color_scheme.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick color scheme'**
-  String get pick_color_scheme;
-
-  /// No description provided for @choose_the_device.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose the device:'**
-  String get choose_the_device;
-
-  /// No description provided for @multiple_device_connected.
-  ///
-  /// In en, this message translates to:
-  /// **'There are multiple device connected.\nChoose the device you want this action to take place'**
-  String get multiple_device_connected;
-
-  /// No description provided for @nothing_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing found'**
-  String get nothing_found;
-
-  /// No description provided for @the_box_is_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'The box is empty'**
-  String get the_box_is_empty;
-
-  /// No description provided for @top_artists.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Artists'**
-  String get top_artists;
-
-  /// No description provided for @top_albums.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Albums'**
-  String get top_albums;
-
-  /// No description provided for @this_week.
-  ///
-  /// In en, this message translates to:
-  /// **'This week'**
-  String get this_week;
-
-  /// No description provided for @this_month.
-  ///
-  /// In en, this message translates to:
-  /// **'This month'**
-  String get this_month;
-
-  /// No description provided for @last_6_months.
-  ///
-  /// In en, this message translates to:
-  /// **'Last 6 months'**
-  String get last_6_months;
-
-  /// No description provided for @this_year.
-  ///
-  /// In en, this message translates to:
-  /// **'This year'**
-  String get this_year;
-
-  /// No description provided for @last_2_years.
-  ///
-  /// In en, this message translates to:
-  /// **'Last 2 years'**
-  String get last_2_years;
-
-  /// No description provided for @all_time.
-  ///
-  /// In en, this message translates to:
-  /// **'All time'**
-  String get all_time;
-
-  /// No description provided for @powered_by_provider.
-  ///
-  /// In en, this message translates to:
-  /// **'Powered by {providerName}'**
-  String powered_by_provider(Object providerName);
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @profile_followers.
-  ///
-  /// In en, this message translates to:
-  /// **'Followers'**
-  String get profile_followers;
-
-  /// No description provided for @birthday.
-  ///
-  /// In en, this message translates to:
-  /// **'Birthday'**
-  String get birthday;
-
-  /// No description provided for @subscription.
-  ///
-  /// In en, this message translates to:
-  /// **'Subscription'**
-  String get subscription;
-
-  /// No description provided for @not_born.
-  ///
-  /// In en, this message translates to:
-  /// **'Not born'**
-  String get not_born;
-
-  /// No description provided for @hacker.
-  ///
-  /// In en, this message translates to:
-  /// **'Hacker'**
-  String get hacker;
-
-  /// No description provided for @profile.
-  ///
-  /// In en, this message translates to:
-  /// **'Profile'**
-  String get profile;
-
-  /// No description provided for @no_name.
-  ///
-  /// In en, this message translates to:
-  /// **'No Name'**
-  String get no_name;
-
-  /// No description provided for @edit.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit'**
-  String get edit;
-
-  /// No description provided for @user_profile.
-  ///
-  /// In en, this message translates to:
-  /// **'User Profile'**
-  String get user_profile;
-
-  /// No description provided for @count_plays.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} plays'**
-  String count_plays(Object count);
-
-  /// No description provided for @streaming_fees_hypothetical.
-  ///
-  /// In en, this message translates to:
-  /// **'Streaming fees (hypothetical)'**
-  String get streaming_fees_hypothetical;
-
-  /// No description provided for @minutes_listened.
-  ///
-  /// In en, this message translates to:
-  /// **'Minutes listened'**
-  String get minutes_listened;
-
-  /// No description provided for @streamed_songs.
-  ///
-  /// In en, this message translates to:
-  /// **'Streamed songs'**
-  String get streamed_songs;
-
-  /// No description provided for @count_streams.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} streams'**
-  String count_streams(Object count);
-
-  /// No description provided for @owned_by_you.
-  ///
-  /// In en, this message translates to:
-  /// **'Owned by you'**
-  String get owned_by_you;
-
-  /// No description provided for @copied_shareurl_to_clipboard.
-  ///
-  /// In en, this message translates to:
-  /// **'Copied {shareUrl} to clipboard'**
-  String copied_shareurl_to_clipboard(Object shareUrl);
-
-  /// No description provided for @spotify_hipotetical_calculation.
-  ///
-  /// In en, this message translates to:
-  /// **'*This is calculated based on Spotify\'s per stream\npayout of \$0.003 to \$0.005. This is a hypothetical\ncalculation to give user insight about how much they\nwould have paid to the artists if they were to listen\ntheir song in Spotify.'**
-  String get spotify_hipotetical_calculation;
-
-  /// No description provided for @count_mins.
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes} mins'**
-  String count_mins(Object minutes);
-
-  /// No description provided for @summary_minutes.
-  ///
-  /// In en, this message translates to:
-  /// **'minutes'**
-  String get summary_minutes;
-
-  /// No description provided for @summary_listened_to_music.
-  ///
-  /// In en, this message translates to:
-  /// **'Listened to music'**
-  String get summary_listened_to_music;
-
-  /// No description provided for @summary_songs.
-  ///
-  /// In en, this message translates to:
-  /// **'songs'**
-  String get summary_songs;
-
-  /// No description provided for @summary_streamed_overall.
-  ///
-  /// In en, this message translates to:
-  /// **'Streamed overall'**
-  String get summary_streamed_overall;
-
-  /// No description provided for @summary_owed_to_artists.
-  ///
-  /// In en, this message translates to:
-  /// **'Owed to artists\nthis month'**
-  String get summary_owed_to_artists;
-
-  /// No description provided for @summary_artists.
-  ///
-  /// In en, this message translates to:
-  /// **'artist\'s'**
-  String get summary_artists;
-
-  /// No description provided for @summary_music_reached_you.
-  ///
-  /// In en, this message translates to:
-  /// **'Music reached you'**
-  String get summary_music_reached_you;
-
-  /// No description provided for @summary_full_albums.
-  ///
-  /// In en, this message translates to:
-  /// **'full albums'**
-  String get summary_full_albums;
-
-  /// No description provided for @summary_got_your_love.
-  ///
-  /// In en, this message translates to:
-  /// **'Got your love'**
-  String get summary_got_your_love;
-
-  /// No description provided for @summary_playlists.
-  ///
-  /// In en, this message translates to:
-  /// **'playlists'**
-  String get summary_playlists;
-
-  /// No description provided for @summary_were_on_repeat.
-  ///
-  /// In en, this message translates to:
-  /// **'Were on repeat'**
-  String get summary_were_on_repeat;
-
-  /// No description provided for @total_money.
-  ///
-  /// In en, this message translates to:
-  /// **'Total {money}'**
-  String total_money(Object money);
-
-  /// No description provided for @webview_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Webview not found'**
-  String get webview_not_found;
-
-  /// No description provided for @webview_not_found_description.
-  ///
-  /// In en, this message translates to:
-  /// **'No webview runtime is installed in your device.\nIf it\'s installed make sure it\'s in the Environment PATH\n\nAfter installing, restart the app'**
-  String get webview_not_found_description;
-
-  /// No description provided for @unsupported_platform.
-  ///
-  /// In en, this message translates to:
-  /// **'Unsupported platform'**
-  String get unsupported_platform;
-
-  /// No description provided for @cache_music.
-  ///
-  /// In en, this message translates to:
-  /// **'Cache music'**
-  String get cache_music;
-
-  /// No description provided for @open.
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get open;
-
-  /// No description provided for @cache_folder.
-  ///
-  /// In en, this message translates to:
-  /// **'Cache folder'**
-  String get cache_folder;
-
-  /// No description provided for @open_cache_folder.
-  ///
-  /// In en, this message translates to:
-  /// **'Open Cache folder'**
-  String get open_cache_folder;
-
-  /// No description provided for @clear_cache.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear cache'**
-  String get clear_cache;
-
-  /// No description provided for @clear_cache_confirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Do you want to clear the cache?'**
-  String get clear_cache_confirmation;
-
-  /// No description provided for @export_cache_files.
-  ///
-  /// In en, this message translates to:
-  /// **'Export Cached Files'**
-  String get export_cache_files;
-
-  /// No description provided for @found_n_files.
-  ///
-  /// In en, this message translates to:
-  /// **'Found {count} files'**
-  String found_n_files(Object count);
-
-  /// No description provided for @export_cache_confirmation.
-  ///
-  /// In en, this message translates to:
-  /// **'Do you want to export these files to'**
-  String get export_cache_confirmation;
-
-  /// No description provided for @exported_n_out_of_m_files.
-  ///
-  /// In en, this message translates to:
-  /// **'Exported {filesExported} out of {files} files'**
-  String exported_n_out_of_m_files(Object files, Object filesExported);
-
-  /// No description provided for @undo.
-  ///
-  /// In en, this message translates to:
-  /// **'Undo'**
-  String get undo;
-
-  /// No description provided for @download_all.
-  ///
-  /// In en, this message translates to:
-  /// **'Download all'**
-  String get download_all;
-
-  /// No description provided for @add_all_to_playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Add all to playlist'**
-  String get add_all_to_playlist;
-
-  /// No description provided for @add_all_to_queue.
-  ///
-  /// In en, this message translates to:
-  /// **'Add all to queue'**
-  String get add_all_to_queue;
-
-  /// No description provided for @play_all_next.
-  ///
-  /// In en, this message translates to:
-  /// **'Play all next'**
-  String get play_all_next;
-
-  /// No description provided for @pause.
-  ///
-  /// In en, this message translates to:
-  /// **'Pause'**
-  String get pause;
-
-  /// No description provided for @view_all.
-  ///
-  /// In en, this message translates to:
-  /// **'View all'**
-  String get view_all;
-
-  /// No description provided for @no_tracks_added_yet.
-  ///
-  /// In en, this message translates to:
-  /// **'Looks like you haven\'t added any tracks yet'**
-  String get no_tracks_added_yet;
-
-  /// No description provided for @no_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Looks like there are no tracks here'**
-  String get no_tracks;
-
-  /// No description provided for @no_tracks_listened_yet.
-  ///
-  /// In en, this message translates to:
-  /// **'Looks like you haven\'t listened to anything yet'**
-  String get no_tracks_listened_yet;
-
-  /// No description provided for @not_following_artists.
-  ///
-  /// In en, this message translates to:
-  /// **'You\'re not following any artists'**
-  String get not_following_artists;
-
-  /// No description provided for @no_favorite_albums_yet.
-  ///
-  /// In en, this message translates to:
-  /// **'Looks like you haven\'t added any albums to your favorites yet'**
-  String get no_favorite_albums_yet;
-
-  /// No description provided for @no_logs_found.
-  ///
-  /// In en, this message translates to:
-  /// **'No logs found'**
-  String get no_logs_found;
-
-  /// No description provided for @youtube_engine.
-  ///
-  /// In en, this message translates to:
-  /// **'YouTube Engine'**
-  String get youtube_engine;
-
-  /// No description provided for @youtube_engine_not_installed_title.
-  ///
-  /// In en, this message translates to:
-  /// **'{engine} is not installed'**
-  String youtube_engine_not_installed_title(Object engine);
-
-  /// No description provided for @youtube_engine_not_installed_message.
-  ///
-  /// In en, this message translates to:
-  /// **'{engine} is not installed in your system.'**
-  String youtube_engine_not_installed_message(Object engine);
-
-  /// No description provided for @youtube_engine_set_path.
-  ///
-  /// In en, this message translates to:
-  /// **'Make sure it\'s available in the PATH variable or\nset the absolute path to the {engine} executable below'**
-  String youtube_engine_set_path(Object engine);
-
-  /// No description provided for @youtube_engine_unix_issue_message.
-  ///
-  /// In en, this message translates to:
-  /// **'In macOS/Linux/unix like OS\'s, setting path on .zshrc/.bashrc/.bash_profile etc. won\'t work.\nYou need to set the path in the shell configuration file'**
-  String get youtube_engine_unix_issue_message;
-
-  /// No description provided for @download.
-  ///
-  /// In en, this message translates to:
-  /// **'Download'**
-  String get download;
-
-  /// No description provided for @file_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'File not found'**
-  String get file_not_found;
-
-  /// No description provided for @custom.
-  ///
-  /// In en, this message translates to:
-  /// **'Custom'**
-  String get custom;
-
-  /// No description provided for @add_custom_url.
-  ///
-  /// In en, this message translates to:
-  /// **'Add custom URL'**
-  String get add_custom_url;
-
-  /// No description provided for @remove.
-  ///
-  /// In en, this message translates to:
-  /// **'Remove'**
-  String get remove;
-
-  /// No description provided for @clear_queue.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear Queue'**
-  String get clear_queue;
-
-  /// No description provided for @generate.
-  ///
-  /// In en, this message translates to:
-  /// **'Generate'**
-  String get generate;
-
-  /// No description provided for @timeZone.
-  ///
-  /// In en, this message translates to:
-  /// **'Time Zone'**
-  String get timeZone;
-
-  /// No description provided for @timeFormat.
-  ///
-  /// In en, this message translates to:
-  /// **'Time Format'**
-  String get timeFormat;
-
-  /// No description provided for @use24HourFormat.
-  ///
-  /// In en, this message translates to:
-  /// **'Use 24-hour format'**
-  String get use24HourFormat;
-
-  /// No description provided for @chinese.
-  ///
-  /// In en, this message translates to:
-  /// **'Chinese'**
-  String get chinese;
-
-  /// No description provided for @english.
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get english;
-
-  /// No description provided for @japanese.
-  ///
-  /// In en, this message translates to:
-  /// **'Japanese'**
-  String get japanese;
-
-  /// No description provided for @cookie_import_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Cookie imported successfully'**
-  String get cookie_import_success;
-
-  /// No description provided for @import_failed.
-  ///
-  /// In en, this message translates to:
-  /// **'Import failed: {error}'**
-  String import_failed(Object error);
-
-  /// No description provided for @cookie_export_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Cookie exported successfully'**
-  String get cookie_export_success;
-
-  /// No description provided for @cookie_cleared.
-  ///
-  /// In en, this message translates to:
-  /// **'Cookie cleared'**
-  String get cookie_cleared;
-
-  /// No description provided for @clear_failed.
-  ///
-  /// In en, this message translates to:
-  /// **'Clear failed: {error}'**
-  String clear_failed(Object error);
-
-  /// No description provided for @audio_quality_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Select audio playback quality'**
-  String get audio_quality_description;
+  /// **'Stop playback after a set time'**
+  String get sleep_timer_description;
 
   /// No description provided for @accounts.
   ///
   /// In en, this message translates to:
   /// **'Accounts'**
   String get accounts;
+
+  /// No description provided for @backup_restore.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & Restore'**
+  String get backup_restore;
 
   /// No description provided for @developers_options.
   ///
@@ -3326,34 +1802,202 @@ abstract class AppLocalizations {
   /// **'Cookie Management'**
   String get cookie_management;
 
-  /// No description provided for @account_management.
+  /// No description provided for @by_author.
   ///
   /// In en, this message translates to:
-  /// **'Account Management'**
-  String get account_management;
+  /// **'By {author}'**
+  String by_author(Object author);
 
-  /// No description provided for @logged_out.
+  /// No description provided for @selected_count.
   ///
   /// In en, this message translates to:
-  /// **'{platform} logged out'**
-  String logged_out(Object platform);
+  /// **'{count} selected'**
+  String selected_count(Object count);
 
-  /// No description provided for @logout_failed.
+  /// No description provided for @pause.
   ///
   /// In en, this message translates to:
-  /// **'Logout failed: {error}'**
-  String logout_failed(Object error);
+  /// **'Pause'**
+  String get pause;
+
+  /// No description provided for @repeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get repeat;
+
+  /// No description provided for @queue_is_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue is empty'**
+  String get queue_is_empty;
+
+  /// No description provided for @add_tracks_to_get_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Add some tracks to get started'**
+  String get add_tracks_to_get_started;
+
+  /// No description provided for @queue_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tracks in queue'**
+  String queue_count(Object count);
+
+  /// No description provided for @no_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks'**
+  String get no_tracks;
+
+  /// No description provided for @removed_from_playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from playlist'**
+  String get removed_from_playlist;
+
+  /// No description provided for @import_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully imported {count} items'**
+  String import_success(Object count);
+
+  /// No description provided for @import_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String import_failed(Object error);
+
+  /// No description provided for @export_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully exported to {path}'**
+  String export_success(Object path);
+
+  /// No description provided for @export_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String export_failed(Object error);
+
+  /// No description provided for @cookie_cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie cleared'**
+  String get cookie_cleared;
+
+  /// No description provided for @clear_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear failed: {error}'**
+  String clear_failed(Object error);
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @cache_cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared'**
+  String get cache_cleared;
+
+  /// No description provided for @clearing_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Clearing failed: {error}'**
+  String clearing_failed(Object error);
+
+  /// No description provided for @api_endpoint_config.
+  ///
+  /// In en, this message translates to:
+  /// **'API Endpoint Configuration'**
+  String get api_endpoint_config;
+
+  /// No description provided for @api_server_address.
+  ///
+  /// In en, this message translates to:
+  /// **'API Server Address'**
+  String get api_server_address;
+
+  /// No description provided for @no_logs_to_export.
+  ///
+  /// In en, this message translates to:
+  /// **'No logs to export'**
+  String get no_logs_to_export;
+
+  /// No description provided for @logs_exported.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs exported to {path}'**
+  String logs_exported(Object path);
+
+  /// No description provided for @debug_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug Mode'**
+  String get debug_mode;
+
+  /// No description provided for @debug_mode_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable debug features and logging'**
+  String get debug_mode_description;
+
+  /// No description provided for @verbose_logging.
+  ///
+  /// In en, this message translates to:
+  /// **'Verbose Logging'**
+  String get verbose_logging;
+
+  /// No description provided for @verbose_logging_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Show detailed logs for troubleshooting'**
+  String get verbose_logging_description;
+
+  /// No description provided for @use_default_server.
+  ///
+  /// In en, this message translates to:
+  /// **'Use default server'**
+  String get use_default_server;
+
+  /// No description provided for @configure.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get configure;
+
+  /// No description provided for @cache_management.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Management'**
+  String get cache_management;
+
+  /// No description provided for @cache_management_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage application cache and temporary files'**
+  String get cache_management_description;
 
   /// No description provided for @logged_in.
   ///
   /// In en, this message translates to:
-  /// **'Logged in: {user}'**
-  String logged_in(Object user);
+  /// **'Logged in as {name}'**
+  String logged_in(Object name);
+
+  /// No description provided for @not_logged_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Not logged in'**
+  String get not_logged_in;
 
   /// No description provided for @choose_theme_mode.
   ///
   /// In en, this message translates to:
-  /// **'Choose application theme mode'**
+  /// **'Choose Theme Mode'**
   String get choose_theme_mode;
 
   /// No description provided for @follow_system.
@@ -3365,13 +2009,13 @@ abstract class AppLocalizations {
   /// No description provided for @light_mode.
   ///
   /// In en, this message translates to:
-  /// **'Light'**
+  /// **'Light Mode'**
   String get light_mode;
 
   /// No description provided for @dark_mode.
   ///
   /// In en, this message translates to:
-  /// **'Dark'**
+  /// **'Dark Mode'**
   String get dark_mode;
 
   /// No description provided for @amoled_mode.
@@ -3383,19 +2027,181 @@ abstract class AppLocalizations {
   /// No description provided for @amoled_mode_description.
   ///
   /// In en, this message translates to:
-  /// **'Use pure black background for dark theme'**
+  /// **'Pure black theme for AMOLED screens'**
   String get amoled_mode_description;
 
   /// No description provided for @choose_accent_color.
   ///
   /// In en, this message translates to:
-  /// **'Choose application accent color scheme'**
+  /// **'Choose Accent Color'**
   String get choose_accent_color;
+
+  /// No description provided for @export_backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Backup'**
+  String get export_backup;
+
+  /// No description provided for @backup_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a backup of your data'**
+  String get backup_description;
+
+  /// No description provided for @backup_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup created successfully'**
+  String get backup_success;
+
+  /// No description provided for @backup_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup failed: {error}'**
+  String backup_failed(Object error);
+
+  /// No description provided for @import_backup.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Backup'**
+  String get import_backup;
+
+  /// No description provided for @restore_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore data from a backup file'**
+  String get restore_description;
+
+  /// No description provided for @restore_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore completed successfully'**
+  String get restore_success;
+
+  /// No description provided for @restore_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore failed: {error}'**
+  String restore_failed(Object error);
+
+  /// No description provided for @cookie_import_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie imported successfully'**
+  String get cookie_import_success;
+
+  /// No description provided for @cookie_export_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie exported successfully'**
+  String get cookie_export_success;
+
+  /// No description provided for @text_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Size'**
+  String get text_size;
+
+  /// No description provided for @line_spacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Spacing'**
+  String get line_spacing;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @playlist_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist not found'**
+  String get playlist_not_found;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get something_went_wrong;
+
+  /// No description provided for @edit_playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Playlist'**
+  String get edit_playlist;
+
+  /// No description provided for @delete_playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Playlist'**
+  String get delete_playlist;
+
+  /// No description provided for @delete_playlist_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the playlist \'{name}\'?'**
+  String delete_playlist_confirm(Object name);
+
+  /// No description provided for @details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
+
+  /// No description provided for @search_for_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for music'**
+  String get search_for_music;
+
+  /// No description provided for @search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for tracks, artists, or albums'**
+  String get search_hint;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @no_results_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found for \'{query}\''**
+  String no_results_found(Object query);
+
+  /// No description provided for @logged_out.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged out from {platform}'**
+  String logged_out(Object platform);
+
+  /// No description provided for @logout_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout failed: {error}'**
+  String logout_failed(Object error);
+
+  /// No description provided for @account_management.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Management'**
+  String get account_management;
+
+  /// No description provided for @logged_in_on.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in as {name} on {platform}'**
+  String logged_in_on(Object name, Object platform);
 
   /// No description provided for @paste_lrc_here.
   ///
   /// In en, this message translates to:
-  /// **'Paste LRC format lyrics here...'**
+  /// **'Paste LRC lyrics here...'**
   String get paste_lrc_here;
 
   /// No description provided for @lyrics_content_cannot_be_empty.
@@ -3403,12 +2209,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lyrics content cannot be empty'**
   String get lyrics_content_cannot_be_empty;
-
-  /// No description provided for @import_success.
-  ///
-  /// In en, this message translates to:
-  /// **'Imported successfully'**
-  String get import_success;
 
   /// No description provided for @input_search_keywords.
   ///
@@ -3425,7 +2225,7 @@ abstract class AppLocalizations {
   /// No description provided for @no_lyrics_found.
   ///
   /// In en, this message translates to:
-  /// **'No matching lyrics found'**
+  /// **'No lyrics found'**
   String get no_lyrics_found;
 
   /// No description provided for @search_results.
@@ -3464,29 +2264,107 @@ abstract class AppLocalizations {
   /// **'Font Size'**
   String get font_size;
 
-  /// No description provided for @line_spacing.
+  /// No description provided for @username.
   ///
   /// In en, this message translates to:
-  /// **'Line Spacing'**
-  String get line_spacing;
+  /// **'Username'**
+  String get username;
 
-  /// No description provided for @cookie_import_failed.
+  /// No description provided for @password.
   ///
   /// In en, this message translates to:
-  /// **'Cookie import failed: {error}'**
-  String cookie_import_failed(Object error);
+  /// **'Password'**
+  String get password;
 
-  /// No description provided for @cookie_export_failed.
+  /// No description provided for @login.
   ///
   /// In en, this message translates to:
-  /// **'Cookie export failed: {error}'**
-  String cookie_export_failed(Object error);
+  /// **'Login'**
+  String get login;
 
-  /// No description provided for @home.
+  /// No description provided for @recently_played.
   ///
   /// In en, this message translates to:
-  /// **'Home'**
-  String get home;
+  /// **'Recently Played'**
+  String get recently_played;
+
+  /// No description provided for @lyrics_imported_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics imported successfully'**
+  String get lyrics_imported_successfully;
+
+  /// No description provided for @failed_to_import_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to import lyrics'**
+  String get failed_to_import_lyrics;
+
+  /// No description provided for @recent_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Tracks'**
+  String get recent_tracks;
+
+  /// No description provided for @see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get see_all;
+
+  /// No description provided for @no_recent_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent tracks'**
+  String get no_recent_tracks;
+
+  /// No description provided for @start_listening_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Start listening to some music to see your history here!'**
+  String get start_listening_hint;
+
+  /// No description provided for @login_with_lastfm.
+  ///
+  /// In en, this message translates to:
+  /// **'Login with Last.fm'**
+  String get login_with_lastfm;
+
+  /// No description provided for @go_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get go_back;
+
+  /// No description provided for @release_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Release Date'**
+  String get release_date;
+
+  /// No description provided for @followers_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Followers'**
+  String followers_count(Object count);
+
+  /// No description provided for @featured_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Playlists'**
+  String get featured_playlists;
+
+  /// No description provided for @no_featured_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'No featured playlists'**
+  String get no_featured_playlists;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {name}'**
+  String welcome_back(Object name);
 
   /// No description provided for @good_morning.
   ///
@@ -3506,197 +2384,17 @@ abstract class AppLocalizations {
   /// **'Good evening'**
   String get good_evening;
 
-  /// No description provided for @welcome_back.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back, {username}'**
-  String welcome_back(Object username);
-
-  /// No description provided for @search_for_music.
-  ///
-  /// In en, this message translates to:
-  /// **'Search for music'**
-  String get search_for_music;
-
-  /// No description provided for @search_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Find your favorite songs, artists, albums, and playlists'**
-  String get search_hint;
-
-  /// No description provided for @all.
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get all;
-
-  /// No description provided for @featured_playlists.
-  ///
-  /// In en, this message translates to:
-  /// **'Featured Playlists'**
-  String get featured_playlists;
-
-  /// No description provided for @see_all.
-  ///
-  /// In en, this message translates to:
-  /// **'See All'**
-  String get see_all;
-
-  /// No description provided for @loading_playlists.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading playlists...'**
-  String get loading_playlists;
-
-  /// No description provided for @no_featured_playlists.
-  ///
-  /// In en, this message translates to:
-  /// **'No featured playlists available'**
-  String get no_featured_playlists;
-
-  /// No description provided for @recent_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Recent Tracks'**
-  String get recent_tracks;
-
-  /// No description provided for @loading_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading tracks...'**
-  String get loading_tracks;
-
-  /// No description provided for @no_recent_tracks.
-  ///
-  /// In en, this message translates to:
-  /// **'No recent tracks found'**
-  String get no_recent_tracks;
-
   /// No description provided for @recommended_artists.
   ///
   /// In en, this message translates to:
   /// **'Recommended Artists'**
   String get recommended_artists;
 
-  /// No description provided for @loading_artists.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading artists...'**
-  String get loading_artists;
-
   /// No description provided for @no_recommended_artists.
   ///
   /// In en, this message translates to:
-  /// **'No recommended artists available'**
+  /// **'No recommended artists'**
   String get no_recommended_artists;
-
-  /// No description provided for @start_listening_hint.
-  ///
-  /// In en, this message translates to:
-  /// **'Start listening to see your history here'**
-  String get start_listening_hint;
-
-  /// No description provided for @no_results_found.
-  ///
-  /// In en, this message translates to:
-  /// **'No results found for \"{query}\"'**
-  String no_results_found(Object query);
-
-  /// No description provided for @search_failed.
-  ///
-  /// In en, this message translates to:
-  /// **'Search failed: {error}'**
-  String search_failed(Object error);
-
-  /// No description provided for @by_author.
-  ///
-  /// In en, this message translates to:
-  /// **'By {author}'**
-  String by_author(Object author);
-
-  /// No description provided for @queue_is_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'Queue is empty'**
-  String get queue_is_empty;
-
-  /// No description provided for @add_tracks_to_get_started.
-  ///
-  /// In en, this message translates to:
-  /// **'Add some tracks to get started'**
-  String get add_tracks_to_get_started;
-
-  /// No description provided for @queue_count.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} tracks'**
-  String queue_count(Object count);
-
-  /// No description provided for @playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Playlist'**
-  String get playlist;
-
-  /// No description provided for @loading_playlist.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading playlist...'**
-  String get loading_playlist;
-
-  /// No description provided for @playlist_not_found.
-  ///
-  /// In en, this message translates to:
-  /// **'Playlist not found'**
-  String get playlist_not_found;
-
-  /// No description provided for @tracks_count.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} tracks'**
-  String tracks_count(Object count);
-
-  /// No description provided for @duration_total.
-  ///
-  /// In en, this message translates to:
-  /// **'Total duration: {duration}'**
-  String duration_total(Object duration);
-
-  /// No description provided for @shuffle_play.
-  ///
-  /// In en, this message translates to:
-  /// **'Shuffle Play'**
-  String get shuffle_play;
-
-  /// No description provided for @play_all.
-  ///
-  /// In en, this message translates to:
-  /// **'Play All'**
-  String get play_all;
-
-  /// No description provided for @repeat.
-  ///
-  /// In en, this message translates to:
-  /// **'Repeat'**
-  String get repeat;
-
-  /// No description provided for @go_back.
-  ///
-  /// In en, this message translates to:
-  /// **'Go Back'**
-  String get go_back;
-
-  /// No description provided for @release_date.
-  ///
-  /// In en, this message translates to:
-  /// **'Release Date'**
-  String get release_date;
-
-  /// No description provided for @followers_count.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} followers'**
-  String followers_count(Object count);
 }
 
 class _AppLocalizationsDelegate

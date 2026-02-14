@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/pages/playlist/widgets/playlist_header.dart';
-// 修正为正确的导入路径
 import 'package:pyro_music/presentation/pages/playlist/widgets/playlist_tracks_list.dart';
 import 'package:pyro_music/presentation/pages/playlist/widgets/playlist_info.dart';
+import 'package:pyro_music/features/playlist/providers/playlist_provider.dart';
 
 /// The playlist details page
-class PlaylistPage extends StatelessWidget {
+class PlaylistPage extends ConsumerStatefulWidget {
   /// The ID of the playlist to display
   final String playlistId;
 
@@ -16,33 +17,56 @@ class PlaylistPage extends StatelessWidget {
   });
 
   @override
+  ConsumerState<PlaylistPage> createState() => _PlaylistPageState();
+}
+
+class _PlaylistPageState extends ConsumerState<PlaylistPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(playlistProvider.notifier).loadPlaylist(widget.playlistId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // 实际应从数据层获取播放列表数据
-    const playlist = null; 
+    final state = ref.watch(playlistProvider);
+    final playlist = state.selectedPlaylist;
+
+    if (state.isLoading && playlist == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (playlist == null) {
+      return _buildErrorState(context);
+    }
 
     return Scaffold(
-      body: playlist == null
-          ? _buildErrorState(context)
-          : CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: PlaylistHeader(playlist: playlist),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: PlaylistInfo(playlist: playlist),
-                  ),
-                ),
-                // 使用正确的组件名称
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: PlaylistTracksList(),
-                  ),
-                ),
-              ],
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: PlaylistHeader(playlist: playlist),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: PlaylistInfo(playlist: playlist),
             ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: PlaylistTracksList(
+                tracks: state.playlistTracks ?? [],
+                playlistId: widget.playlistId,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -50,34 +74,37 @@ class PlaylistPage extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.queue_music_outlined,
-            size: 64,
-            color: theme.colorScheme.error,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            l10n.playlist_not_found,
-            style: theme.textTheme.titleLarge,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            l10n.something_went_wrong,
-            style: theme.textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text(l10n.previous),
-          ),
-        ],
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.queue_music_outlined,
+              size: 64,
+              color: theme.colorScheme.error,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.playlist_not_found,
+              style: theme.textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.something_went_wrong,
+              style: theme.textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.previous),
+            ),
+          ],
+        ),
       ),
     );
   }

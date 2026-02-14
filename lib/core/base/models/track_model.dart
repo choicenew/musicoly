@@ -51,6 +51,14 @@ class TrackModel extends MediaModel implements TrackInterface {
   @override
   final String? previewUrl;
 
+  /// Local file path (if available)
+  @override
+  final String? localPath;
+
+  /// Whether this track is marked as favorite
+  @override
+  final bool isFavorite;
+
   /// Platform-specific metadata
   @override
   final Map<String, dynamic> platformMetadata;
@@ -72,6 +80,8 @@ class TrackModel extends MediaModel implements TrackInterface {
     this.popularity,
     this.isExplicit = false,
     this.previewUrl,
+    this.localPath,
+    this.isFavorite = false,
     this.platformMetadata = const {},
   });
 
@@ -89,6 +99,8 @@ class TrackModel extends MediaModel implements TrackInterface {
         'popularity': popularity,
         'isExplicit': isExplicit,
         'previewUrl': previewUrl,
+        'localPath': localPath,
+        'isFavorite': isFavorite,
         'platformMetadata': platformMetadata,
       };
 
@@ -109,6 +121,7 @@ class TrackModel extends MediaModel implements TrackInterface {
     int? popularity,
     bool? isExplicit,
     String? previewUrl,
+    String? localPath,
     Map<String, dynamic>? platformMetadata,
   }) {
     return TrackModel(
@@ -127,7 +140,33 @@ class TrackModel extends MediaModel implements TrackInterface {
       popularity: popularity ?? this.popularity,
       isExplicit: isExplicit ?? this.isExplicit,
       previewUrl: previewUrl ?? this.previewUrl,
+      localPath: localPath ?? this.localPath,
       platformMetadata: platformMetadata ?? this.platformMetadata,
+    );
+  }
+
+  /// Create a TrackModel from a TrackInterface
+  factory TrackModel.fromInterface(TrackInterface interface) {
+    if (interface is TrackModel) return interface;
+
+    return TrackModel(
+      id: interface.id,
+      platform: interface.platform,
+      name: interface.name,
+      imageUrl: interface.imageUrl,
+      artistIds: interface.artistIds,
+      artistNames: interface.artistNames,
+      albumId: interface.albumId,
+      albumName: interface.albumName,
+      durationMs: interface.durationMs,
+      isPlayable: interface.isPlayable,
+      trackNumber: interface.trackNumber,
+      discNumber: interface.discNumber,
+      popularity: interface.popularity,
+      isExplicit: interface.isExplicit,
+      previewUrl: interface.previewUrl,
+      localPath: interface.localPath,
+      platformMetadata: interface.platformMetadata,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
@@ -23,8 +24,18 @@ class DynamicThemeNotifier extends _$DynamicThemeNotifier {
 
   Future<void> _updateColor(String url) async {
     try {
+      ImageProvider imageProvider;
+      if (url.startsWith('file://')) {
+        imageProvider = FileImage(File(url.replaceFirst('file://', '')));
+      } else if (url.startsWith('http')) {
+        imageProvider = NetworkImage(url);
+      } else {
+        // Assume local path if not http or file://
+        imageProvider = FileImage(File(url));
+      }
+
       final paletteGenerator = await PaletteGenerator.fromImageProvider(
-        NetworkImage(url),
+        imageProvider,
         maximumColorCount: 10,
       );
       

@@ -58,7 +58,7 @@ final class PlaylistServiceProvider
   }
 }
 
-String _$playlistServiceHash() => r'6d117cff4c75f1fcdf1157be1a837a083f8b8dd8';
+String _$playlistServiceHash() => r'59c2503622b07ed17aff9e70158f6cc2e6f37e7e';
 
 /// Notifier for playlist state
 
@@ -96,7 +96,7 @@ final class PlaylistNotifierProvider
   }
 }
 
-String _$playlistNotifierHash() => r'61214ae47edb6abc0a4591e9e355c716ee16aa71';
+String _$playlistNotifierHash() => r'f0febfaf2076b278c081fcc72221155f5b38c7d8';
 
 /// Notifier for playlist state
 

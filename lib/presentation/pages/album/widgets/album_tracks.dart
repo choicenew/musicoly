@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pyro_music/features/player/providers/playback_provider.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays the list of tracks in an album
-class AlbumTracks extends StatelessWidget {
+class AlbumTracks extends ConsumerWidget {
   /// The list of tracks to display
   final List<TrackInterface> tracks;
 
@@ -11,7 +13,7 @@ class AlbumTracks extends StatelessWidget {
   const AlbumTracks({super.key, required this.tracks});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
 
@@ -66,7 +68,8 @@ class AlbumTracks extends StatelessWidget {
                 style: theme.textTheme.bodySmall,
               ),
               onTap: () {
-                // TODO: Play track
+                final trackIds = tracks.map((t) => t.id).toList();
+                ref.read(playbackStateProvider.notifier).playTracks(trackIds, initialIndex: index);
               },
             );
           },

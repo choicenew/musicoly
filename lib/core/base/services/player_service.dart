@@ -56,6 +56,9 @@ abstract class PlayerService extends BaseService
   @override
   Future<void> clearQueue();
 
+  /// Add tracks to play next (after current track)
+  Future<void> addTracksNext(List<String> trackIds);
+
   /// Get the current track details
   Future<TrackInterface?> getCurrentTrack();
 }

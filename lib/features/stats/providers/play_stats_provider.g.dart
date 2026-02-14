@@ -44,7 +44,7 @@ final class PlayStatsNotifierProvider
   }
 }
 
-String _$playStatsNotifierHash() => r'0ff6b8ae77c485a6e49fb8162520fdde081608d7';
+String _$playStatsNotifierHash() => r'325aad29fccd5fa32c22e105155dd4d1c88beab8';
 
 /// 播放统计提供者实现
 

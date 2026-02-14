@@ -7,20 +7,25 @@ import 'package:pyro_music/core/base/services/base_service.dart';
 import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
 import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
 import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/core/base/services/stats_service.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/models/track_model.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:pyro_music/core/base/services/player_service.dart';
 import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/services/equalizer_service.dart';
+import 'package:pyro_music/core/services/desktop_service.dart';
 
 /// 播放服务实现 - 使用 just_audio
 class PlaybackServiceImpl extends PlayerService {
-  final AudioPlayer _player = AudioPlayer();
+  final AndroidEqualizer _equalizer = AndroidEqualizer();
+  late final AudioPlayer _player;
   final ConcatenatingAudioSource _playlist = ConcatenatingAudioSource(children: []);
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
   late final Isar _isar;
 
   TrackSourceManager? _trackSourceManager;
+  EqualizerService? _equalizerService;
   
   String? _currentTrackId;
   PlaybackState _currentState = PlaybackState.none;
@@ -41,13 +46,66 @@ class PlaybackServiceImpl extends PlayerService {
   StreamSubscription? _durationSubscription;
   StreamSubscription? _volumeSubscription;
   StreamSubscription? _currentIndexSubscription;
+  StreamSubscription? _equalizerEnabledSubscription;
+  StreamSubscription? _equalizerBandsSubscription;
 
   PlaybackServiceImpl() {
     _isar = GetIt.instance<Isar>();
+    _player = AudioPlayer(
+      audioPipeline: defaultTargetPlatform == TargetPlatform.android 
+          ? AudioPipeline(androidAudioEffects: [_equalizer])
+          : null,
+    );
+    _initPlayer();
     _initStreams();
+    _initEqualizer();
+  }
+
+  void _initPlayer() async {
+    // 尝试添加均衡器效果 (Android)
+    try {
+      await _player.setAudioSource(_playlist, preload: false);
+    } catch (e) {
+      debugPrint('Error initializing player: $e');
+    }
+  }
+
+  void _initEqualizer() {
+    _equalizerService = _serviceRegistry.getService<EqualizerService>('equalizer_service');
+    if (_equalizerService != null) {
+      // 初始状态
+      _applyEqualizerEnabled(_equalizerService!.isEnabled);
+      _applyEqualizerBands(_equalizerService!.bandLevels);
+
+      // 监听变化
+      _equalizerEnabledSubscription = _equalizerService!.enabledStream.listen((enabled) {
+        _applyEqualizerEnabled(enabled);
+      });
+
+      _equalizerBandsSubscription = _equalizerService!.bandsStream.listen((bands) {
+        _applyEqualizerBands(bands);
+      });
+    }
+  }
+
+  void _applyEqualizerEnabled(bool enabled) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      _equalizer.setEnabled(enabled);
+    }
+  }
+
+  Future<void> _applyEqualizerBands(List<double> levels) async {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final parameters = await _equalizer.parameters;
+      for (int i = 0; i < levels.length && i < parameters.bands.length; i++) {
+        parameters.bands[i].setGain(levels[i]);
+      }
+    }
   }
 
   void _initStreams() {
+    final desktopService = _serviceRegistry.getService<DesktopService>('desktop_service');
+
     _playerStateSubscription = _player.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.loading ||
           state.processingState == ProcessingState.buffering) {
@@ -62,10 +120,20 @@ class PlaybackServiceImpl extends PlayerService {
         _currentState = PlaybackState.none;
       }
       _playbackStateController.add(_currentState);
+      
+      // Update desktop status
+      desktopService?.setTaskbarStatus(state.playing);
+      desktopService?.updatePlaybackState(state.playing);
     });
 
     _positionSubscription = _player.positionStream.listen((pos) {
       _positionController.add(pos);
+      
+      // Update desktop taskbar progress
+      final dur = _player.duration;
+      if (dur != null && dur.inMilliseconds > 0) {
+        desktopService?.updateTaskbarProgress(pos.inMilliseconds / dur.inMilliseconds);
+      }
     });
 
     _bufferedPositionSubscription = _player.bufferedPositionStream.listen((pos) {
@@ -82,15 +150,48 @@ class PlaybackServiceImpl extends PlayerService {
       _volumeController.add(vol);
     });
 
-    _currentIndexSubscription = _player.currentIndexStream.listen((index) {
+    _currentIndexSubscription = _player.currentIndexStream.listen((index) async {
       if (index != null && index >= 0 && index < _playlist.length) {
         final tag = _playlist.children[index].sequence.first.tag;
         if (tag is String) {
           _currentTrackId = tag;
           _currentTrackController.add(_currentTrackId);
+          _updatePlayStats(tag);
+
+          // Show desktop notification
+           if (desktopService != null) {
+             final track = await _isar.trackEntitys.filter().trackIdEqualTo(tag).findFirst();
+             if (track != null) {
+               desktopService.showNotification(
+                 track.name,
+                 track.artistNames?.join(', ') ?? 'Unknown Artist',
+               );
+               desktopService.updateMetadata(
+                 track.name,
+                 track.artistNames?.join(', ') ?? 'Unknown Artist',
+                 album: track.albumName,
+                 imageUrl: track.imageUrl,
+               );
+             }
+           }
         }
       }
     });
+  }
+
+  Future<void> _updatePlayStats(String trackId) async {
+    try {
+      final statsService = _serviceRegistry.getService<StatsService>('play_stats_service');
+      if (statsService != null) {
+        final entity = await _isar.trackEntitys.filter().trackIdEqualTo(trackId).findFirst();
+        if (entity != null) {
+          final trackModel = _entityToModel(entity);
+          await statsService.recordPlay(trackModel, isComplete: true);
+        }
+      }
+    } catch (e) {
+      debugPrint('Error updating play stats: $e');
+    }
   }
 
   @override
@@ -165,6 +266,25 @@ class PlaybackServiceImpl extends PlayerService {
     }
 
     await _player.seek(Duration.zero, index: index);
+    await _player.play();
+  }
+
+  Future<void> playTrack(String trackId) async {
+    final source = await _createAudioSource(trackId);
+    await _playlist.clear();
+    await _playlist.add(source);
+    await _player.setAudioSource(_playlist);
+    await _player.play();
+  }
+
+  Future<void> playTracks(List<String> trackIds, {int initialIndex = 0}) async {
+    await _playlist.clear();
+    final sources = <AudioSource>[];
+    for (final id in trackIds) {
+      sources.add(await _createAudioSource(id));
+    }
+    await _playlist.addAll(sources);
+    await _player.setAudioSource(_playlist, initialIndex: initialIndex);
     await _player.play();
   }
 
@@ -251,6 +371,22 @@ class PlaybackServiceImpl extends PlayerService {
   }
 
   @override
+  Future<void> addTracksNext(List<String> trackIds) async {
+    final currentIndex = _player.currentIndex ?? -1;
+    final insertIndex = currentIndex + 1;
+    final sources = <AudioSource>[];
+    for (final id in trackIds) {
+      sources.add(await _createAudioSource(id));
+    }
+    
+    if (insertIndex >= 0 && insertIndex <= _playlist.length) {
+      await _playlist.insertAll(insertIndex, sources);
+    } else {
+      await _playlist.addAll(sources);
+    }
+  }
+
+  @override
   Future<void> removeTrack(String trackId) async {
     for (int i = 0; i < _playlist.length; i++) {
       if (_playlist.children[i].sequence.first.tag == trackId) {
@@ -304,10 +440,28 @@ class PlaybackServiceImpl extends PlayerService {
   }
 
   @override
-  Future<List<String>> getHistory() async => []; // TODO: Implement history
+  Future<List<String>> getHistory() async {
+    final statsService = _serviceRegistry.getService<StatsService>('play_stats_service');
+    if (statsService == null) return [];
+    
+    final recentPlays = await statsService.getRecentPlays(limit: 50);
+    return recentPlays.map((e) => e.track.id).toList();
+  }
 
   @override
-  Future<void> clearHistory() async {}
+  Future<void> clearHistory() async {
+    await _isar.writeTxn(() async {
+      final entities = await _isar.trackEntitys
+          .filter()
+          .lastPlayedAtIsNotNull()
+          .findAll();
+      
+      for (final entity in entities) {
+        entity.lastPlayedAt = null;
+        await _isar.trackEntitys.put(entity);
+      }
+    });
+  }
 
   // PlayerService implementation
   @override
@@ -344,6 +498,8 @@ class PlaybackServiceImpl extends PlayerService {
       durationMs: entity.durationMs,
       isPlayable: entity.isPlayable,
       previewUrl: entity.previewUrl,
+      localPath: entity.localPath,
+      isFavorite: entity.isFavorite,
     );
   }
 
@@ -380,6 +536,13 @@ class PlaybackServiceImpl extends PlayerService {
     }
 
     // 3. 创建 AudioSource
+    if (url.startsWith('file://')) {
+      return AudioSource.file(
+        url.replaceFirst('file://', ''),
+        tag: trackId,
+      );
+    }
+    
     return AudioSource.uri(
       Uri.parse(url),
       tag: trackId, // 简单使用 ID 作为 tag，或者封装更复杂的 Metadata
@@ -394,6 +557,8 @@ class PlaybackServiceImpl extends PlayerService {
     await _durationSubscription?.cancel();
     await _volumeSubscription?.cancel();
     await _currentIndexSubscription?.cancel();
+    await _equalizerEnabledSubscription?.cancel();
+    await _equalizerBandsSubscription?.cancel();
     await _player.dispose();
     
     await _positionController.close();
@@ -464,4 +629,7 @@ class _PlaybackInterfaceWrapper implements PlaybackInterface {
 
   @override
   bool get shuffleMode => _service.shuffleMode;
+
+  @override
+  Duration get duration => _service.duration;
 }

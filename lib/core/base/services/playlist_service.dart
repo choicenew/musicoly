@@ -70,4 +70,14 @@ abstract class PlaylistService extends BaseService {
   /// Get featured playlists
   Future<List<PlaylistInterface>> getFeaturedPlaylists(
       {int limit = 20, int offset = 0});
+
+  /// Get smart playlists (Recently Added, Most Played, Recently Played)
+  Future<List<TrackInterface>> getSmartPlaylistTracks(String type,
+      {int limit = 50});
+
+  /// Toggle favorite status of a track
+  Future<bool> toggleFavorite(String trackId);
+
+  /// Check if a track is a favorite
+  Future<bool> isFavorite(String trackId);
 }

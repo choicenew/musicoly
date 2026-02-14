@@ -44,7 +44,7 @@ final class SearchNotifierProvider
   }
 }
 
-String _$searchNotifierHash() => r'16a4c85b5688250b302cdc8597a61b037d37885a';
+String _$searchNotifierHash() => r'22b343f7d4bc3837435bd391968a10b6ca8fc012';
 
 /// Notifier for search state
 

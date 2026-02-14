@@ -39,6 +39,12 @@ abstract class TrackInterface extends MediaInterface {
   /// Preview URL for the track (if available)
   String? get previewUrl;
 
+  /// Local file path (if available)
+  String? get localPath;
+
+  /// Whether this track is marked as favorite
+  bool get isFavorite;
+
   /// Platform-specific metadata
   Map<String, dynamic> get platformMetadata;
 }
