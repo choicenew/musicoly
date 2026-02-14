@@ -8,15 +8,16 @@ import 'media_model.dart';
 @immutable
 class CollectionModel extends MediaModel implements CollectionInterface {
   /// Description of the collection
+  @override
   final String? description;
 
-  /// Type of the collection (e.g., "featured", "new-releases", "genres")
+  @override
   final String collectionType;
 
-  /// Total number of items in the collection
+  @override
   final int totalItems;
 
-  /// Platform-specific metadata
+  @override
   final Map<String, dynamic> platformMetadata;
 
   /// Create a new collection model

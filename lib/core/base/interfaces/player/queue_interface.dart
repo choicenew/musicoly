@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import '../../services/base_service.dart';
-import '../media/track_interface.dart';
 
 /// Interface for player queue functionality
 ///

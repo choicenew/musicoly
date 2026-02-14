@@ -167,10 +167,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get top_tracks => 'Top Tracks';
 
   @override
-  String get fans_also_like => 'Fans also like';
+  String get fans_also_like => 'Fans Also Like';
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String get loading_album => 'Loading album...';
+
+  @override
+  String get loading_artist => 'Loading artist...';
+
+  @override
+  String get album_not_found => 'Album not found';
+
+  @override
+  String get album_not_found_hint =>
+      'The album you are looking for could not be found';
+
+  @override
+  String get artist_not_found => 'Artist not found';
+
+  @override
+  String get artist_not_found_hint =>
+      'The artist you are looking for could not be found';
+
+  @override
+  String get unknown_release_date => 'Unknown release date';
+
+  @override
+  String get label => 'Label';
+
+  @override
+  String get album_details => 'Album Details';
+
+  @override
+  String get no_tracks_available => 'No tracks available';
+
+  @override
+  String get no_albums_available => 'No albums available';
+
+  @override
+  String get no_related_artists_found => 'No related artists found';
+
+  @override
+  String get popular_tracks => 'Popular Tracks';
+
+  @override
+  String get see_all_tracks => 'See All Tracks';
+
+  @override
+  String get all_tracks => 'All Tracks';
+
+  @override
+  String songs_count(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count songs',
+      one: '1 song',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get artist => 'Artist';
@@ -392,7 +450,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout_of_this_account => 'Logout of this account';
 
   @override
-  String get language_region => 'Language & Region';
+  String get language_region => 'Language and Region';
 
   @override
   String get language => 'Language';
@@ -457,17 +515,122 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accent_color => 'Accent Color';
 
   @override
-  String get sync_album_color => 'Sync album color';
+  String get sync_album_color => 'Sync Album Color';
 
   @override
   String get sync_album_color_description =>
-      'Uses the dominant color of the album art as the accent color';
+      'Sync UI color based on album artwork';
 
   @override
   String get playback => 'Playback';
 
   @override
   String get audio_quality => 'Audio Quality';
+
+  @override
+  String get select_audio_quality => 'Select audio playback quality';
+
+  @override
+  String get low_quality => 'Low';
+
+  @override
+  String get medium_quality => 'Medium';
+
+  @override
+  String get high_quality => 'High';
+
+  @override
+  String get crossfade => 'Crossfade';
+
+  @override
+  String get crossfade_description => 'Set transition effect between songs';
+
+  @override
+  String get off => 'Off';
+
+  @override
+  String seconds(Object count) {
+    return '$count seconds';
+  }
+
+  @override
+  String get download_path => 'Download Path';
+
+  @override
+  String get download_format => 'Download Format';
+
+  @override
+  String get download_lyrics => 'Download Lyrics';
+
+  @override
+  String get download_lyrics_description =>
+      'Download lyric files along with songs';
+
+  @override
+  String get download_cover => 'Download Cover';
+
+  @override
+  String get download_cover_description =>
+      'Download cover images along with songs';
+
+  @override
+  String get file_naming_format => 'File Naming Format';
+
+  @override
+  String get file_naming_format_description =>
+      'Set naming rules for downloaded files';
+
+  @override
+  String get song_title => 'Song Title';
+
+  @override
+  String get artist_song_title => 'Artist - Song Title';
+
+  @override
+  String get song_title_artist => 'Song Title - Artist';
+
+  @override
+  String get album_track_song_title => 'Album - Track - Song Title';
+
+  @override
+  String get desktop => 'Desktop';
+
+  @override
+  String get auto_start => 'Auto-start on boot';
+
+  @override
+  String get auto_start_description =>
+      'Run app automatically when system starts';
+
+  @override
+  String get minimize_to_tray => 'Minimize to tray';
+
+  @override
+  String get minimize_to_tray_description =>
+      'Minimize to system tray instead of exiting when closing window';
+
+  @override
+  String get media_key_control => 'Media Key Control';
+
+  @override
+  String get media_key_control_description =>
+      'Control playback using keyboard media keys';
+
+  @override
+  String get system_notifications => 'System Notifications';
+
+  @override
+  String get system_notifications_description =>
+      'Show system notifications for track changes etc.';
+
+  @override
+  String get shortcut_settings => 'Shortcut Settings';
+
+  @override
+  String get shortcut_settings_description => 'Customize global shortcuts';
+
+  @override
+  String get set => 'Set';
 
   @override
   String get high => 'High';
@@ -493,16 +656,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please wait for the current download to finish';
 
   @override
-  String get desktop => 'Desktop';
-
-  @override
   String get close_behavior => 'Close Behavior';
 
   @override
   String get close => 'Close';
-
-  @override
-  String get minimize_to_tray => 'Minimize to tray';
 
   @override
   String get show_tray_icon => 'Show System tray icon';
@@ -514,20 +671,106 @@ class AppLocalizationsEn extends AppLocalizations {
   String get u_love_pyro_music => 'We know you love Pyro Music';
 
   @override
+  String get version_info => 'Version Info';
+
+  @override
+  String get failed_to_check_for_updates => 'Failed to check for updates';
+
+  @override
+  String get import_cookie => 'Import Cookie';
+
+  @override
+  String get import_cookie_description => 'Import authentication from file';
+
+  @override
+  String get import => 'Import';
+
+  @override
+  String get export_cookie => 'Export Cookie';
+
+  @override
+  String get export_cookie_description => 'Export authentication to file';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get clear_cookie => 'Clear Cookie';
+
+  @override
+  String get clear_cookie_description => 'Clear all authentication';
+
+  @override
+  String get show_plain_lyrics => 'Show plain lyrics';
+
+  @override
+  String get show_synced_lyrics => 'Show synced lyrics';
+
+  @override
+  String get exit_edit_mode => 'Exit edit mode';
+
+  @override
+  String get enter_edit_mode => 'Enter edit mode';
+
+  @override
+  String get export_lyrics => 'Export lyrics';
+
+  @override
+  String get import_lyrics => 'Import lyrics';
+
+  @override
+  String get search_lyrics => 'Search lyrics';
+
+  @override
+  String get lyrics_settings => 'Lyrics settings';
+
+  @override
+  String get no_track_playing => 'No track playing';
+
+  @override
+  String get login_error => 'Login Error';
+
+  @override
+  String failed_to_get_auth_service(Object platform) {
+    return 'Failed to get auth service for $platform';
+  }
+
+  @override
+  String login_failed(Object error) {
+    return 'Login failed: $error';
+  }
+
+  @override
+  String get welcome_to_pyro_music => 'Welcome to Pyro Music';
+
+  @override
+  String get let_us_configure_first =>
+      'Before we start, let\'s configure some basic settings';
+
+  @override
   String get check_for_updates => 'Check for updates';
 
   @override
   String get about_pyro_music => 'About Pyro Music';
 
   @override
-  String get blacklist => 'Blacklist';
+  String get repository => 'Repository';
 
   @override
-  String get please_sponsor => 'Please Sponsor/Donate';
+  String get bug_issues => 'Bug+Issues';
+
+  @override
+  String get license => 'License';
 
   @override
   String get pyro_music_description =>
       'Pyro Music, a lightweight, cross-platform, free-for-all spotify client';
+
+  @override
+  String get blacklist => 'Blacklist';
+
+  @override
+  String get please_sponsor => 'Please Sponsor/Donate';
 
   @override
   String get version => 'Version';
@@ -539,12 +782,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get founder => 'Founder';
 
   @override
-  String get repository => 'Repository';
-
-  @override
-  String get bug_issues => 'Bug+Issues';
-
-  @override
   String get made_with => 'Made with ❤️ in Bangladesh🇧🇩';
 
   @override
@@ -554,9 +791,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String copyright(Object current_year) {
     return '© 2021-$current_year Kingkor Roy Tirtho';
   }
-
-  @override
-  String get license => 'License';
 
   @override
   String get add_spotify_credentials =>
@@ -683,9 +917,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get export_logs_description => 'Export application log files';
-
-  @override
-  String get export => 'Export';
 
   @override
   String get cache_cleared => 'Cache clearing completed';
@@ -936,7 +1167,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get developers => 'Developers';
 
   @override
-  String get not_logged_in => 'You\'re not logged in';
+  String get not_logged_in => 'Not logged in';
 
   @override
   String get search_mode => 'Search Mode';
@@ -1530,9 +1761,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get export_cookie => 'Export Cookie';
-
-  @override
   String get cookie_export_success => 'Cookie exported successfully';
 
   @override
@@ -1547,25 +1775,226 @@ class AppLocalizationsEn extends AppLocalizations {
   String get audio_quality_description => 'Select audio playback quality';
 
   @override
-  String get low_quality => 'Low';
+  String get accounts => 'Accounts';
 
   @override
-  String get medium_quality => 'Medium';
+  String get developers_options => 'Developer Options';
 
   @override
-  String get high_quality => 'High';
+  String get cookie_management => 'Cookie Management';
 
   @override
-  String get crossfade => 'Crossfade';
+  String get account_management => 'Account Management';
 
   @override
-  String get crossfade_description => 'Set transition effect between songs';
+  String logged_out(Object platform) {
+    return '$platform logged out';
+  }
 
   @override
-  String get off => 'Off';
+  String logout_failed(Object error) {
+    return 'Logout failed: $error';
+  }
 
   @override
-  String seconds(Object count) {
-    return '$count seconds';
+  String logged_in(Object user) {
+    return 'Logged in: $user';
+  }
+
+  @override
+  String get choose_theme_mode => 'Choose application theme mode';
+
+  @override
+  String get follow_system => 'Follow System';
+
+  @override
+  String get light_mode => 'Light';
+
+  @override
+  String get dark_mode => 'Dark';
+
+  @override
+  String get amoled_mode => 'AMOLED Mode';
+
+  @override
+  String get amoled_mode_description =>
+      'Use pure black background for dark theme';
+
+  @override
+  String get choose_accent_color => 'Choose application accent color scheme';
+
+  @override
+  String get paste_lrc_here => 'Paste LRC format lyrics here...';
+
+  @override
+  String get lyrics_content_cannot_be_empty => 'Lyrics content cannot be empty';
+
+  @override
+  String get import_success => 'Imported successfully';
+
+  @override
+  String get input_search_keywords => 'Input search keywords...';
+
+  @override
+  String get search_keywords_cannot_be_empty =>
+      'Search keywords cannot be empty';
+
+  @override
+  String get no_lyrics_found => 'No matching lyrics found';
+
+  @override
+  String get search_results => 'Search Results';
+
+  @override
+  String get lyrics_applied_successfully => 'Lyrics applied successfully';
+
+  @override
+  String get auto_scroll => 'Auto Scroll';
+
+  @override
+  String get highlight_current_line => 'Highlight Current Line';
+
+  @override
+  String get show_translation => 'Show Translation';
+
+  @override
+  String get font_size => 'Font Size';
+
+  @override
+  String get line_spacing => 'Line Spacing';
+
+  @override
+  String cookie_import_failed(Object error) {
+    return 'Cookie import failed: $error';
+  }
+
+  @override
+  String cookie_export_failed(Object error) {
+    return 'Cookie export failed: $error';
+  }
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get good_morning => 'Good morning';
+
+  @override
+  String get good_afternoon => 'Good afternoon';
+
+  @override
+  String get good_evening => 'Good evening';
+
+  @override
+  String welcome_back(Object username) {
+    return 'Welcome back, $username';
+  }
+
+  @override
+  String get search_for_music => 'Search for music';
+
+  @override
+  String get search_hint =>
+      'Find your favorite songs, artists, albums, and playlists';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get featured_playlists => 'Featured Playlists';
+
+  @override
+  String get see_all => 'See All';
+
+  @override
+  String get loading_playlists => 'Loading playlists...';
+
+  @override
+  String get no_featured_playlists => 'No featured playlists available';
+
+  @override
+  String get recent_tracks => 'Recent Tracks';
+
+  @override
+  String get loading_tracks => 'Loading tracks...';
+
+  @override
+  String get no_recent_tracks => 'No recent tracks found';
+
+  @override
+  String get recommended_artists => 'Recommended Artists';
+
+  @override
+  String get loading_artists => 'Loading artists...';
+
+  @override
+  String get no_recommended_artists => 'No recommended artists available';
+
+  @override
+  String get start_listening_hint => 'Start listening to see your history here';
+
+  @override
+  String no_results_found(Object query) {
+    return 'No results found for \"$query\"';
+  }
+
+  @override
+  String search_failed(Object error) {
+    return 'Search failed: $error';
+  }
+
+  @override
+  String by_author(Object author) {
+    return 'By $author';
+  }
+
+  @override
+  String get queue_is_empty => 'Queue is empty';
+
+  @override
+  String get add_tracks_to_get_started => 'Add some tracks to get started';
+
+  @override
+  String queue_count(Object count) {
+    return '$count tracks';
+  }
+
+  @override
+  String get playlist => 'Playlist';
+
+  @override
+  String get loading_playlist => 'Loading playlist...';
+
+  @override
+  String get playlist_not_found => 'Playlist not found';
+
+  @override
+  String tracks_count(Object count) {
+    return '$count tracks';
+  }
+
+  @override
+  String duration_total(Object duration) {
+    return 'Total duration: $duration';
+  }
+
+  @override
+  String get shuffle_play => 'Shuffle Play';
+
+  @override
+  String get play_all => 'Play All';
+
+  @override
+  String get repeat => 'Repeat';
+
+  @override
+  String get go_back => 'Go Back';
+
+  @override
+  String get release_date => 'Release Date';
+
+  @override
+  String followers_count(Object count) {
+    return '$count followers';
   }
 }

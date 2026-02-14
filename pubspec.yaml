@@ -26,21 +26,11 @@ dependencies:
   collection: ^1.18.0
   config_package:
     path: packages/config_package
-  curved_navigation_bar: ^1.0.3
-  desktop_webview_window:
-    git:
-      path: packages/desktop_webview_window
-      ref: feat/cookies
-      url: https://github.com/KRTirtho/flutter-plugins.git
+  # Removed curved_navigation_bar (stale)
+  # Removed desktop_webview_window git fork
   device_info_plus: ^11.1.1
   dio: ^5.4.3+1
-  disable_battery_optimization:
-    git:
-      url: https://github.com/KRTirtho/Disable-Battery-Optimizations.git
-  draggable_scrollbar:
-    git:
-      ref: cfd570035bf393de541d32e9b28808b5d7e602df
-      url: https://github.com/thielepaul/flutter-draggable-scrollbar.git
+  optimize_battery: ^0.0.3
   duration: ^3.0.12
   encrypt: ^5.0.3
   envied: ^1.0.0
@@ -49,14 +39,11 @@ dependencies:
   fluentui_system_icons: ^1.1.234
   flutter:
     sdk: flutter
-  flutter_broadcasts:
-    git:
-      url: https://github.com/KRTirtho/flutter_broadcasts.git
-      ref: 63931dfe06733d4fb7452e9981e1f0b23414d97a
+  # Removed flutter_broadcasts git fork
   flutter_cache_manager: ^3.3.0
   flutter_discord_rpc: ^1.0.0
   flutter_displaymode: ^0.6.0
-  flutter_feather_icons: ^2.0.0+1
+  lucide_icons_flutter: ^1.0.0
   flutter_form_builder: ^10.0.1
   flutter_hooks: ^0.21.0
   flutter_inappwebview: ^6.1.3
@@ -67,7 +54,6 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   flutter_sharing_intent: ^1.1.0
   flutter_svg: 2.0.17
-  flutter_undraw: ^0.2.1
   form_builder_validators: ^11.1.2
   form_validator: ^2.1.1
   freezed_annotation: any
@@ -102,13 +88,10 @@ dependencies:
   permission_handler: ^11.3.1
 
   provider: ^6.1.4
-  popover: ^0.3.0
+  # Removed popover (stale)
   riverpod: any
   riverpod_annotation: any
-  scrobblenaut:
-    git:
-      ref: dart-3-support
-      url: https://github.com/KRTirtho/scrobblenaut.git
+  # Removed scrobblenaut git fork
   scroll_to_index: ^3.0.1
   shared_preferences: ^2.2.3
   shelf: ^1.4.1
@@ -142,7 +125,7 @@ dependencies:
   auto_route: ^10.0.1
   home_widget: ^0.7.0+1
   get_it: ^8.0.3
-  webview_flutter: ^4.10.0
+  # Removed webview_flutter (redundant with flutter_inappwebview)
   flutter_colorpicker: ^1.1.0
   flutter_timezone: ^4.1.0
   world_flags: ^2.9.1

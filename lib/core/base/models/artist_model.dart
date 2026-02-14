@@ -8,18 +8,19 @@ import 'media_model.dart';
 @immutable
 class ArtistModel extends MediaModel implements ArtistInterface {
   /// Genres associated with this artist
+  @override
   final List<String>? genres;
 
-  /// Popularity score (0-100)
+  @override
   final int? popularity;
 
-  /// Number of followers
+  @override
   final int? followersCount;
 
-  /// Artist description or biography
+  @override
   final String? description;
 
-  /// Platform-specific metadata
+  @override
   final Map<String, dynamic> platformMetadata;
 
   /// Create a new artist model

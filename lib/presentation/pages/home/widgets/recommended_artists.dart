@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
 import 'package:pyro_music/presentation/widgets/common/artist_card.dart';
-import 'package:pyro_music/presentation/widgets/common/loading_indicator.dart';
+
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// A widget that displays recommended artists on the home page
 class RecommendedArtists extends StatelessWidget {
-  const RecommendedArtists({Key? key}) : super(key: key);
+  const RecommendedArtists({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     // This would normally come from a provider
-    final bool isLoading = false;
     final List<ArtistModel> artists =
         []; // Would come from recommendations provider
 
@@ -23,7 +24,7 @@ class RecommendedArtists extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Recommended Artists',
+              l10n.recommended_artists,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -32,18 +33,16 @@ class RecommendedArtists extends StatelessWidget {
               onPressed: () {
                 // Navigate to see all recommended artists
               },
-              child: const Text('See All'),
+              child: Text(l10n.see_all),
             ),
           ],
         ),
         const SizedBox(height: 16),
 
         // Content
-        if (isLoading) ...[
-          const LoadingIndicator(text: 'Loading recommendations...'),
-        ] else if (artists.isEmpty) ...[
-          _buildEmptyState(theme),
-        ] else ...[
+        if (artists.isEmpty)
+          _buildEmptyState(theme, l10n)
+        else
           SizedBox(
             height: 160,
             child: ListView.builder(
@@ -67,12 +66,11 @@ class RecommendedArtists extends StatelessWidget {
               },
             ),
           ),
-        ],
       ],
     );
   }
 
-  Widget _buildEmptyState(ThemeData theme) {
+  Widget _buildEmptyState(ThemeData theme, AppLocalizations l10n) {
     return Container(
       height: 160,
       alignment: Alignment.center,
@@ -86,7 +84,7 @@ class RecommendedArtists extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No artist recommendations available',
+            l10n.no_recommended_artists,
             style: theme.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),

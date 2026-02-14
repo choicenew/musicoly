@@ -1,6 +1,5 @@
 import 'package:pyro_music/features/language/config/locale_config.dart';
 import 'package:config_package/config_package.dart';
-import 'package:flutter/material.dart' show Locale;
 
 class LocaleService {
   final ConfigRepository _configRepository;

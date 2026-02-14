@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
 import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays the artist header with image and basic info
 class ArtistHeader extends StatelessWidget {
@@ -14,6 +15,7 @@ class ArtistHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -54,7 +56,7 @@ class ArtistHeader extends StatelessWidget {
           // Followers count
           if (artist.followersCount != null)
             Text(
-              '${_formatFollowers(artist.followersCount!)} followers',
+              l10n.followers_count(artist.followersCount!),
               style: theme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -82,7 +84,7 @@ class ArtistHeader extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.play_arrow),
-            label: const Text('Play'),
+            label: Text(l10n.play),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -107,16 +109,5 @@ class ArtistHeader extends StatelessWidget {
       ),
       backgroundColor: theme.colorScheme.surfaceContainerHighest,
     );
-  }
-
-  /// Formats the followers count to a readable string
-  String _formatFollowers(int count) {
-    if (count >= 1000000) {
-      return '${(count / 1000000).toStringAsFixed(1)}M';
-    } else if (count >= 1000) {
-      return '${(count / 1000).toStringAsFixed(1)}K';
-    } else {
-      return count.toString();
-    }
   }
 }

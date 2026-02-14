@@ -4,7 +4,11 @@ import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/base/interfaces/player/player_interface.dart';
+import '../../../core/base/interfaces/player/playback_interface.dart';
+import '../../../core/base/services/player_service.dart';
+import '../../../core/services/service_registry.dart';
 import '../services/player_service_impl.dart';
+import 'playback_provider.dart';
 
 part 'player_state_provider.freezed.dart';
 part 'player_state_provider.g.dart';
@@ -34,9 +38,38 @@ class PlayerStateNotifier extends _$PlayerStateNotifier {
 
   @override
   PlayerState build() {
-    _playerService = PlayerServiceImpl();
+    final registry = ServiceRegistry();
+    _playerService = registry.getService<PlayerService>('player_service') as PlayerServiceImpl;
     _initialize();
+
+    // 监听播放控制状态
+    ref.listen(playbackStateProvider, (previous, next) {
+      if (next.currentTrackId != state.currentTrackId) {
+        _updateCurrentTrack(next.currentTrackId);
+      }
+      
+      state = state.copyWith(
+        position: next.position.inMilliseconds,
+        isPlaying: next.playbackState == PlaybackState.playing,
+        isLoading: next.playbackState == PlaybackState.buffering,
+      );
+    });
+
     return const PlayerState();
+  }
+
+  /// 更新当前曲目信息
+  Future<void> _updateCurrentTrack(String? trackId) async {
+    if (trackId == null) {
+      state = state.copyWith(currentTrack: null, currentTrackId: null);
+      return;
+    }
+    
+    final track = await _playerService.getCurrentTrack();
+    state = state.copyWith(
+      currentTrackId: trackId,
+      currentTrack: track,
+    );
   }
 
   /// 初始化

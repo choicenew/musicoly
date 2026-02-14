@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/playlist_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays detailed playlist information
 class PlaylistInfo extends StatelessWidget {
@@ -7,11 +8,12 @@ class PlaylistInfo extends StatelessWidget {
   final PlaylistModel playlist;
 
   /// Creates a new playlist info widget
-  const PlaylistInfo({Key? key, required this.playlist}) : super(key: key);
+  const PlaylistInfo({super.key, required this.playlist});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +22,7 @@ class PlaylistInfo extends StatelessWidget {
         if (playlist.description != null &&
             playlist.description!.isNotEmpty) ...[
           Text(
-            'Description',
+            l10n.description,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -35,7 +37,7 @@ class PlaylistInfo extends StatelessWidget {
 
         // Playlist details section title
         Text(
-          'Playlist Details',
+          l10n.details,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -52,7 +54,7 @@ class PlaylistInfo extends StatelessWidget {
               _buildInfoItem(
                 context,
                 icon: Icons.person,
-                title: 'Created By',
+                title: l10n.founder,
                 value: playlist.ownerName!,
               ),
 
@@ -60,23 +62,23 @@ class PlaylistInfo extends StatelessWidget {
             _buildInfoItem(
               context,
               icon: Icons.visibility,
-              title: 'Privacy',
-              value: playlist.isPublic ? 'Public' : 'Private',
+              title: l10n.public,
+              value: playlist.isPublic ? l10n.done : l10n.none,
             ),
 
             // Collaborative status
             _buildInfoItem(
               context,
               icon: Icons.group,
-              title: 'Collaborative',
-              value: playlist.isCollaborative ? 'Yes' : 'No',
+              title: l10n.collaborative,
+              value: playlist.isCollaborative ? l10n.done : l10n.none,
             ),
 
             // Total tracks
             _buildInfoItem(
               context,
               icon: Icons.music_note,
-              title: 'Tracks',
+              title: l10n.tracks,
               value: playlist.totalTracks.toString(),
             ),
           ],
@@ -99,7 +101,7 @@ class PlaylistInfo extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: theme.colorScheme.primary),
+          Icon(icon, size: 20, color: theme.colorScheme.primary),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -108,15 +110,14 @@ class PlaylistInfo extends StatelessWidget {
                 Text(
                   title,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 4),
                 Text(
                   value,
-                  style: theme.textTheme.bodyMedium,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

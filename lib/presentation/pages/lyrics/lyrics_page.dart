@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/presentation/pages/lyrics/widgets/synced_lyrics_widget.dart';
 import 'package:pyro_music/presentation/pages/lyrics/widgets/plain_lyrics_widget.dart';
 import 'package:pyro_music/presentation/widgets/common/loading_indicator.dart';
+
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// 歌词页面
 class LyricsPage extends ConsumerWidget {
@@ -16,23 +17,24 @@ class LyricsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lyricController = ref.watch(LyricController.provider);
+    final l10n = AppLocalizations.of(context);
     // 仅监听 currentTrack 的变化，提高性能
     final currentTrack = ref.watch(playerStateProvider.select((s) => s.currentTrack));
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('歌词'),
+        title: Text(l10n.lyrics),
         actions: [
           // 同步歌词切换按钮
           IconButton(
             icon: Icon(lyricController.showSyncedLyrics.value ? Icons.sync : Icons.sync_disabled),
-            tooltip: lyricController.showSyncedLyrics.value ? '显示普通歌词' : '显示同步歌词',
+            tooltip: lyricController.showSyncedLyrics.value ? l10n.show_plain_lyrics : l10n.show_synced_lyrics,
             onPressed: lyricController.toggleSyncedLyrics,
           ),
           // 编辑模式切换按钮
           IconButton(
             icon: Icon(lyricController.isEditMode.value ? Icons.edit_off : Icons.edit),
-            tooltip: lyricController.isEditMode.value ? '退出编辑模式' : '进入编辑模式',
+            tooltip: lyricController.isEditMode.value ? l10n.exit_edit_mode : l10n.enter_edit_mode,
             onPressed: lyricController.toggleEditMode,
           ),
           // 更多选项菜单
@@ -54,32 +56,32 @@ class LyricsPage extends ConsumerWidget {
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'export',
                 child: ListTile(
-                  leading: Icon(Icons.file_download),
-                  title: Text('导出歌词'),
+                  leading: const Icon(Icons.file_download),
+                  title: Text(l10n.export_lyrics),
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'import',
                 child: ListTile(
-                  leading: Icon(Icons.file_upload),
-                  title: Text('导入歌词'),
+                  leading: const Icon(Icons.file_upload),
+                  title: Text(l10n.import_lyrics),
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'search',
                 child: ListTile(
-                  leading: Icon(Icons.search),
-                  title: Text('搜索歌词'),
+                  leading: const Icon(Icons.search),
+                  title: Text(l10n.search_lyrics),
                 ),
               ),
-              const PopupMenuItem<String>(
+              PopupMenuItem<String>(
                 value: 'settings',
                 child: ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('歌词设置'),
+                  leading: const Icon(Icons.settings),
+                  title: Text(l10n.lyrics_settings),
                 ),
               ),
             ],
@@ -87,7 +89,7 @@ class LyricsPage extends ConsumerWidget {
         ],
       ),
       body: currentTrack == null
-          ? const Center(child: Text('没有正在播放的曲目'))
+          ? Center(child: Text(l10n.no_track_playing))
           : ValueListenableBuilder<LyricData?>(
               valueListenable: lyricController.currentLyrics,
               builder: (context, lyrics, _) {
@@ -168,42 +170,44 @@ class LyricsPage extends ConsumerWidget {
     }
     
     final textController = TextEditingController();
+    final l10n = AppLocalizations.of(context);
     
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('导入LRC歌词'),
+        title: Text(l10n.import_lyrics),
         content: TextField(
           controller: textController,
           maxLines: 10,
-          decoration: const InputDecoration(
-            hintText: '粘贴LRC格式歌词...',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: l10n.paste_lrc_here,
+            border: const OutlineInputBorder(),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
               final lrcContent = textController.text.trim();
               if (lrcContent.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('歌词内容不能为空')),
+                  SnackBar(content: Text(l10n.lyrics_content_cannot_be_empty)),
                 );
                 return;
               }
               
               final success = await controller.importFromLRC(lrcContent, currentTrack);
-              Navigator.of(context).pop();
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(success ? '导入成功' : '导入失败')),
-              );
+              if (context.mounted) {
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(success ? l10n.import_success : l10n.import_failed(''))),
+                );
+              }
             },
-            child: const Text('导入'),
+            child: Text(l10n.import),
           ),
         ],
       ),
@@ -212,9 +216,10 @@ class LyricsPage extends ConsumerWidget {
   
   // 搜索歌词
   void _searchLyrics(BuildContext context, LyricController controller, dynamic currentTrack) {
+    final l10n = AppLocalizations.of(context);
     if (currentTrack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('没有正在播放的曲目')),
+        SnackBar(content: Text(l10n.no_track_playing)),
       );
       return;
     }
@@ -225,36 +230,40 @@ class LyricsPage extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('搜索歌词'),
+        title: Text(l10n.search_lyrics),
         content: TextField(
           controller: textController,
-          decoration: const InputDecoration(
-            hintText: '输入搜索关键词...',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: l10n.input_search_keywords,
+            border: const OutlineInputBorder(),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
               final query = textController.text.trim();
               if (query.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('搜索关键词不能为空')),
+                  SnackBar(content: Text(l10n.search_keywords_cannot_be_empty)),
                 );
                 return;
               }
               
-              Navigator.of(context).pop();
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
               
               // 显示搜索结果
               final results = await controller.searchLyrics(query);
+              if (!context.mounted) return;
+
               if (results.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('未找到匹配的歌词')),
+                  SnackBar(content: Text(l10n.no_lyrics_found)),
                 );
                 return;
               }
@@ -263,7 +272,7 @@ class LyricsPage extends ConsumerWidget {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('搜索结果'),
+                  title: Text(l10n.search_results),
                   content: SizedBox(
                     width: double.maxFinite,
                     height: 300,
@@ -277,10 +286,12 @@ class LyricsPage extends ConsumerWidget {
                           trailing: Icon(lyrics.isSynced ? Icons.sync : Icons.sync_disabled),
                           onTap: () async {
                             await controller.saveLyrics(lyrics);
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('歌词应用成功')),
-                            );
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(l10n.lyrics_applied_successfully)),
+                              );
+                            }
                           },
                         );
                       },
@@ -289,13 +300,13 @@ class LyricsPage extends ConsumerWidget {
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('关闭'),
+                      child: Text(l10n.cancel),
                     ),
                   ],
                 ),
               );
             },
-            child: const Text('搜索'),
+            child: Text(l10n.search),
           ),
         ],
       ),
@@ -304,10 +315,11 @@ class LyricsPage extends ConsumerWidget {
   
   // 显示歌词设置
   void _showLyricsSettings(BuildContext context, LyricController controller) {
+    final l10n = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('歌词设置'),
+        title: Text(l10n.lyrics_settings),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -317,7 +329,7 @@ class LyricsPage extends ConsumerWidget {
                 valueListenable: controller.autoScroll,
                 builder: (context, autoScroll, _) {
                   return SwitchListTile(
-                    title: const Text('自动滚动'),
+                    title: Text(l10n.auto_scroll),
                     value: autoScroll,
                     onChanged: (value) {
                       controller.toggleAutoScroll();
@@ -330,7 +342,7 @@ class LyricsPage extends ConsumerWidget {
                 valueListenable: controller.highlightCurrentLine,
                 builder: (context, highlight, _) {
                   return SwitchListTile(
-                    title: const Text('高亮当前行'),
+                    title: Text(l10n.highlight_current_line),
                     value: highlight,
                     onChanged: (value) {
                       controller.toggleHighlightCurrentLine();
@@ -343,7 +355,7 @@ class LyricsPage extends ConsumerWidget {
                 valueListenable: controller.showTranslation,
                 builder: (context, showTranslation, _) {
                   return SwitchListTile(
-                    title: const Text('显示翻译'),
+                    title: Text(l10n.show_translation),
                     value: showTranslation,
                     onChanged: (value) {
                       controller.toggleShowTranslation();
@@ -356,7 +368,7 @@ class LyricsPage extends ConsumerWidget {
                 valueListenable: controller.fontSize,
                 builder: (context, fontSize, _) {
                   return ListTile(
-                    title: const Text('字体大小'),
+                    title: Text(l10n.font_size),
                     subtitle: Slider(
                       value: fontSize,
                       min: 12.0,
@@ -375,7 +387,7 @@ class LyricsPage extends ConsumerWidget {
                 valueListenable: controller.lineSpacing,
                 builder: (context, lineSpacing, _) {
                   return ListTile(
-                    title: const Text('行间距'),
+                    title: Text(l10n.line_spacing),
                     subtitle: Slider(
                       value: lineSpacing,
                       min: 1.0,
@@ -395,7 +407,7 @@ class LyricsPage extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('关闭'),
+            child: Text(l10n.cancel),
           ),
         ],
       ),

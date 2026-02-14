@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/core/base/services/auth_service.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// 移动端登录页面
-/// 
-/// 使用平台注册表动态发现可用的认证服务
 class MobileLoginPage extends StatefulWidget {
   /// 构造函数
   const MobileLoginPage({super.key});
@@ -48,6 +48,7 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
   }
 
   Future<void> _loginWithPlatform(String platformId) async {
+    final l10n = AppLocalizations.of(context);
     try {
       // 设置活跃平台
       _platformRegistry.activePlatformId = platformId;
@@ -56,21 +57,19 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
       final authService = _platformRegistry.getServiceInstance<AuthService>(platformId);
       
       if (authService == null) {
-        _showErrorDialog('无法获取${_getPlatformName(platformId)}认证服务');
+        _showErrorDialog(l10n.failed_to_get_auth_service(_getPlatformName(platformId)));
         return;
       }
 
       // 执行OAuth登录
-      final user = await authService.loginWithOAuth();
+      await authService.loginWithOAuth();
       
-      if (user != null) {
-        // 登录成功，返回上一页
-        if (mounted) {
-          Navigator.of(context).pop(true);
-        }
+      // 登录成功，返回上一页
+      if (mounted) {
+        Navigator.of(context).pop(true);
       }
     } catch (e) {
-      _showErrorDialog('登录失败: $e');
+      _showErrorDialog(l10n.login_failed(e.toString()));
     }
   }
 
@@ -81,15 +80,16 @@ class _MobileLoginPageState extends State<MobileLoginPage> {
   }
 
   void _showErrorDialog(String message) {
+    final l10n = AppLocalizations.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('登录错误'),
+        title: Text(l10n.login_error),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('确定'),
+            child: Text(l10n.ok),
           ),
         ],
       ),

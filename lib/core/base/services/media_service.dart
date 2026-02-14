@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'base_service.dart';
 import '../interfaces/media/track_interface.dart';
 import '../interfaces/media/album_interface.dart';
 import '../interfaces/media/artist_interface.dart';
 import '../interfaces/media/playlist_interface.dart';
-import '../interfaces/media/collection_interface.dart';
 
 /// Base class for media services
 ///

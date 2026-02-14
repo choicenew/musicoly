@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/playlist_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays the playlist header with cover art and basic info
 class PlaylistHeader extends StatelessWidget {
@@ -7,11 +8,12 @@ class PlaylistHeader extends StatelessWidget {
   final PlaylistModel playlist;
 
   /// Creates a new playlist header widget
-  const PlaylistHeader({Key? key, required this.playlist}) : super(key: key);
+  const PlaylistHeader({super.key, required this.playlist});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -51,7 +53,7 @@ class PlaylistHeader extends StatelessWidget {
                   children: [
                     // Playlist type
                     Text(
-                      'PLAYLIST',
+                      l10n.playlist.toUpperCase(),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -72,7 +74,7 @@ class PlaylistHeader extends StatelessWidget {
                     // Owner name
                     if (playlist.ownerName != null)
                       Text(
-                        'By ${playlist.ownerName}',
+                        l10n.by_author(playlist.ownerName!),
                         style: theme.textTheme.bodyMedium,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -81,7 +83,7 @@ class PlaylistHeader extends StatelessWidget {
 
                     // Track count
                     Text(
-                      '${playlist.totalTracks} tracks',
+                      l10n.tracks_count(playlist.totalTracks),
                       style: theme.textTheme.bodySmall,
                     ),
                     const SizedBox(height: 16),
@@ -92,7 +94,7 @@ class PlaylistHeader extends StatelessWidget {
                         // TODO: Implement play functionality
                       },
                       icon: const Icon(Icons.play_arrow),
-                      label: const Text('Play'),
+                      label: Text(l10n.play),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

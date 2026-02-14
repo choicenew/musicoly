@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'base_service.dart';
 import '../interfaces/media/artist_interface.dart';
 import '../interfaces/media/album_interface.dart';

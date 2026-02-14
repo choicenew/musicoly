@@ -4,33 +4,36 @@ import 'package:pyro_music/presentation/pages/home/widgets/featured_playlists.da
 import 'package:pyro_music/presentation/pages/home/widgets/recent_tracks.dart';
 import 'package:pyro_music/presentation/pages/home/widgets/recommended_artists.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// The home page of the application
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             // App bar
-            const SliverAppBar(
-              title: Text('Home'),
+            SliverAppBar(
+              title: Text(l10n.home),
               floating: true,
               snap: true,
             ),
 
             // Home content
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     // Welcome header
                     HomeHeader(),
-                    SizedBox(height: 24),
+                    SizedBox(height: 32),
 
                     // Recently played tracks
                     RecentTracks(),

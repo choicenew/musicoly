@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/playlist_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/pages/playlist/widgets/playlist_header.dart';
 // 修正为正确的导入路径
 import 'package:pyro_music/presentation/pages/playlist/widgets/playlist_tracks_list.dart';
@@ -18,7 +18,7 @@ class PlaylistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 实际应从数据层获取播放列表数据
-    final PlaylistModel? playlist = null; 
+    const playlist = null; 
 
     return Scaffold(
       body: playlist == null
@@ -48,6 +48,7 @@ class PlaylistPage extends StatelessWidget {
 
   Widget _buildErrorState(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Center(
       child: Column(
@@ -60,12 +61,12 @@ class PlaylistPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Playlist not found',
+            l10n.playlist_not_found,
             style: theme.textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
-            'The playlist you are looking for could not be found',
+            l10n.something_went_wrong,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -74,7 +75,7 @@ class PlaylistPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Go Back'),
+            child: Text(l10n.previous),
           ),
         ],
       ),

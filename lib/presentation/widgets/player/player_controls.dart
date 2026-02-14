@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// A widget that displays playback controls (play/pause, next, previous, etc.)
 class PlayerControls extends StatelessWidget {
   /// Whether a track is currently playing
@@ -27,7 +29,7 @@ class PlayerControls extends StatelessWidget {
   final VoidCallback? onRepeat;
 
   const PlayerControls({
-    Key? key,
+    super.key,
     this.isPlaying = false,
     this.isShuffleEnabled = false,
     this.repeatMode = RepeatMode.off,
@@ -36,11 +38,12 @@ class PlayerControls extends StatelessWidget {
     this.onPrevious,
     this.onShuffle,
     this.onRepeat,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final primaryColor = theme.colorScheme.primary;
     final iconColor = theme.iconTheme.color;
 
@@ -54,7 +57,7 @@ class PlayerControls extends StatelessWidget {
             color: isShuffleEnabled ? primaryColor : iconColor,
           ),
           onPressed: onShuffle,
-          tooltip: 'Shuffle',
+          tooltip: l10n.shuffle,
         ),
 
         // Previous track button
@@ -62,7 +65,7 @@ class PlayerControls extends StatelessWidget {
           icon: const Icon(Icons.skip_previous),
           iconSize: 40,
           onPressed: onPrevious,
-          tooltip: 'Previous',
+          tooltip: l10n.previous,
         ),
 
         // Play/Pause button
@@ -80,7 +83,7 @@ class PlayerControls extends StatelessWidget {
             ),
             iconSize: 32,
             onPressed: onPlayPause,
-            tooltip: isPlaying ? 'Pause' : 'Play',
+            tooltip: isPlaying ? l10n.pause : l10n.play,
           ),
         ),
 
@@ -89,7 +92,7 @@ class PlayerControls extends StatelessWidget {
           icon: const Icon(Icons.skip_next),
           iconSize: 40,
           onPressed: onNext,
-          tooltip: 'Next',
+          tooltip: l10n.next,
         ),
 
         // Repeat button
@@ -99,7 +102,7 @@ class PlayerControls extends StatelessWidget {
             color: repeatMode != RepeatMode.off ? primaryColor : iconColor,
           ),
           onPressed: onRepeat,
-          tooltip: 'Repeat',
+          tooltip: l10n.repeat,
         ),
       ],
     );

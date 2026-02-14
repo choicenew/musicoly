@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// A widget that displays a welcome header on the home page
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({Key? key}) : super(key: key);
+  const HomeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final greeting = _getGreeting();
-    final username = 'User'; // This would come from auth provider
+    final l10n = AppLocalizations.of(context);
+    final greeting = _getGreeting(l10n);
+    const username = 'User'; // This would come from auth provider
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +24,7 @@ class HomeHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Welcome back, $username',
+          l10n.welcome_back(username),
           style: theme.textTheme.titleMedium?.copyWith(
             color: theme.textTheme.titleMedium?.color?.withValues(alpha: 0.7),
           ),
@@ -31,15 +34,15 @@ class HomeHeader extends StatelessWidget {
   }
 
   /// Returns a greeting based on the current time of day
-  String _getGreeting() {
+  String _getGreeting(AppLocalizations l10n) {
     final hour = DateTime.now().hour;
 
     if (hour < 12) {
-      return 'Good morning';
+      return l10n.good_morning;
     } else if (hour < 17) {
-      return 'Good afternoon';
+      return l10n.good_afternoon;
     } else {
-      return 'Good evening';
+      return l10n.good_evening;
     }
   }
 }

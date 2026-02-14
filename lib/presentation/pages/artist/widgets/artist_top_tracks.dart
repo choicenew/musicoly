@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
 import 'package:pyro_music/core/base/models/track_model.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/widgets/common/track_tile.dart';
 
 /// Widget that displays the top tracks of an artist
@@ -16,6 +17,7 @@ class ArtistTopTracks extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     // 实际应从数据层获取，这里保持示例代码
     final List<TrackModel> tracks = [];
@@ -25,7 +27,7 @@ class ArtistTopTracks extends ConsumerWidget {
       children: [
         // Section title
         Text(
-          'Popular Tracks',
+          l10n.popular_tracks,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -46,7 +48,7 @@ class ArtistTopTracks extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No tracks available',
+                    l10n.no_tracks_available,
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -86,7 +88,7 @@ class ArtistTopTracks extends ConsumerWidget {
                     MaterialPageRoute(
                       builder: (context) => Scaffold(
                         appBar:
-                            AppBar(title: Text('${artist.name} - All Tracks')),
+                            AppBar(title: Text('${artist.name} - ${l10n.all_tracks}')),
                         body: ListView.builder(
                           itemCount: tracks.length,
                           itemBuilder: (context, index) => TrackTile(
@@ -97,7 +99,7 @@ class ArtistTopTracks extends ConsumerWidget {
                     ),
                   );
                 },
-                child: const Text('See All Tracks'),
+                child: Text(l10n.see_all_tracks),
               ),
             ),
           ),

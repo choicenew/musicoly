@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @fans_also_like.
   ///
   /// In en, this message translates to:
-  /// **'Fans also like'**
+  /// **'Fans Also Like'**
   String get fans_also_like;
 
   /// No description provided for @loading.
@@ -409,6 +409,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
+
+  /// No description provided for @loading_album.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading album...'**
+  String get loading_album;
+
+  /// No description provided for @loading_artist.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading artist...'**
+  String get loading_artist;
+
+  /// No description provided for @album_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Album not found'**
+  String get album_not_found;
+
+  /// No description provided for @album_not_found_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The album you are looking for could not be found'**
+  String get album_not_found_hint;
+
+  /// No description provided for @artist_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Artist not found'**
+  String get artist_not_found;
+
+  /// No description provided for @artist_not_found_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'The artist you are looking for could not be found'**
+  String get artist_not_found_hint;
+
+  /// No description provided for @unknown_release_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown release date'**
+  String get unknown_release_date;
+
+  /// No description provided for @label.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get label;
+
+  /// No description provided for @album_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Album Details'**
+  String get album_details;
+
+  /// No description provided for @no_tracks_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracks available'**
+  String get no_tracks_available;
+
+  /// No description provided for @no_albums_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No albums available'**
+  String get no_albums_available;
+
+  /// No description provided for @no_related_artists_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No related artists found'**
+  String get no_related_artists_found;
+
+  /// No description provided for @popular_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Popular Tracks'**
+  String get popular_tracks;
+
+  /// No description provided for @see_all_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'See All Tracks'**
+  String get see_all_tracks;
+
+  /// No description provided for @all_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'All Tracks'**
+  String get all_tracks;
+
+  /// No description provided for @songs_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 song} other{{count} songs}}'**
+  String songs_count(num count);
 
   /// No description provided for @artist.
   ///
@@ -803,7 +899,7 @@ abstract class AppLocalizations {
   /// No description provided for @language_region.
   ///
   /// In en, this message translates to:
-  /// **'Language & Region'**
+  /// **'Language and Region'**
   String get language_region;
 
   /// No description provided for @language.
@@ -929,13 +1025,13 @@ abstract class AppLocalizations {
   /// No description provided for @sync_album_color.
   ///
   /// In en, this message translates to:
-  /// **'Sync album color'**
+  /// **'Sync Album Color'**
   String get sync_album_color;
 
   /// No description provided for @sync_album_color_description.
   ///
   /// In en, this message translates to:
-  /// **'Uses the dominant color of the album art as the accent color'**
+  /// **'Sync UI color based on album artwork'**
   String get sync_album_color_description;
 
   /// No description provided for @playback.
@@ -949,6 +1045,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Audio Quality'**
   String get audio_quality;
+
+  /// No description provided for @select_audio_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Select audio playback quality'**
+  String get select_audio_quality;
+
+  /// No description provided for @low_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get low_quality;
+
+  /// No description provided for @medium_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get medium_quality;
+
+  /// No description provided for @high_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get high_quality;
+
+  /// No description provided for @crossfade.
+  ///
+  /// In en, this message translates to:
+  /// **'Crossfade'**
+  String get crossfade;
+
+  /// No description provided for @crossfade_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Set transition effect between songs'**
+  String get crossfade_description;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
+
+  /// No description provided for @seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seconds'**
+  String seconds(Object count);
+
+  /// No description provided for @download_path.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Path'**
+  String get download_path;
+
+  /// No description provided for @download_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Format'**
+  String get download_format;
+
+  /// No description provided for @download_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Lyrics'**
+  String get download_lyrics;
+
+  /// No description provided for @download_lyrics_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Download lyric files along with songs'**
+  String get download_lyrics_description;
+
+  /// No description provided for @download_cover.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Cover'**
+  String get download_cover;
+
+  /// No description provided for @download_cover_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Download cover images along with songs'**
+  String get download_cover_description;
+
+  /// No description provided for @file_naming_format.
+  ///
+  /// In en, this message translates to:
+  /// **'File Naming Format'**
+  String get file_naming_format;
+
+  /// No description provided for @file_naming_format_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Set naming rules for downloaded files'**
+  String get file_naming_format_description;
+
+  /// No description provided for @song_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Song Title'**
+  String get song_title;
+
+  /// No description provided for @artist_song_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Artist - Song Title'**
+  String get artist_song_title;
+
+  /// No description provided for @song_title_artist.
+  ///
+  /// In en, this message translates to:
+  /// **'Song Title - Artist'**
+  String get song_title_artist;
+
+  /// No description provided for @album_track_song_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Album - Track - Song Title'**
+  String get album_track_song_title;
+
+  /// No description provided for @desktop.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop'**
+  String get desktop;
+
+  /// No description provided for @auto_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-start on boot'**
+  String get auto_start;
+
+  /// No description provided for @auto_start_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Run app automatically when system starts'**
+  String get auto_start_description;
+
+  /// No description provided for @minimize_to_tray.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimize to tray'**
+  String get minimize_to_tray;
+
+  /// No description provided for @minimize_to_tray_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimize to system tray instead of exiting when closing window'**
+  String get minimize_to_tray_description;
+
+  /// No description provided for @media_key_control.
+  ///
+  /// In en, this message translates to:
+  /// **'Media Key Control'**
+  String get media_key_control;
+
+  /// No description provided for @media_key_control_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Control playback using keyboard media keys'**
+  String get media_key_control_description;
+
+  /// No description provided for @system_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'System Notifications'**
+  String get system_notifications;
+
+  /// No description provided for @system_notifications_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Show system notifications for track changes etc.'**
+  String get system_notifications_description;
+
+  /// No description provided for @shortcut_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcut Settings'**
+  String get shortcut_settings;
+
+  /// No description provided for @shortcut_settings_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize global shortcuts'**
+  String get shortcut_settings_description;
+
+  /// No description provided for @set.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get set;
 
   /// No description provided for @high.
   ///
@@ -992,12 +1280,6 @@ abstract class AppLocalizations {
   /// **'Please wait for the current download to finish'**
   String get wait_for_download_to_finish;
 
-  /// No description provided for @desktop.
-  ///
-  /// In en, this message translates to:
-  /// **'Desktop'**
-  String get desktop;
-
   /// No description provided for @close_behavior.
   ///
   /// In en, this message translates to:
@@ -1009,12 +1291,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
-
-  /// No description provided for @minimize_to_tray.
-  ///
-  /// In en, this message translates to:
-  /// **'Minimize to tray'**
-  String get minimize_to_tray;
 
   /// No description provided for @show_tray_icon.
   ///
@@ -1034,6 +1310,150 @@ abstract class AppLocalizations {
   /// **'We know you love Pyro Music'**
   String get u_love_pyro_music;
 
+  /// No description provided for @version_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Version Info'**
+  String get version_info;
+
+  /// No description provided for @failed_to_check_for_updates.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to check for updates'**
+  String get failed_to_check_for_updates;
+
+  /// No description provided for @import_cookie.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Cookie'**
+  String get import_cookie;
+
+  /// No description provided for @import_cookie_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Import authentication from file'**
+  String get import_cookie_description;
+
+  /// No description provided for @import.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get import;
+
+  /// No description provided for @export_cookie.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Cookie'**
+  String get export_cookie;
+
+  /// No description provided for @export_cookie_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Export authentication to file'**
+  String get export_cookie_description;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @clear_cookie.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cookie'**
+  String get clear_cookie;
+
+  /// No description provided for @clear_cookie_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all authentication'**
+  String get clear_cookie_description;
+
+  /// No description provided for @show_plain_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Show plain lyrics'**
+  String get show_plain_lyrics;
+
+  /// No description provided for @show_synced_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Show synced lyrics'**
+  String get show_synced_lyrics;
+
+  /// No description provided for @exit_edit_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit edit mode'**
+  String get exit_edit_mode;
+
+  /// No description provided for @enter_edit_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter edit mode'**
+  String get enter_edit_mode;
+
+  /// No description provided for @export_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Export lyrics'**
+  String get export_lyrics;
+
+  /// No description provided for @import_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Import lyrics'**
+  String get import_lyrics;
+
+  /// No description provided for @search_lyrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Search lyrics'**
+  String get search_lyrics;
+
+  /// No description provided for @lyrics_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics settings'**
+  String get lyrics_settings;
+
+  /// No description provided for @no_track_playing.
+  ///
+  /// In en, this message translates to:
+  /// **'No track playing'**
+  String get no_track_playing;
+
+  /// No description provided for @login_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Login Error'**
+  String get login_error;
+
+  /// No description provided for @failed_to_get_auth_service.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get auth service for {platform}'**
+  String failed_to_get_auth_service(Object platform);
+
+  /// No description provided for @login_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Login failed: {error}'**
+  String login_failed(Object error);
+
+  /// No description provided for @welcome_to_pyro_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Pyro Music'**
+  String get welcome_to_pyro_music;
+
+  /// No description provided for @let_us_configure_first.
+  ///
+  /// In en, this message translates to:
+  /// **'Before we start, let\'s configure some basic settings'**
+  String get let_us_configure_first;
+
   /// No description provided for @check_for_updates.
   ///
   /// In en, this message translates to:
@@ -1046,6 +1466,30 @@ abstract class AppLocalizations {
   /// **'About Pyro Music'**
   String get about_pyro_music;
 
+  /// No description provided for @repository.
+  ///
+  /// In en, this message translates to:
+  /// **'Repository'**
+  String get repository;
+
+  /// No description provided for @bug_issues.
+  ///
+  /// In en, this message translates to:
+  /// **'Bug+Issues'**
+  String get bug_issues;
+
+  /// No description provided for @license.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get license;
+
+  /// No description provided for @pyro_music_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Pyro Music, a lightweight, cross-platform, free-for-all spotify client'**
+  String get pyro_music_description;
+
   /// No description provided for @blacklist.
   ///
   /// In en, this message translates to:
@@ -1057,12 +1501,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please Sponsor/Donate'**
   String get please_sponsor;
-
-  /// No description provided for @pyro_music_description.
-  ///
-  /// In en, this message translates to:
-  /// **'Pyro Music, a lightweight, cross-platform, free-for-all spotify client'**
-  String get pyro_music_description;
 
   /// No description provided for @version.
   ///
@@ -1082,18 +1520,6 @@ abstract class AppLocalizations {
   /// **'Founder'**
   String get founder;
 
-  /// No description provided for @repository.
-  ///
-  /// In en, this message translates to:
-  /// **'Repository'**
-  String get repository;
-
-  /// No description provided for @bug_issues.
-  ///
-  /// In en, this message translates to:
-  /// **'Bug+Issues'**
-  String get bug_issues;
-
   /// No description provided for @made_with.
   ///
   /// In en, this message translates to:
@@ -1111,12 +1537,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'© 2021-{current_year} Kingkor Roy Tirtho'**
   String copyright(Object current_year);
-
-  /// No description provided for @license.
-  ///
-  /// In en, this message translates to:
-  /// **'License'**
-  String get license;
 
   /// No description provided for @add_spotify_credentials.
   ///
@@ -1345,12 +1765,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export application log files'**
   String get export_logs_description;
-
-  /// No description provided for @export.
-  ///
-  /// In en, this message translates to:
-  /// **'Export'**
-  String get export;
 
   /// No description provided for @cache_cleared.
   ///
@@ -1799,7 +2213,7 @@ abstract class AppLocalizations {
   /// No description provided for @not_logged_in.
   ///
   /// In en, this message translates to:
-  /// **'You\'re not logged in'**
+  /// **'Not logged in'**
   String get not_logged_in;
 
   /// No description provided for @search_mode.
@@ -2870,12 +3284,6 @@ abstract class AppLocalizations {
   /// **'Import failed: {error}'**
   String import_failed(Object error);
 
-  /// No description provided for @export_cookie.
-  ///
-  /// In en, this message translates to:
-  /// **'Export Cookie'**
-  String get export_cookie;
-
   /// No description provided for @cookie_export_success.
   ///
   /// In en, this message translates to:
@@ -2900,47 +3308,395 @@ abstract class AppLocalizations {
   /// **'Select audio playback quality'**
   String get audio_quality_description;
 
-  /// No description provided for @low_quality.
+  /// No description provided for @accounts.
   ///
   /// In en, this message translates to:
-  /// **'Low'**
-  String get low_quality;
+  /// **'Accounts'**
+  String get accounts;
 
-  /// No description provided for @medium_quality.
+  /// No description provided for @developers_options.
   ///
   /// In en, this message translates to:
-  /// **'Medium'**
-  String get medium_quality;
+  /// **'Developer Options'**
+  String get developers_options;
 
-  /// No description provided for @high_quality.
+  /// No description provided for @cookie_management.
   ///
   /// In en, this message translates to:
-  /// **'High'**
-  String get high_quality;
+  /// **'Cookie Management'**
+  String get cookie_management;
 
-  /// No description provided for @crossfade.
+  /// No description provided for @account_management.
   ///
   /// In en, this message translates to:
-  /// **'Crossfade'**
-  String get crossfade;
+  /// **'Account Management'**
+  String get account_management;
 
-  /// No description provided for @crossfade_description.
+  /// No description provided for @logged_out.
   ///
   /// In en, this message translates to:
-  /// **'Set transition effect between songs'**
-  String get crossfade_description;
+  /// **'{platform} logged out'**
+  String logged_out(Object platform);
 
-  /// No description provided for @off.
+  /// No description provided for @logout_failed.
   ///
   /// In en, this message translates to:
-  /// **'Off'**
-  String get off;
+  /// **'Logout failed: {error}'**
+  String logout_failed(Object error);
 
-  /// No description provided for @seconds.
+  /// No description provided for @logged_in.
   ///
   /// In en, this message translates to:
-  /// **'{count} seconds'**
-  String seconds(Object count);
+  /// **'Logged in: {user}'**
+  String logged_in(Object user);
+
+  /// No description provided for @choose_theme_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose application theme mode'**
+  String get choose_theme_mode;
+
+  /// No description provided for @follow_system.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow System'**
+  String get follow_system;
+
+  /// No description provided for @light_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light_mode;
+
+  /// No description provided for @dark_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark_mode;
+
+  /// No description provided for @amoled_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'AMOLED Mode'**
+  String get amoled_mode;
+
+  /// No description provided for @amoled_mode_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Use pure black background for dark theme'**
+  String get amoled_mode_description;
+
+  /// No description provided for @choose_accent_color.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose application accent color scheme'**
+  String get choose_accent_color;
+
+  /// No description provided for @paste_lrc_here.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste LRC format lyrics here...'**
+  String get paste_lrc_here;
+
+  /// No description provided for @lyrics_content_cannot_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics content cannot be empty'**
+  String get lyrics_content_cannot_be_empty;
+
+  /// No description provided for @import_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Imported successfully'**
+  String get import_success;
+
+  /// No description provided for @input_search_keywords.
+  ///
+  /// In en, this message translates to:
+  /// **'Input search keywords...'**
+  String get input_search_keywords;
+
+  /// No description provided for @search_keywords_cannot_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Search keywords cannot be empty'**
+  String get search_keywords_cannot_be_empty;
+
+  /// No description provided for @no_lyrics_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching lyrics found'**
+  String get no_lyrics_found;
+
+  /// No description provided for @search_results.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Results'**
+  String get search_results;
+
+  /// No description provided for @lyrics_applied_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Lyrics applied successfully'**
+  String get lyrics_applied_successfully;
+
+  /// No description provided for @auto_scroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Scroll'**
+  String get auto_scroll;
+
+  /// No description provided for @highlight_current_line.
+  ///
+  /// In en, this message translates to:
+  /// **'Highlight Current Line'**
+  String get highlight_current_line;
+
+  /// No description provided for @show_translation.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Translation'**
+  String get show_translation;
+
+  /// No description provided for @font_size.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get font_size;
+
+  /// No description provided for @line_spacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Spacing'**
+  String get line_spacing;
+
+  /// No description provided for @cookie_import_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie import failed: {error}'**
+  String cookie_import_failed(Object error);
+
+  /// No description provided for @cookie_export_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie export failed: {error}'**
+  String cookie_export_failed(Object error);
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning'**
+  String get good_morning;
+
+  /// No description provided for @good_afternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon'**
+  String get good_afternoon;
+
+  /// No description provided for @good_evening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening'**
+  String get good_evening;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {username}'**
+  String welcome_back(Object username);
+
+  /// No description provided for @search_for_music.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for music'**
+  String get search_for_music;
+
+  /// No description provided for @search_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your favorite songs, artists, albums, and playlists'**
+  String get search_hint;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @featured_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Playlists'**
+  String get featured_playlists;
+
+  /// No description provided for @see_all.
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get see_all;
+
+  /// No description provided for @loading_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading playlists...'**
+  String get loading_playlists;
+
+  /// No description provided for @no_featured_playlists.
+  ///
+  /// In en, this message translates to:
+  /// **'No featured playlists available'**
+  String get no_featured_playlists;
+
+  /// No description provided for @recent_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Tracks'**
+  String get recent_tracks;
+
+  /// No description provided for @loading_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading tracks...'**
+  String get loading_tracks;
+
+  /// No description provided for @no_recent_tracks.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent tracks found'**
+  String get no_recent_tracks;
+
+  /// No description provided for @recommended_artists.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommended Artists'**
+  String get recommended_artists;
+
+  /// No description provided for @loading_artists.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading artists...'**
+  String get loading_artists;
+
+  /// No description provided for @no_recommended_artists.
+  ///
+  /// In en, this message translates to:
+  /// **'No recommended artists available'**
+  String get no_recommended_artists;
+
+  /// No description provided for @start_listening_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Start listening to see your history here'**
+  String get start_listening_hint;
+
+  /// No description provided for @no_results_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found for \"{query}\"'**
+  String no_results_found(Object query);
+
+  /// No description provided for @search_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Search failed: {error}'**
+  String search_failed(Object error);
+
+  /// No description provided for @by_author.
+  ///
+  /// In en, this message translates to:
+  /// **'By {author}'**
+  String by_author(Object author);
+
+  /// No description provided for @queue_is_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Queue is empty'**
+  String get queue_is_empty;
+
+  /// No description provided for @add_tracks_to_get_started.
+  ///
+  /// In en, this message translates to:
+  /// **'Add some tracks to get started'**
+  String get add_tracks_to_get_started;
+
+  /// No description provided for @queue_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tracks'**
+  String queue_count(Object count);
+
+  /// No description provided for @playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist'**
+  String get playlist;
+
+  /// No description provided for @loading_playlist.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading playlist...'**
+  String get loading_playlist;
+
+  /// No description provided for @playlist_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Playlist not found'**
+  String get playlist_not_found;
+
+  /// No description provided for @tracks_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tracks'**
+  String tracks_count(Object count);
+
+  /// No description provided for @duration_total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total duration: {duration}'**
+  String duration_total(Object duration);
+
+  /// No description provided for @shuffle_play.
+  ///
+  /// In en, this message translates to:
+  /// **'Shuffle Play'**
+  String get shuffle_play;
+
+  /// No description provided for @play_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Play All'**
+  String get play_all;
+
+  /// No description provided for @repeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get repeat;
+
+  /// No description provided for @go_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get go_back;
+
+  /// No description provided for @release_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Release Date'**
+  String get release_date;
+
+  /// No description provided for @followers_count.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} followers'**
+  String followers_count(Object count);
 }
 
 class _AppLocalizationsDelegate

@@ -40,3 +40,6 @@ analyzer:
     - "**.gr.dart"
     - "**/generated_plugin_registrant.dart"
     - test/**/*.dart
+    - "参考/**"
+    - "old_backup/**"
+    - "packages/**"

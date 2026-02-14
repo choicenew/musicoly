@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/core/base/services/auth_service.dart';
 import 'package:pyro_music/presentation/pages/mobile_login/mobile_login_page.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class AccountsSettings extends StatefulWidget {
   const AccountsSettings({super.key});
+
+  static const String routeName = '/accounts_settings';
 
   @override
   State<AccountsSettings> createState() => _AccountsSettingsState();
@@ -34,18 +37,20 @@ class _AccountsSettingsState extends State<AccountsSettings> {
   }
 
   Future<void> _handleLogout(String platformId, AuthService authService) async {
+    final l10n = AppLocalizations.of(context);
     try {
       await authService.signOut();
       if (mounted) {
+        final platformName = _platformRegistry.getPlatformInfo(platformId)?.displayName ?? platformId;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${_platformRegistry.getPlatformInfo(platformId)?.displayName} 已登出')),
+          SnackBar(content: Text(l10n.logged_out(platformName))),
         );
         setState(() {});
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('登出失败: $e')),
+          SnackBar(content: Text(l10n.logout_failed(e.toString()))),
         );
       }
     }
@@ -53,15 +58,16 @@ class _AccountsSettingsState extends State<AccountsSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('账户管理', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(l10n.account_management, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
             ..._authServices.entries.map((entry) {
               final platformId = entry.key;
@@ -82,8 +88,8 @@ class _AccountsSettingsState extends State<AccountsSettings> {
                 ),
                 title: Text(platformInfo?.displayName ?? platformId),
                 subtitle: user != null 
-                  ? Text('已登录: ${user.displayName}')
-                  : const Text('未登录'),
+                  ? Text(l10n.logged_in(user.displayName))
+                  : Text(l10n.not_logged_in),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _handlePlatformAuth(platformId, authService),
                 onLongPress: () => _handleLogout(platformId, authService),

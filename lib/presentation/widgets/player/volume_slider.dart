@@ -15,12 +15,12 @@ class VolumeSlider extends StatelessWidget {
   final VoidCallback? onMuteToggle;
 
   const VolumeSlider({
-    Key? key,
+    super.key,
     required this.volume,
     this.isMuted = false,
     this.onVolumeChanged,
     this.onMuteToggle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

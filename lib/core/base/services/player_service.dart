@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'base_service.dart';
 import '../interfaces/player/player_interface.dart';

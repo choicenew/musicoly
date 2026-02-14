@@ -58,19 +58,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get load_more => 'Load more';
 
   @override
-  String get playlists => 'Playlists';
+  String get playlists => '歌单';
 
   @override
-  String get artists => 'Artists';
+  String get artists => '艺人';
 
   @override
-  String get albums => 'Albums';
+  String get albums => '专辑';
 
   @override
-  String get tracks => 'Tracks';
+  String get tracks => '单曲';
 
   @override
-  String get downloads => 'Downloads';
+  String get downloads => '下载';
 
   @override
   String get filter_playlists => 'Filter your playlists...';
@@ -118,7 +118,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get search_local_tracks => 'Search local tracks...';
 
   @override
-  String get play => 'Play';
+  String get play => '播放';
 
   @override
   String get delete => 'Delete';
@@ -167,10 +167,60 @@ class AppLocalizationsZh extends AppLocalizations {
   String get top_tracks => 'Top Tracks';
 
   @override
-  String get fans_also_like => 'Fans also like';
+  String get fans_also_like => '粉丝也喜欢';
 
   @override
   String get loading => '加载中...';
+
+  @override
+  String get loading_album => '正在加载专辑...';
+
+  @override
+  String get loading_artist => '正在加载艺术家...';
+
+  @override
+  String get album_not_found => '未找到专辑';
+
+  @override
+  String get album_not_found_hint => '找不到您要查看的专辑';
+
+  @override
+  String get artist_not_found => '未找到艺术家';
+
+  @override
+  String get artist_not_found_hint => '找不到您要查看的艺术家';
+
+  @override
+  String get unknown_release_date => '发行日期未知';
+
+  @override
+  String get label => '唱片公司';
+
+  @override
+  String get album_details => '专辑详情';
+
+  @override
+  String get no_tracks_available => '无可用曲目';
+
+  @override
+  String get no_albums_available => '无可用专辑';
+
+  @override
+  String get no_related_artists_found => '未找到相关艺术家';
+
+  @override
+  String get popular_tracks => '热门曲目';
+
+  @override
+  String get see_all_tracks => '查看全部曲目';
+
+  @override
+  String get all_tracks => '全部曲目';
+
+  @override
+  String songs_count(num count) {
+    return '$count 首歌曲';
+  }
 
   @override
   String get artist => 'Artist';
@@ -202,7 +252,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plain => 'Plain';
 
   @override
-  String get shuffle => 'Shuffle';
+  String get shuffle => '随机播放';
 
   @override
   String get search_tracks => 'Search tracks...';
@@ -392,7 +442,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get logout_of_this_account => 'Logout of this account';
 
   @override
-  String get language_region => 'Language & Region';
+  String get language_region => '语言和地区设置';
 
   @override
   String get language => '语言';
@@ -422,7 +472,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get recommendation_country => 'Recommendation Country';
 
   @override
-  String get appearance => 'Appearance';
+  String get appearance => '外观';
 
   @override
   String get layout_mode => 'Layout Mode';
@@ -441,7 +491,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get extended => 'Extended';
 
   @override
-  String get theme => 'Theme';
+  String get theme => '主题';
 
   @override
   String get dark => 'Dark';
@@ -453,20 +503,117 @@ class AppLocalizationsZh extends AppLocalizations {
   String get system => 'System';
 
   @override
-  String get accent_color => 'Accent Color';
+  String get accent_color => '强调色';
 
   @override
-  String get sync_album_color => 'Sync album color';
+  String get sync_album_color => '同步专辑颜色';
 
   @override
-  String get sync_album_color_description =>
-      'Uses the dominant color of the album art as the accent color';
+  String get sync_album_color_description => '根据专辑封面同步界面颜色';
 
   @override
-  String get playback => 'Playback';
+  String get playback => '播放';
 
   @override
   String get audio_quality => '音频质量';
+
+  @override
+  String get select_audio_quality => '选择音频播放质量';
+
+  @override
+  String get low_quality => '低质量';
+
+  @override
+  String get medium_quality => '中等质量';
+
+  @override
+  String get high_quality => '高质量';
+
+  @override
+  String get crossfade => '交叉淡入淡出';
+
+  @override
+  String get crossfade_description => '设置歌曲之间的过渡效果';
+
+  @override
+  String get off => '关闭';
+
+  @override
+  String seconds(Object count) {
+    return '$count 秒';
+  }
+
+  @override
+  String get download_path => '下载路径';
+
+  @override
+  String get download_format => '下载格式';
+
+  @override
+  String get download_lyrics => '下载歌词';
+
+  @override
+  String get download_lyrics_description => '同时下载歌曲的歌词文件';
+
+  @override
+  String get download_cover => '下载封面';
+
+  @override
+  String get download_cover_description => '同时下载歌曲的封面图片';
+
+  @override
+  String get file_naming_format => '文件命名格式';
+
+  @override
+  String get file_naming_format_description => '设置下载文件的命名规则';
+
+  @override
+  String get song_title => '歌曲名';
+
+  @override
+  String get artist_song_title => '歌手 - 歌曲名';
+
+  @override
+  String get song_title_artist => '歌曲名 - 歌手';
+
+  @override
+  String get album_track_song_title => '专辑 - 曲目 - 歌曲名';
+
+  @override
+  String get desktop => '桌面';
+
+  @override
+  String get auto_start => '开机自启动';
+
+  @override
+  String get auto_start_description => '系统启动时自动运行应用';
+
+  @override
+  String get minimize_to_tray => '最小化到系统托盘';
+
+  @override
+  String get minimize_to_tray_description => '关闭窗口时最小化到系统托盘而不是退出';
+
+  @override
+  String get media_key_control => '媒体键控制';
+
+  @override
+  String get media_key_control_description => '使用键盘媒体键控制播放';
+
+  @override
+  String get system_notifications => '系统通知';
+
+  @override
+  String get system_notifications_description => '显示歌曲切换等系统通知';
+
+  @override
+  String get shortcut_settings => '快捷键设置';
+
+  @override
+  String get shortcut_settings_description => '自定义全局快捷键';
+
+  @override
+  String get set => '设置';
 
   @override
   String get high => 'High';
@@ -492,41 +639,119 @@ class AppLocalizationsZh extends AppLocalizations {
       'Please wait for the current download to finish';
 
   @override
-  String get desktop => 'Desktop';
-
-  @override
   String get close_behavior => 'Close Behavior';
 
   @override
   String get close => 'Close';
 
   @override
-  String get minimize_to_tray => 'Minimize to tray';
-
-  @override
   String get show_tray_icon => 'Show System tray icon';
 
   @override
-  String get about => 'About';
+  String get about => '关于';
 
   @override
-  String get u_love_pyro_music => 'We know you love Pyro Music';
+  String get u_love_pyro_music => '我们知道你喜欢 Pyro Music';
 
   @override
-  String get check_for_updates => 'Check for updates';
+  String get version_info => '版本信息';
 
   @override
-  String get about_pyro_music => 'About Pyro Music';
+  String get failed_to_check_for_updates => '检查更新失败';
+
+  @override
+  String get import_cookie => '导入Cookie';
+
+  @override
+  String get import_cookie_description => '从文件导入认证信息';
+
+  @override
+  String get import => '导入';
+
+  @override
+  String get export_cookie => '导出Cookie';
+
+  @override
+  String get export_cookie_description => '导出当前认证信息到文件';
+
+  @override
+  String get export => '导出';
+
+  @override
+  String get clear_cookie => '清除Cookie';
+
+  @override
+  String get clear_cookie_description => '清除所有平台的认证信息';
+
+  @override
+  String get show_plain_lyrics => '显示普通歌词';
+
+  @override
+  String get show_synced_lyrics => '显示同步歌词';
+
+  @override
+  String get exit_edit_mode => '退出编辑模式';
+
+  @override
+  String get enter_edit_mode => '进入编辑模式';
+
+  @override
+  String get export_lyrics => '导出歌词';
+
+  @override
+  String get import_lyrics => '导入歌词';
+
+  @override
+  String get search_lyrics => '搜索歌词';
+
+  @override
+  String get lyrics_settings => '歌词设置';
+
+  @override
+  String get no_track_playing => '没有正在播放的曲目';
+
+  @override
+  String get login_error => '登录错误';
+
+  @override
+  String failed_to_get_auth_service(Object platform) {
+    return '无法获取 $platform 认证服务';
+  }
+
+  @override
+  String login_failed(Object error) {
+    return '登录失败: $error';
+  }
+
+  @override
+  String get welcome_to_pyro_music => '欢迎使用 Pyro Music';
+
+  @override
+  String get let_us_configure_first => '开始使用前，让我们先进行一些基本设置';
+
+  @override
+  String get check_for_updates => '检查更新';
+
+  @override
+  String get about_pyro_music => '关于 Pyro Music';
+
+  @override
+  String get repository => '项目仓库';
+
+  @override
+  String get bug_issues => '问题反馈';
+
+  @override
+  String get license => '开源许可';
+
+  @override
+  String get pyro_music_description => '基于Flutter构建的开源音乐播放器';
 
   @override
   String get blacklist => 'Blacklist';
 
   @override
   String get please_sponsor => 'Please Sponsor/Donate';
-
-  @override
-  String get pyro_music_description =>
-      'Pyro Music, a lightweight, cross-platform, free-for-all spotify client';
 
   @override
   String get version => 'Version';
@@ -538,12 +763,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get founder => 'Founder';
 
   @override
-  String get repository => 'Repository';
-
-  @override
-  String get bug_issues => 'Bug+Issues';
-
-  @override
   String get made_with => 'Made with ❤️ in Bangladesh🇧🇩';
 
   @override
@@ -553,9 +772,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String copyright(Object current_year) {
     return '© 2021-$current_year Kingkor Roy Tirtho';
   }
-
-  @override
-  String get license => 'License';
 
   @override
   String get add_spotify_credentials =>
@@ -591,10 +807,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exit => 'Exit';
 
   @override
-  String get previous => 'Previous';
+  String get previous => '上一首';
 
   @override
-  String get next => 'Next';
+  String get next => '下一首';
 
   @override
   String get done => '完成';
@@ -679,9 +895,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get export_logs_description => '导出应用日志文件';
-
-  @override
-  String get export => '导出';
 
   @override
   String get cache_cleared => '缓存清理完成';
@@ -932,7 +1145,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get developers => 'Developers';
 
   @override
-  String get not_logged_in => 'You\'re not logged in';
+  String get not_logged_in => '未登录';
 
   @override
   String get search_mode => 'Search Mode';
@@ -1430,7 +1643,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get play_all_next => 'Play all next';
 
   @override
-  String get pause => 'Pause';
+  String get pause => '暂停';
 
   @override
   String get view_all => 'View all';
@@ -1491,7 +1704,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get add_custom_url => 'Add custom URL';
 
   @override
-  String get remove => 'Remove';
+  String get remove => '移除';
 
   @override
   String get clear_queue => 'Clear Queue';
@@ -1518,7 +1731,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get japanese => '日文';
 
   @override
-  String get cookie_import_success => 'Cookie导入成功';
+  String get cookie_import_success => 'Cookie 导入成功';
 
   @override
   String import_failed(Object error) {
@@ -1526,13 +1739,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get export_cookie => '导出Cookie';
+  String get cookie_export_success => 'Cookie 导出成功';
 
   @override
-  String get cookie_export_success => 'Cookie导出成功';
-
-  @override
-  String get cookie_cleared => 'Cookie已清除';
+  String get cookie_cleared => 'Cookie 已清除';
 
   @override
   String clear_failed(Object error) {
@@ -1540,28 +1750,226 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get audio_quality_description => '选择音频播放质量';
+  String get audio_quality_description => 'Select audio playback quality';
 
   @override
-  String get low_quality => '低';
+  String get accounts => '账户';
 
   @override
-  String get medium_quality => '中';
+  String get developers_options => '开发者选项';
 
   @override
-  String get high_quality => '高';
+  String get cookie_management => 'Cookie管理';
 
   @override
-  String get crossfade => '淡入淡出';
+  String get account_management => '账户管理';
 
   @override
-  String get crossfade_description => '设置歌曲之间的过渡效果';
+  String logged_out(Object platform) {
+    return '$platform 已登出';
+  }
 
   @override
-  String get off => '关闭';
+  String logout_failed(Object error) {
+    return '登出失败: $error';
+  }
 
   @override
-  String seconds(Object count) {
-    return '$count 秒';
+  String logged_in(Object user) {
+    return '已登录: $user';
+  }
+
+  @override
+  String get choose_theme_mode => '选择应用的主题模式';
+
+  @override
+  String get follow_system => '跟随系统';
+
+  @override
+  String get light_mode => '浅色';
+
+  @override
+  String get dark_mode => '深色';
+
+  @override
+  String get amoled_mode => 'AMOLED模式';
+
+  @override
+  String get amoled_mode_description => '使用纯黑背景的深色主题';
+
+  @override
+  String get choose_accent_color => '选择应用的强调色方案';
+
+  @override
+  String get paste_lrc_here => '粘贴LRC格式歌词...';
+
+  @override
+  String get lyrics_content_cannot_be_empty => '歌词内容不能为空';
+
+  @override
+  String get import_success => '导入成功';
+
+  @override
+  String get input_search_keywords => '输入搜索关键词...';
+
+  @override
+  String get search_keywords_cannot_be_empty => '搜索关键词不能为空';
+
+  @override
+  String get no_lyrics_found => '未找到匹配的歌词';
+
+  @override
+  String get search_results => '搜索结果';
+
+  @override
+  String get lyrics_applied_successfully => '歌词应用成功';
+
+  @override
+  String get auto_scroll => '自动滚动';
+
+  @override
+  String get highlight_current_line => '高亮当前行';
+
+  @override
+  String get show_translation => '显示翻译';
+
+  @override
+  String get font_size => '字体大小';
+
+  @override
+  String get line_spacing => '行间距';
+
+  @override
+  String cookie_import_failed(Object error) {
+    return 'Cookie import failed: $error';
+  }
+
+  @override
+  String cookie_export_failed(Object error) {
+    return 'Cookie export failed: $error';
+  }
+
+  @override
+  String get home => '首页';
+
+  @override
+  String get good_morning => '早上好';
+
+  @override
+  String get good_afternoon => '下午好';
+
+  @override
+  String get good_evening => '晚上好';
+
+  @override
+  String welcome_back(Object username) {
+    return '欢迎回来, $username';
+  }
+
+  @override
+  String get search_for_music => '搜索音乐';
+
+  @override
+  String get search_hint => '查找你喜欢的歌曲、艺人、专辑和歌单';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String get featured_playlists => '推荐歌单';
+
+  @override
+  String get see_all => '查看全部';
+
+  @override
+  String get loading_playlists => '正在加载歌单...';
+
+  @override
+  String get no_featured_playlists => '暂无推荐歌单';
+
+  @override
+  String get recent_tracks => '最近播放';
+
+  @override
+  String get loading_tracks => '正在加载歌曲...';
+
+  @override
+  String get no_recent_tracks => '暂无最近播放记录';
+
+  @override
+  String get recommended_artists => '推荐艺人';
+
+  @override
+  String get loading_artists => '正在加载艺人...';
+
+  @override
+  String get no_recommended_artists => '暂无推荐艺人';
+
+  @override
+  String get start_listening_hint => '开始听歌以在此处查看历史记录';
+
+  @override
+  String no_results_found(Object query) {
+    return '未找到 \"$query\" 的结果';
+  }
+
+  @override
+  String search_failed(Object error) {
+    return '搜索失败: $error';
+  }
+
+  @override
+  String by_author(Object author) {
+    return '作者: $author';
+  }
+
+  @override
+  String get queue_is_empty => '队列为空';
+
+  @override
+  String get add_tracks_to_get_started => '添加一些歌曲以开始播放';
+
+  @override
+  String queue_count(Object count) {
+    return '$count 首歌曲';
+  }
+
+  @override
+  String get playlist => '歌单';
+
+  @override
+  String get loading_playlist => '正在加载歌单...';
+
+  @override
+  String get playlist_not_found => '未找到歌单';
+
+  @override
+  String tracks_count(Object count) {
+    return '$count 首歌曲';
+  }
+
+  @override
+  String duration_total(Object duration) {
+    return '总时长: $duration';
+  }
+
+  @override
+  String get shuffle_play => '随机播放';
+
+  @override
+  String get play_all => '播放全部';
+
+  @override
+  String get repeat => '重复播放';
+
+  @override
+  String get go_back => '返回';
+
+  @override
+  String get release_date => '发行日期';
+
+  @override
+  String followers_count(Object count) {
+    return '$count 位关注者';
   }
 }

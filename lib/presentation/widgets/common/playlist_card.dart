@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/playlist_model.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// A reusable card widget for displaying playlist information
 class PlaylistCard extends StatelessWidget {
   /// The playlist data to display
@@ -22,18 +24,19 @@ class PlaylistCard extends StatelessWidget {
   final double? height;
 
   const PlaylistCard({
-    Key? key,
+    super.key,
     required this.playlist,
     this.onTap,
     this.showName = true,
     this.showOwner = true,
     this.width,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return InkWell(
       onTap: onTap,
@@ -76,11 +79,11 @@ class PlaylistCard extends StatelessWidget {
             if (showOwner && playlist.ownerName != null) ...[
               const SizedBox(height: 4),
               Text(
-                'By ${playlist.ownerName ?? "Unknown"}',
+                l10n.by_author(playlist.ownerName ?? l10n.guest),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.textTheme.bodySmall?.color?.withAlpha(180),
+                  color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
                 ),
               ),
             ],

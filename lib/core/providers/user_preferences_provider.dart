@@ -41,7 +41,7 @@ class UserPreferences extends _$UserPreferences {
     final themeModeIndex = prefs.getInt('themeMode') ?? 0;
     final amoledDark = prefs.getBool('amoledDark') ?? false;
     final albumColorSync = prefs.getBool('albumColorSync') ?? true;
-    final accentColorValue = prefs.getInt('accentColor') ?? Colors.blue.value;
+    final accentColorValue = prefs.getInt('accentColor') ?? Colors.blue.toARGB32();
     final timeZone =
         prefs.getString('timeZone') ?? await FlutterTimezone.getLocalTimezone();
     final use24HourFormat = prefs.getBool('use24HourFormat') ?? false;
@@ -93,8 +93,8 @@ class UserPreferences extends _$UserPreferences {
   Future<void> setAccentColor(Color color) async {
     state = await AsyncValue.guard(() async {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt('accentColor', color.value);
-      return state.requireValue.copyWith(accentColorValue: color.value);
+      await prefs.setInt('accentColor', color.toARGB32());
+      return state.requireValue.copyWith(accentColorValue: color.toARGB32());
     });
   }
 

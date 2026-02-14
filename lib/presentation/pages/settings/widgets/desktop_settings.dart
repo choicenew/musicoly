@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class DesktopSettings extends StatelessWidget {
-  const DesktopSettings({Key? key}) : super(key: key);
+  const DesktopSettings({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -12,45 +15,45 @@ class DesktopSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SwitchListTile(
-              title: const Text('开机自启动'),
-              subtitle: const Text('系统启动时自动运行应用'),
+              title: Text(l10n.auto_start),
+              subtitle: Text(l10n.auto_start_description),
               value: false,
               onChanged: (value) {
                 // TODO: 实现开机自启动设置
               },
             ),
             SwitchListTile(
-              title: const Text('最小化到系统托盘'),
-              subtitle: const Text('关闭窗口时最小化到系统托盘而不是退出'),
+              title: Text(l10n.minimize_to_tray),
+              subtitle: Text(l10n.minimize_to_tray_description),
               value: true,
               onChanged: (value) {
                 // TODO: 实现最小化到系统托盘设置
               },
             ),
             SwitchListTile(
-              title: const Text('媒体键控制'),
-              subtitle: const Text('使用键盘媒体键控制播放'),
+              title: Text(l10n.media_key_control),
+              subtitle: Text(l10n.media_key_control_description),
               value: true,
               onChanged: (value) {
                 // TODO: 实现媒体键控制设置
               },
             ),
             SwitchListTile(
-              title: const Text('系统通知'),
-              subtitle: const Text('显示歌曲切换等系统通知'),
+              title: Text(l10n.system_notifications),
+              subtitle: Text(l10n.system_notifications_description),
               value: true,
               onChanged: (value) {
                 // TODO: 实现系统通知设置
               },
             ),
             ListTile(
-              title: const Text('快捷键设置'),
-              subtitle: const Text('自定义全局快捷键'),
+              title: Text(l10n.shortcut_settings),
+              subtitle: Text(l10n.shortcut_settings_description),
               trailing: TextButton(
                 onPressed: () {
                   // TODO: 实现快捷键设置
                 },
-                child: const Text('设置'),
+                child: Text(l10n.set),
               ),
             ),
           ],

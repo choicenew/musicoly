@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'player_interface.dart';
 
 /// Interface for playback state and control

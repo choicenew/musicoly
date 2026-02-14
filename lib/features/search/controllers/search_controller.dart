@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
 import '../providers/search_provider.dart';
 
 /// Controller for search functionality

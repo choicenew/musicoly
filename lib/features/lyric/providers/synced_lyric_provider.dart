@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:pyro_music/features/lyric/providers/lyric_provider.dart';
-import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 
 part 'synced_lyric_provider.freezed.dart';
 part 'synced_lyric_provider.g.dart';

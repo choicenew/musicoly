@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/track_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/widgets/common/track_tile.dart';
 
 /// A widget that displays the current playback queue
@@ -20,17 +21,18 @@ class PlayerQueue extends StatelessWidget {
   final Function(int index)? onRemove;
 
   const PlayerQueue({
-    Key? key,
+    super.key,
     required this.tracks,
     this.currentIndex = 0,
     this.onTrackTap,
     this.onReorder,
     this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     if (tracks.isEmpty) {
       return Center(
@@ -44,12 +46,12 @@ class PlayerQueue extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Queue is empty',
+              l10n.queue_is_empty,
               style: theme.textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
-              'Add some tracks to get started',
+              l10n.add_tracks_to_get_started,
               style: theme.textTheme.bodyMedium,
             ),
           ],
@@ -66,11 +68,11 @@ class PlayerQueue extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Queue',
+                l10n.queue,
                 style: theme.textTheme.titleLarge,
               ),
               Text(
-                '${tracks.length} tracks',
+                l10n.queue_count(tracks.length),
                 style: theme.textTheme.bodyMedium,
               ),
             ],
@@ -98,25 +100,17 @@ class PlayerQueue extends StatelessWidget {
                 background: Container(
                   color: Colors.red,
                   alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: const Icon(Icons.delete, color: Colors.white),
                 ),
-                onDismissed: (_) {
-                  if (onRemove != null) {
-                    onRemove!(index);
-                  }
+                onDismissed: (direction) {
+                  onRemove?.call(index);
                 },
                 child: TrackTile(
+                  key: Key('track-tile-$index'),
                   track: track,
                   isPlaying: isPlaying,
-                  onTap: () {
-                    if (onTrackTap != null) {
-                      onTrackTap!(index);
-                    }
-                  },
+                  onTap: () => onTrackTap?.call(index),
                 ),
               );
             },

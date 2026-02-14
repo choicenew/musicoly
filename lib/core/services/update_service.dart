@@ -26,7 +26,7 @@ class UpdateService {
         if (runs.isEmpty) return;
         
         final buildNum = runs[0]["run_number"] as int;
-        if (buildNum > int.parse(packageInfo.buildNumber)) {
+        if (buildNum > int.parse(packageInfo.buildNumber) && context.mounted) {
           _showUpdateDialog(context, buildNum.toString());
         }
       } else {
@@ -34,14 +34,16 @@ class UpdateService {
           "https://api.github.com/repos/KRTirtho/pyro_music/releases/latest"
         );
         final latestVersion = response.data?["tag_name"]?.toString();
-        if (latestVersion != null && latestVersion != "v${packageInfo.version}") {
+        if (latestVersion != null && latestVersion != "v${packageInfo.version}" && context.mounted) {
           _showUpdateDialog(context, latestVersion);
         }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('检查更新失败'))
-      );
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('检查更新失败'))
+        );
+      }
     }
   }
 
@@ -50,7 +52,7 @@ class UpdateService {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('发现新版本'),
-        content: Text('当前版本: v${version}\n是否立即下载更新？'),
+        content: Text('当前版本: v$version\n是否立即下载更新？'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),

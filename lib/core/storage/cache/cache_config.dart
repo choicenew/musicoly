@@ -18,9 +18,9 @@ class CacheConfig {
     Duration? defaultExpiry,
     int? maxCacheSize,
     bool? enableLogging,
-  })  : this.defaultExpiry = defaultExpiry ?? const Duration(hours: 24),
-        this.maxCacheSize = maxCacheSize ?? 100 * 1024 * 1024, // 100 MB
-        this.enableLogging = enableLogging ?? kDebugMode;
+  })  : defaultExpiry = defaultExpiry ?? const Duration(hours: 24),
+        maxCacheSize = maxCacheSize ?? 100 * 1024 * 1024, // 100 MB
+        enableLogging = enableLogging ?? kDebugMode;
 
   /// Create a cache configuration with default values
   factory CacheConfig.defaultConfig() => CacheConfig();

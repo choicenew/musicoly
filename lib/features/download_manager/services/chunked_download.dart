@@ -31,7 +31,6 @@ extension ChunkDownload on Dio {
 
     // this is the last response
     // status & headers will the last chunk's status & headers
-    final completer = Completer<Response>();
 
     Future<Response> downloadChunk(
       String url, {
@@ -140,7 +139,7 @@ extension ChunkDownload on Dio {
 
       return responses.last;
     } else {
-      await File(savePath + tempExtension + "0").rename(savePath);
+      await File("$savePath${tempExtension}0").rename(savePath);
       return firstResponse;
     }
   }

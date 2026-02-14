@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
 import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/widgets/common/album_card.dart';
 
 /// Widget that displays the albums of an artist
@@ -14,6 +15,7 @@ class ArtistAlbums extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     // In a real implementation, these albums would come from a provider
     // This is just a placeholder for demonstration
@@ -26,7 +28,7 @@ class ArtistAlbums extends StatelessWidget {
       children: [
         // Section title
         Text(
-          'Albums',
+          l10n.albums,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -52,7 +54,7 @@ class ArtistAlbums extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No albums available',
+                    l10n.no_albums_available,
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],
@@ -100,7 +102,7 @@ class ArtistAlbums extends StatelessWidget {
                     arguments: artist,
                   );
                 },
-                child: const Text('See All Albums'),
+                child: Text(l10n.see_all),
               ),
             ),
           ),

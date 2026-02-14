@@ -1,92 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/album_model.dart';
-import 'package:pyro_music/core/base/models/track_model.dart';
-import 'package:provider/provider.dart';
-import 'package:pyro_music/features/player/providers/player_state_provider.dart';
-import 'package:pyro_music/presentation/widgets/common/track_tile.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
-/// Widget that displays the tracks in an album
+/// Widget that displays the list of tracks in an album
 class AlbumTracks extends StatelessWidget {
-  /// The album containing the tracks
-  final AlbumModel album;
+  /// The list of tracks to display
+  final List<TrackInterface> tracks;
 
-  /// Creates a new album tracks widget
-  const AlbumTracks({super.key, required this.album});
+  /// Creates a new album tracks list widget
+  const AlbumTracks({super.key, required this.tracks});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
-    // In a real implementation, these tracks would come from a provider
-    // This is just a placeholder for demonstration
-    final List<TrackModel> tracks = [];
-    const bool isLoading = false;
+    if (tracks.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Text(
+            l10n.no_tracks_available,
+            style: theme.textTheme.bodyMedium,
+          ),
+        ),
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section title
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Tracks',
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+        // Tracks list
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: tracks.length,
+          itemBuilder: (context, index) {
+            final track = tracks[index];
+            return ListTile(
+              leading: SizedBox(
+                width: 32,
+                child: Center(
+                  child: Text(
+                    '${index + 1}',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            Text(
-              '${album.totalTracks} songs',
-              style: theme.textTheme.bodyMedium,
-            ),
-          ],
+              title: Text(
+                track.name,
+                style: theme.textTheme.bodyLarge,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                track.artistNames.join(', '),
+                style: theme.textTheme.bodySmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: Text(
+                _formatDuration(track.durationMs),
+                style: theme.textTheme.bodySmall,
+              ),
+              onTap: () {
+                // TODO: Play track
+              },
+            );
+          },
         ),
-        const SizedBox(height: 16),
-
-        // Track list
-        if (tracks.isEmpty)
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.music_off,
-                    size: 48,
-                    color: theme.colorScheme.onSurface.withAlpha(128),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'No tracks available',
-                    style: theme.textTheme.bodyLarge,
-                  ),
-                ],
-              ),
-            ),
-          )
-        else
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: tracks.length,
-            itemBuilder: (context, index) {
-              final track = tracks[index];
-              return TrackTile(
-                track: track,
-                onTap: () {
-                  final player =
-                      Provider.of<PlayerStateNotifier>(context, listen: false);
-                  // Use the correct play method with required parameters
-                  player.play(
-                    trackId: track.id,
-                    sourceId: album.id,
-                    sourceName: album.name,
-                  );
-                },
-              );
-            },
-          ),
       ],
     );
+  }
+
+  String _formatDuration(int ms) {
+    final minutes = (ms / 60000).floor();
+    final seconds = ((ms % 60000) / 1000).floor();
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
 }

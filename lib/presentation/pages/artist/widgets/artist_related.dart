@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/widgets/common/artist_card.dart';
 
 /// Widget that displays artists related to the current artist
@@ -13,6 +14,7 @@ class ArtistRelated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     // In a real implementation, these related artists would come from a provider
     // This is just a placeholder for demonstration
@@ -24,7 +26,7 @@ class ArtistRelated extends StatelessWidget {
       children: [
         // Section title
         Text(
-          'Fans Also Like',
+          l10n.fans_also_like,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -50,7 +52,7 @@ class ArtistRelated extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No related artists found',
+                    l10n.no_related_artists_found,
                     style: theme.textTheme.bodyLarge,
                   ),
                 ],

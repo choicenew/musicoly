@@ -3,9 +3,11 @@ import 'package:pyro_music/presentation/pages/search/widgets/search_bar.dart';
 import 'package:pyro_music/presentation/pages/search/widgets/search_results.dart';
 import 'package:pyro_music/presentation/pages/search/widgets/search_filters.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// The search page of the application
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -33,6 +35,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -60,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                       query: _query,
                       filter: _selectedFilter,
                     )
-                  : _buildSearchSuggestions(),
+                  : _buildSearchSuggestions(l10n),
             ),
           ],
         ),
@@ -68,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildSearchSuggestions() {
+  Widget _buildSearchSuggestions(AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -80,12 +83,12 @@ class _SearchPageState extends State<SearchPage> {
           ),
           const SizedBox(height: 16),
           Text(
-            'Search for music',
+            l10n.search_for_music,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
-            'Find your favorite songs, artists, albums, and playlists',
+            l10n.search_hint,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),

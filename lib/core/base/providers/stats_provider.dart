@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/base/interfaces/stats/play_stats_interface.dart';
 import 'package:pyro_music/core/base/interfaces/stats/artist_stats_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';

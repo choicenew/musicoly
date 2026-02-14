@@ -8,24 +8,25 @@ import 'media_model.dart';
 @immutable
 class PlaylistModel extends MediaModel implements PlaylistInterface {
   /// Description of the playlist
+  @override
   final String? description;
 
-  /// Owner ID of the playlist
+  @override
   final String? ownerId;
 
-  /// Owner name/display name of the playlist
+  @override
   final String? ownerName;
 
-  /// Whether this playlist is public
+  @override
   final bool isPublic;
 
-  /// Whether this playlist is collaborative
+  @override
   final bool isCollaborative;
 
-  /// Total number of tracks in the playlist
+  @override
   final int totalTracks;
 
-  /// Platform-specific metadata
+  @override
   final Map<String, dynamic> platformMetadata;
 
   /// Create a new playlist model

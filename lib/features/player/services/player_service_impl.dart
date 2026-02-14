@@ -36,9 +36,10 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
   Future<void> _initializeActiveService() async {
     final platformId = _platformRegistry.activePlatformId;
     if (platformId.isNotEmpty) {
-      _activePlayerService =
-          _serviceRegistry.getService<PlayerService>(platformId);
-      if (_activePlayerService != null) {
+      final service = _serviceRegistry.getService<PlayerService>(platformId);
+      if (service != null && service != _activePlayerService) {
+        _activePlayerService = service;
+        _playback.setSource(service.playback);
         debugPrint('已设置活跃播放器服务: $platformId');
       }
     }
@@ -419,6 +420,46 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
 
   /// 当前随机播放模式
   bool _shuffleMode = false;
+
+  /// 当前订阅
+  final List<StreamSubscription> _subscriptions = [];
+
+  /// 设置数据源
+  void setSource(PlaybackInterface source) {
+    // 取消旧订阅
+    for (final sub in _subscriptions) {
+      sub.cancel();
+    }
+    _subscriptions.clear();
+
+    // 订阅新数据源
+    _subscriptions.add(source.positionStream.listen((p) => _positionController.add(p)));
+    _subscriptions.add(source.bufferedPositionStream.listen((p) => _bufferedPositionController.add(p)));
+    _subscriptions.add(source.durationStream.listen((p) => _durationController.add(p)));
+    _subscriptions.add(source.playbackStateStream.listen((s) {
+      _currentState = s;
+      _playbackStateController.add(s);
+    }));
+    _subscriptions.add(source.currentTrackStream.listen((t) => _currentTrackController.add(t)));
+    _subscriptions.add(source.volumeStream.listen((v) {
+      _volume = v;
+      _volumeController.add(v);
+    }));
+    _subscriptions.add(source.repeatModeStream.listen((m) {
+      _repeatMode = m;
+      _repeatModeController.add(m);
+    }));
+    _subscriptions.add(source.shuffleModeStream.listen((s) {
+      _shuffleMode = s;
+      _shuffleModeController.add(s);
+    }));
+
+    // 更新当前值
+    _currentState = source.currentState;
+    _volume = source.volume;
+    _repeatMode = source.repeatMode;
+    _shuffleMode = source.shuffleMode;
+  }
 
   @override
   Stream<Duration> get positionStream => _positionController.stream;

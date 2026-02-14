@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/pages/artist/widgets/artist_header.dart';
 import 'package:pyro_music/presentation/pages/artist/widgets/artist_top_tracks.dart';
 import 'package:pyro_music/presentation/pages/artist/widgets/artist_albums.dart';
@@ -25,12 +26,14 @@ class ArtistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       body: FutureBuilder<ArtistModel?>(
         future: _fetchArtist(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingIndicator(text: 'Loading artist...');
+            return LoadingIndicator(text: l10n.loading_artist);
           }
           final artist = snapshot.data;
           if (artist == null) {
@@ -68,6 +71,7 @@ class ArtistPage extends StatelessWidget {
 
   Widget _buildErrorState(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Center(
       child: Column(
@@ -80,12 +84,12 @@ class ArtistPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Artist not found',
+            l10n.artist_not_found,
             style: theme.textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
-            'The artist you are looking for could not be found',
+            l10n.artist_not_found_hint,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -94,7 +98,7 @@ class ArtistPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Go Back'),
+            child: Text(l10n.go_back),
           ),
         ],
       ),

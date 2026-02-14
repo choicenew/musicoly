@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/playlist_model.dart';
 import 'package:pyro_music/presentation/widgets/common/playlist_card.dart';
-import 'package:pyro_music/presentation/widgets/common/loading_indicator.dart';
+
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// A widget that displays featured playlists on the home page
 class FeaturedPlaylists extends StatelessWidget {
-  const FeaturedPlaylists({Key? key}) : super(key: key);
+  const FeaturedPlaylists({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     // This would normally come from a provider
-    final bool isLoading = false;
     final List<PlaylistModel> playlists =
         []; // Would come from playlist provider
 
@@ -23,7 +24,7 @@ class FeaturedPlaylists extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Featured Playlists',
+              l10n.featured_playlists,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -32,18 +33,16 @@ class FeaturedPlaylists extends StatelessWidget {
               onPressed: () {
                 // Navigate to see all featured playlists
               },
-              child: const Text('See All'),
+              child: Text(l10n.see_all),
             ),
           ],
         ),
         const SizedBox(height: 16),
 
         // Content
-        if (isLoading) ...[
-          const LoadingIndicator(text: 'Loading playlists...'),
-        ] else if (playlists.isEmpty) ...[
-          _buildEmptyState(theme),
-        ] else ...[
+        if (playlists.isEmpty)
+          _buildEmptyState(theme, l10n)
+        else
           SizedBox(
             height: 200,
             child: ListView.builder(
@@ -67,12 +66,11 @@ class FeaturedPlaylists extends StatelessWidget {
               },
             ),
           ),
-        ],
       ],
     );
   }
 
-  Widget _buildEmptyState(ThemeData theme) {
+  Widget _buildEmptyState(ThemeData theme, AppLocalizations l10n) {
     return Container(
       height: 200,
       alignment: Alignment.center,
@@ -86,7 +84,7 @@ class FeaturedPlaylists extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No featured playlists available',
+            l10n.no_featured_playlists,
             style: theme.textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),

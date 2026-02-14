@@ -18,7 +18,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
   String _apiEndpoint = '';
 
   Future<void> _cleanCache(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     try {
       final tempDir = await getTemporaryDirectory();
       final cacheDir = Directory('${tempDir.path}/cache');
@@ -43,7 +43,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
   }
 
   Future<void> _showEndpointDialog(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final controller = TextEditingController(text: _apiEndpoint);
     
     return showDialog(
@@ -77,7 +77,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
   }
 
   Future<void> _exportLogs(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     try {
       final tempDir = await getTemporaryDirectory();
       final logFile = File('${tempDir.path}/app.log');
@@ -115,7 +115,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

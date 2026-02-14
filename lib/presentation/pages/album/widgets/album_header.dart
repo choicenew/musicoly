@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// Widget that displays the album header with cover art and basic info
 class AlbumHeader extends StatelessWidget {
@@ -12,6 +13,7 @@ class AlbumHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -51,7 +53,7 @@ class AlbumHeader extends StatelessWidget {
                   children: [
                     // Album type
                     Text(
-                      album.albumType?.toUpperCase() ?? 'ALBUM',
+                      album.albumType?.toUpperCase() ?? l10n.album.toUpperCase(),
                       style: theme.textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -84,7 +86,7 @@ class AlbumHeader extends StatelessWidget {
                         // TODO: Implement play functionality
                       },
                       icon: const Icon(Icons.play_arrow),
-                      label: const Text('Play'),
+                      label: Text(l10n.play),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),

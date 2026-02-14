@@ -1,8 +1,3 @@
-import 'package:flutter/foundation.dart';
-
-/// Base class for all services in the application
-///
-/// Provides common functionality and lifecycle methods for services
 abstract class BaseService {
   /// Service identifier
   String get serviceId;

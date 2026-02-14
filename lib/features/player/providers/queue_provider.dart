@@ -1,7 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../services/queue_service_impl.dart';
+
+import 'playback_provider.dart';
 
 part 'queue_provider.freezed.dart';
 part 'queue_provider.g.dart';
@@ -55,6 +56,17 @@ class QueueStateNotifier extends _$QueueStateNotifier {
   QueueState build() {
     _queueService = QueueServiceImpl();
     _initialize();
+
+    // 监听播放状态以同步当前索引
+    ref.listen(playbackStateProvider, (previous, next) {
+      if (next.currentTrackId != null) {
+        final index = state.queue.indexOf(next.currentTrackId!);
+        if (index != -1 && index != state.currentIndex) {
+          state = state.copyWith(currentIndex: index);
+        }
+      }
+    });
+
     return const QueueState();
   }
 

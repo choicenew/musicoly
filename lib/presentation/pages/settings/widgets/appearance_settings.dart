@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/providers/user_preferences_provider.dart';
 import 'package:pyro_music/presentation/widgets/color_scheme_picker_dialog.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class AppearanceSettings extends ConsumerWidget {
   const AppearanceSettings({super.key});
@@ -9,6 +10,7 @@ class AppearanceSettings extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final preferencesAsync = ref.watch(userPreferencesProvider);
+    final l10n = AppLocalizations.of(context);
     
     return Card(
       child: Padding(
@@ -18,22 +20,22 @@ class AppearanceSettings extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                title: const Text('主题'),
-                subtitle: const Text('选择应用的主题模式'),
+                title: Text(l10n.theme),
+                subtitle: Text(l10n.choose_theme_mode),
                 trailing: DropdownButton<ThemeMode>(
                   value: preferences.themeMode,
-                  items: const [
+                  items: [
                     DropdownMenuItem(
                       value: ThemeMode.system,
-                      child: Text('跟随系统'),
+                      child: Text(l10n.follow_system),
                     ),
                     DropdownMenuItem(
                       value: ThemeMode.light,
-                      child: Text('浅色'),
+                      child: Text(l10n.light_mode),
                     ),
                     DropdownMenuItem(
                       value: ThemeMode.dark,
-                      child: Text('深色'),
+                      child: Text(l10n.dark_mode),
                     ),
                   ],
                   onChanged: (value) {
@@ -44,24 +46,24 @@ class AppearanceSettings extends ConsumerWidget {
                 ),
               ),
               SwitchListTile(
-                title: const Text('AMOLED模式'),
-                subtitle: const Text('使用纯黑背景的深色主题'),
+                title: Text(l10n.amoled_mode),
+                subtitle: Text(l10n.amoled_mode_description),
                 value: preferences.amoledDark,
                 onChanged: (value) {
                   ref.read(userPreferencesProvider.notifier).setAmoledDark(value);
                 },
               ),
               SwitchListTile(
-                title: const Text('同步专辑颜色'),
-                subtitle: const Text('根据专辑封面同步界面颜色'),
+                title: Text(l10n.sync_album_color),
+                subtitle: Text(l10n.sync_album_color_description),
                 value: preferences.albumColorSync,
                 onChanged: (value) {
                   ref.read(userPreferencesProvider.notifier).setAlbumColorSync(value);
                 },
               ),
               ListTile(
-                title: const Text('强调色'),
-                subtitle: const Text('选择应用的强调色方案'),
+                title: Text(l10n.accent_color),
+                subtitle: Text(l10n.choose_accent_color),
                 trailing: ColorChip(
                   color: preferences.accentColor,
                   onPressed: () => showDialog(

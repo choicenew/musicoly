@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/presentation/pages/album/widgets/album_header.dart';
 import 'package:pyro_music/presentation/pages/album/widgets/album_tracks.dart';
 import 'package:pyro_music/presentation/pages/album/widgets/album_info.dart';
@@ -24,12 +25,13 @@ class AlbumPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: FutureBuilder<AlbumModel?>(
         future: _fetchAlbum(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingIndicator(text: 'Loading album...');
+            return LoadingIndicator(text: l10n.loading_album);
           }
           final album = snapshot.data;
           if (album == null) {
@@ -46,10 +48,10 @@ class AlbumPage extends StatelessWidget {
                   child: AlbumInfo(album: album),
                 ),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: AlbumTracks(album: album),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: AlbumTracks(tracks: []),
                 ),
               ),
             ],
@@ -61,6 +63,7 @@ class AlbumPage extends StatelessWidget {
 
   Widget _buildErrorState(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Center(
       child: Column(
@@ -73,12 +76,12 @@ class AlbumPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Album not found',
+            l10n.album_not_found,
             style: theme.textTheme.titleLarge,
           ),
           const SizedBox(height: 8),
           Text(
-            'The album you are looking for could not be found',
+            l10n.album_not_found_hint,
             style: theme.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
@@ -87,7 +90,7 @@ class AlbumPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Go Back'),
+            child: Text(l10n.go_back),
           ),
         ],
       ),

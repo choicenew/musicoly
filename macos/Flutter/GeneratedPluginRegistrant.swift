@@ -9,7 +9,6 @@ import app_links
 import audio_service
 import audio_session
 import bonsoir_darwin
-import desktop_webview_window
 import device_info_plus
 import file_picker
 import file_selector_macos
@@ -29,7 +28,6 @@ import sqflite_darwin
 import system_theme
 import tray_manager
 import url_launcher_macos
-import webview_flutter_wkwebview
 import window_manager
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
@@ -37,7 +35,6 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AudioServicePlugin.register(with: registry.registrar(forPlugin: "AudioServicePlugin"))
   AudioSessionPlugin.register(with: registry.registrar(forPlugin: "AudioSessionPlugin"))
   SwiftBonsoirPlugin.register(with: registry.registrar(forPlugin: "SwiftBonsoirPlugin"))
-  DesktopWebviewWindowPlugin.register(with: registry.registrar(forPlugin: "DesktopWebviewWindowPlugin"))
   DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   FilePickerPlugin.register(with: registry.registrar(forPlugin: "FilePickerPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
@@ -57,6 +54,5 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   SystemThemePlugin.register(with: registry.registrar(forPlugin: "SystemThemePlugin"))
   TrayManagerPlugin.register(with: registry.registrar(forPlugin: "TrayManagerPlugin"))
   UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
-  WebViewFlutterPlugin.register(with: registry.registrar(forPlugin: "WebViewFlutterPlugin"))
   WindowManagerPlugin.register(with: registry.registrar(forPlugin: "WindowManagerPlugin"))
 }

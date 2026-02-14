@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'base_service.dart';
 import '../interfaces/auth/auth_interface.dart';
 import '../interfaces/auth/user_interface.dart';

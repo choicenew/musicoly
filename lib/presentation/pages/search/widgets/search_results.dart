@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// A widget that displays search results
 class SearchResults extends ConsumerWidget {
   /// The search query
@@ -18,12 +20,13 @@ class SearchResults extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     
     // TODO: Integrate with search provider
-    return _buildEmptyState(theme);
+    return _buildEmptyState(theme, l10n);
   }
 
-  Widget _buildEmptyState(ThemeData theme) {
+  Widget _buildEmptyState(ThemeData theme, AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,34 +34,14 @@ class SearchResults extends ConsumerWidget {
           Icon(
             Icons.search_off,
             size: 64,
-            color: theme.colorScheme.secondary.withAlpha(128),
+            color: theme.colorScheme.secondary.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
-            'No results found for "$query"',
+            l10n.no_results_found(query),
             style: theme.textTheme.titleMedium?.copyWith(
-              color: theme.textTheme.titleMedium?.color?.withAlpha(179),
+              color: theme.textTheme.titleMedium?.color?.withValues(alpha: 0.7),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildErrorState(ThemeData theme, String error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.error_outline,
-            size: 64,
-            color: Colors.red,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Search failed: $error',
-            style: theme.textTheme.titleMedium,
           ),
         ],
       ),

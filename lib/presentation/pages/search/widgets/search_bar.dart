@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:pyro_music/generated/app_localizations.dart';
+
 /// A custom search bar widget for the search page
 class CustomSearchBar extends StatefulWidget {
   /// Callback when the search query changes
@@ -9,10 +11,10 @@ class CustomSearchBar extends StatefulWidget {
   final String initialQuery;
 
   const CustomSearchBar({
-    Key? key,
+    super.key,
     required this.onSearch,
     this.initialQuery = '',
-  }) : super(key: key);
+  });
 
   @override
   State<CustomSearchBar> createState() => _CustomSearchBarState();
@@ -36,6 +38,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       height: 48,
@@ -53,7 +56,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       child: TextField(
         controller: _controller,
         decoration: InputDecoration(
-          hintText: 'Search for songs, artists, albums...',
+          hintText: l10n.search,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: _controller.text.isNotEmpty
               ? IconButton(

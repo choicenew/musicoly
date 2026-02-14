@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
-/// Widget that displays detailed album information
+/// Widget that displays additional album information
 class AlbumInfo extends StatelessWidget {
   /// The album to display information for
   final AlbumModel album;
@@ -12,103 +13,45 @@ class AlbumInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    // Format release date
-    final releaseDate = album.releaseDate;
-    final releaseDateText = releaseDate != null
-        ? '${releaseDate.year}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}'
-        : 'Unknown release date';
+    final l10n = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Album details section title
         Text(
-          'Album Details',
+          l10n.album_details,
           style: theme.textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 16),
-
-        // Album details grid
-        Wrap(
-          spacing: 24,
-          runSpacing: 16,
-          children: [
-            // Release date
-            _buildInfoItem(
-              context,
-              icon: Icons.calendar_today,
-              title: 'Release Date',
-              value: releaseDateText,
-            ),
-
-            // Total tracks
-            _buildInfoItem(
-              context,
-              icon: Icons.music_note,
-              title: 'Tracks',
-              value: album.totalTracks.toString(),
-            ),
-
-            // Genres (if available)
-            if (album.genres != null && album.genres!.isNotEmpty)
-              _buildInfoItem(
-                context,
-                icon: Icons.category,
-                title: 'Genres',
-                value: album.genres!.join(', '),
-              ),
-
-            // Popularity (if available)
-            if (album.popularity != null)
-              _buildInfoItem(
-                context,
-                icon: Icons.trending_up,
-                title: 'Popularity',
-                value: '${album.popularity}/100',
-              ),
-          ],
-        ),
+        const SizedBox(height: 8),
+        _buildInfoRow(context, l10n.release_date, album.releaseDate?.toString() ?? l10n.unknown_release_date),
+        _buildInfoRow(context, l10n.tracks, l10n.songs_count(album.totalTracks)),
       ],
     );
   }
 
-  /// Builds an individual info item with icon, title and value
-  Widget _buildInfoItem(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-  }) {
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
     final theme = Theme.of(context);
 
-    return SizedBox(
-      width: 150,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: theme.colorScheme.primary),
-          const SizedBox(width: 8),
+          SizedBox(
+            width: 100,
+            child: Text(
+              label,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
+              ),
+            ),
+          ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: theme.textTheme.bodyMedium,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-              ],
+            child: Text(
+              value,
+              style: theme.textTheme.bodyMedium,
             ),
           ),
         ],

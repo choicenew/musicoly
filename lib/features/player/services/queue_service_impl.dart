@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import '../../../core/base/services/base_service.dart';
-import '../../../core/base/interfaces/player/queue_interface.dart';
-import '../../../core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/base/interfaces/player/queue_interface.dart';
 import '../../../core/services/service_registry.dart';
 import '../../../core/platform/platform_registry.dart';
 

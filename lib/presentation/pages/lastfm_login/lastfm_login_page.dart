@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 /// LastFM登录页面
 class LastFMLoginPage extends StatefulWidget {
   /// 构造函数
-  const LastFMLoginPage({Key? key}) : super(key: key);
+  const LastFMLoginPage({super.key});
 
   @override
   State<LastFMLoginPage> createState() => _LastFMLoginPageState();
@@ -22,6 +23,7 @@ class _LastFMLoginPageState extends State<LastFMLoginPage> {
   }
 
   Future<void> _handleLogin() async {
+    final l10n = AppLocalizations.of(context);
     setState(() {
       _isLoading = true;
     });
@@ -35,7 +37,7 @@ class _LastFMLoginPageState extends State<LastFMLoginPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('登录失败: $e')),
+          SnackBar(content: Text(l10n.login_failed(e.toString()))),
         );
       }
     } finally {
@@ -49,9 +51,10 @@ class _LastFMLoginPageState extends State<LastFMLoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LastFM 登录'),
+        title: Text(l10n.login_with_lastfm),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -66,17 +69,17 @@ class _LastFMLoginPageState extends State<LastFMLoginPage> {
             const SizedBox(height: 32),
             TextField(
               controller: _usernameController,
-              decoration: const InputDecoration(
-                labelText: '用户名',
-                prefixIcon: Icon(Icons.person),
+              decoration: InputDecoration(
+                labelText: l10n.username,
+                prefixIcon: const Icon(Icons.person),
               ),
             ),
             const SizedBox(height: 16),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: '密码',
-                prefixIcon: Icon(Icons.lock),
+              decoration: InputDecoration(
+                labelText: l10n.password,
+                prefixIcon: const Icon(Icons.lock),
               ),
               obscureText: true,
             ),
@@ -87,7 +90,7 @@ class _LastFMLoginPageState extends State<LastFMLoginPage> {
                 onPressed: _isLoading ? null : _handleLogin,
                 child: _isLoading
                     ? const CircularProgressIndicator()
-                    : const Text('登录'),
+                    : Text(l10n.login),
               ),
             ),
           ],

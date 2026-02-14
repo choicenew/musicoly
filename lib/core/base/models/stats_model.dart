@@ -7,9 +7,6 @@ import 'package:pyro_music/core/base/models/base_model.dart';
 /// 播放统计模型
 class PlayStatsModel extends BaseModel implements PlayStatsInterface {
   @override
-  final String id;
-
-  @override
   final TrackInterface track;
 
   @override
@@ -31,7 +28,7 @@ class PlayStatsModel extends BaseModel implements PlayStatsInterface {
   final int skipCount;
 
   const PlayStatsModel({
-    required this.id,
+    required super.id,
     required this.track,
     this.playCount = 1,
     required this.firstPlayed,
@@ -40,7 +37,7 @@ class PlayStatsModel extends BaseModel implements PlayStatsInterface {
     this.isCompletePlay = false,
     this.skipCount = 0,
     required super.platform,
-  }) : super(id: id);
+  });
 
   /// 从JSON创建播放统计模型
   factory PlayStatsModel.fromJson(
@@ -103,9 +100,6 @@ class PlayStatsModel extends BaseModel implements PlayStatsInterface {
 /// 艺术家统计模型
 class ArtistStatsModel extends BaseModel implements ArtistStatsInterface {
   @override
-  final String id;
-
-  @override
   final ArtistInterface artist;
 
   @override
@@ -121,14 +115,14 @@ class ArtistStatsModel extends BaseModel implements ArtistStatsInterface {
   final int totalPlayDuration;
 
   const ArtistStatsModel({
-    required this.id,
+    required super.id,
     required this.artist,
     this.playCount = 1,
     required this.firstPlayed,
     required this.lastPlayed,
     this.totalPlayDuration = 0,
     super.platform = 'default',
-  }) : super(id: id);
+  });
 
   /// 从JSON创建艺术家统计模型
   factory ArtistStatsModel.fromJson(

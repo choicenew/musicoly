@@ -11,7 +11,7 @@ class CookieImportExportSettings extends StatelessWidget {
   const CookieImportExportSettings({super.key});
 
   Future<void> _handleImport(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -46,7 +46,7 @@ class CookieImportExportSettings extends StatelessWidget {
   }
 
   Future<void> _handleExport(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     try {
       final platformRegistry = PlatformRegistry();
       final authServices = platformRegistry.getAllServicesOfType<AuthService>();
@@ -82,7 +82,7 @@ class CookieImportExportSettings extends StatelessWidget {
   }
 
   Future<void> _handleClear(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     try {
       final platformRegistry = PlatformRegistry();
       final authServices = platformRegistry.getAllServicesOfType<AuthService>();
@@ -107,6 +107,7 @@ class CookieImportExportSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -114,27 +115,27 @@ class CookieImportExportSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              title: const Text('导入Cookie'),
-              subtitle: const Text('从文件导入认证信息'),
+              title: Text(l10n.import_cookie),
+              subtitle: Text(l10n.import_cookie_description),
               trailing: TextButton(
                 onPressed: () => _handleImport(context),
-                child: const Text('导入'),
+                child: Text(l10n.import),
               ),
             ),
             ListTile(
-              title: const Text('导出Cookie'),
-              subtitle: const Text('导出当前认证信息到文件'),
+              title: Text(l10n.export_cookie),
+              subtitle: Text(l10n.export_cookie_description),
               trailing: TextButton(
                 onPressed: () => _handleExport(context),
-                child: const Text('导出'),
+                child: Text(l10n.export),
               ),
             ),
             ListTile(
-              title: const Text('清除Cookie'),
-              subtitle: const Text('清除所有平台的认证信息'),
+              title: Text(l10n.clear_cookie),
+              subtitle: Text(l10n.clear_cookie_description),
               trailing: TextButton(
                 onPressed: () => _handleClear(context),
-                child: const Text('清除'),
+                child: Text(l10n.clear),
               ),
             ),
           ],

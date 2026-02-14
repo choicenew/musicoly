@@ -8,9 +8,10 @@ import 'base_model.dart';
 @immutable
 abstract class MediaModel extends BaseModel implements MediaInterface {
   /// Name or title of the media
+  @override
   final String name;
 
-  /// URL to the media's image/thumbnail
+  @override
   final String? imageUrl;
 
   /// Create a new media model

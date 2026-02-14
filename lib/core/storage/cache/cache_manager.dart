@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'cache_config.dart';
-import 'cache_keys.dart';
 
 /// Cache manager for the application
 ///
@@ -91,7 +90,7 @@ class CacheManager {
         jsonData = await file.readAsString();
       }
 
-      final cacheData = jsonDecode(jsonData!);
+      final cacheData = jsonDecode(jsonData);
       final expiryTime =
           DateTime.fromMillisecondsSinceEpoch(cacheData['expiry']);
 

@@ -4,7 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:pyro_music/core/base/providers/stats_provider.dart';
 import 'package:pyro_music/core/base/providers/base_provider.dart';
 import 'package:pyro_music/core/base/interfaces/stats/artist_stats_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/artist_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/models/artist_model.dart';
 import 'package:pyro_music/core/base/services/stats_service.dart';

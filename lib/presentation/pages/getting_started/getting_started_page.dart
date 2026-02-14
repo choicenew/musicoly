@@ -7,17 +7,17 @@ import 'package:pyro_music/presentation/pages/getting_started/widgets/support_se
 /// 入门引导页面
 class GettingStartedPage extends StatelessWidget {
   /// 构造函数
-  const GettingStartedPage({Key? key}) : super(key: key);
+  const GettingStartedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               GreetingSection(),
               SizedBox(height: 24),
               PlaybackSection(),

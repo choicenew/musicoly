@@ -18,13 +18,13 @@ class LoadingIndicator extends StatelessWidget {
   final bool center;
 
   const LoadingIndicator({
-    Key? key,
+    super.key,
     this.size = 40.0,
     this.strokeWidth = 4.0,
     this.color,
     this.text,
     this.center = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

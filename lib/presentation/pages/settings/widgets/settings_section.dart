@@ -20,19 +20,19 @@ class SettingsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 账户设置
-        const _SectionTitle(title: '账户'),
+        _SectionTitle(title: l10n.accounts),
         const AccountsSettings(),
 
         // 外观设置
-        const _SectionTitle(title: '外观'),
+        _SectionTitle(title: l10n.appearance),
         const AppearanceSettings(),
 
         // 播放设置
-        const _SectionTitle(title: '播放'),
+        _SectionTitle(title: l10n.playback),
         const PlaybackSettings(),
 
         // 下载设置
-        const _SectionTitle(title: '下载'),
+        _SectionTitle(title: l10n.downloads),
         const DownloadsSettings(),
 
         // 语言和地区设置
@@ -51,19 +51,19 @@ class SettingsSection extends StatelessWidget {
         ),
 
         // 桌面设置
-        const _SectionTitle(title: '桌面'),
+        _SectionTitle(title: l10n.desktop),
         const DesktopSettings(),
 
         // 开发者选项
-        const _SectionTitle(title: '开发者选项'),
+        _SectionTitle(title: l10n.developers_options),
         const DevelopersSettings(),
 
         // Cookie导入导出
-        const _SectionTitle(title: 'Cookie管理'),
+        _SectionTitle(title: l10n.cookie_management),
         const CookieImportExportSettings(),
 
         // 关于
-        const _SectionTitle(title: '关于'),
+        _SectionTitle(title: l10n.about),
         const AboutSettings(),
       ],
     );
