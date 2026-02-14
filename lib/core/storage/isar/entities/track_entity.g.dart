@@ -58,28 +58,33 @@ const TrackEntitySchema = CollectionSchema(
       name: r'isPlayable',
       type: IsarType.bool,
     ),
-    r'name': PropertySchema(id: 9, name: r'name', type: IsarType.string),
+    r'localPath': PropertySchema(
+      id: 9,
+      name: r'localPath',
+      type: IsarType.string,
+    ),
+    r'name': PropertySchema(id: 10, name: r'name', type: IsarType.string),
     r'platform': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'platform',
       type: IsarType.string,
     ),
     r'platformMetadata': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'platformMetadata',
       type: IsarType.string,
     ),
     r'popularity': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'popularity',
       type: IsarType.long,
     ),
     r'previewUrl': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'previewUrl',
       type: IsarType.string,
     ),
-    r'trackId': PropertySchema(id: 14, name: r'trackId', type: IsarType.string),
+    r'trackId': PropertySchema(id: 15, name: r'trackId', type: IsarType.string),
   },
 
   estimateSize: _trackEntityEstimateSize,
@@ -185,6 +190,12 @@ int _trackEntityEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.localPath;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.platform.length * 3;
   {
@@ -218,12 +229,13 @@ void _trackEntitySerialize(
   writer.writeString(offsets[6], object.imageUrl);
   writer.writeBool(offsets[7], object.isExplicit);
   writer.writeBool(offsets[8], object.isPlayable);
-  writer.writeString(offsets[9], object.name);
-  writer.writeString(offsets[10], object.platform);
-  writer.writeString(offsets[11], object.platformMetadata);
-  writer.writeLong(offsets[12], object.popularity);
-  writer.writeString(offsets[13], object.previewUrl);
-  writer.writeString(offsets[14], object.trackId);
+  writer.writeString(offsets[9], object.localPath);
+  writer.writeString(offsets[10], object.name);
+  writer.writeString(offsets[11], object.platform);
+  writer.writeString(offsets[12], object.platformMetadata);
+  writer.writeLong(offsets[13], object.popularity);
+  writer.writeString(offsets[14], object.previewUrl);
+  writer.writeString(offsets[15], object.trackId);
 }
 
 TrackEntity _trackEntityDeserialize(
@@ -243,12 +255,13 @@ TrackEntity _trackEntityDeserialize(
   object.imageUrl = reader.readStringOrNull(offsets[6]);
   object.isExplicit = reader.readBool(offsets[7]);
   object.isPlayable = reader.readBool(offsets[8]);
-  object.name = reader.readString(offsets[9]);
-  object.platform = reader.readString(offsets[10]);
-  object.platformMetadata = reader.readStringOrNull(offsets[11]);
-  object.popularity = reader.readLongOrNull(offsets[12]);
-  object.previewUrl = reader.readStringOrNull(offsets[13]);
-  object.trackId = reader.readString(offsets[14]);
+  object.localPath = reader.readStringOrNull(offsets[9]);
+  object.name = reader.readString(offsets[10]);
+  object.platform = reader.readString(offsets[11]);
+  object.platformMetadata = reader.readStringOrNull(offsets[12]);
+  object.popularity = reader.readLongOrNull(offsets[13]);
+  object.previewUrl = reader.readStringOrNull(offsets[14]);
+  object.trackId = reader.readString(offsets[15]);
   return object;
 }
 
@@ -278,16 +291,18 @@ P _trackEntityDeserializeProp<P>(
     case 8:
       return (reader.readBool(offset)) as P;
     case 9:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 10:
       return (reader.readString(offset)) as P;
     case 11:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 12:
-      return (reader.readLongOrNull(offset)) as P;
-    case 13:
       return (reader.readStringOrNull(offset)) as P;
+    case 13:
+      return (reader.readLongOrNull(offset)) as P;
     case 14:
+      return (reader.readStringOrNull(offset)) as P;
+    case 15:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1917,6 +1932,165 @@ extension TrackEntityQueryFilter
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'localPath'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'localPath'),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathEqualTo(String? value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'localPath',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathStartsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathEndsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'localPath',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'localPath',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'localPath', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition>
+  localPathIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'localPath', value: ''),
+      );
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterFilterCondition> nameEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -2839,6 +3013,18 @@ extension TrackEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByLocalPath() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localPath', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByLocalPathDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localPath', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -3012,6 +3198,18 @@ extension TrackEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByLocalPath() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localPath', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByLocalPathDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localPath', Sort.desc);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -3149,6 +3347,14 @@ extension TrackEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByLocalPath({
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'localPath', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<TrackEntity, TrackEntity, QDistinct> distinctByName({
     bool caseSensitive = true,
   }) {
@@ -3260,6 +3466,12 @@ extension TrackEntityQueryProperty
   QueryBuilder<TrackEntity, bool, QQueryOperations> isPlayableProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isPlayable');
+    });
+  }
+
+  QueryBuilder<TrackEntity, String?, QQueryOperations> localPathProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'localPath');
     });
   }
 

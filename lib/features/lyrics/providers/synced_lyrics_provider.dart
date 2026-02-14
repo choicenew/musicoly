@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:pyro_music/features/lyrics/providers/lyrics_provider.dart';
-import 'package:pyro_music/core/base/interfaces/lyrics/lyrics_interface.dart';
+import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 
 part 'synced_lyrics_provider.freezed.dart';
 part 'synced_lyrics_provider.g.dart';
@@ -54,11 +54,11 @@ class SyncedLyricsNotifier extends _$SyncedLyricsNotifier {
     if (currentLyrics == null ||
         !currentLyrics.isSynced ||
         index < 0 ||
-        index >= currentLyrics.syncedLyrics.length) {
+        index >= currentLyrics.lines.length) {
       return null;
     }
 
-    return currentLyrics.syncedLyrics[index][1] as String?;
+    return currentLyrics.lines[index].text;
   }
 
   int? getLyricTimestamp(int index) {
@@ -68,11 +68,11 @@ class SyncedLyricsNotifier extends _$SyncedLyricsNotifier {
     if (currentLyrics == null ||
         !currentLyrics.isSynced ||
         index < 0 ||
-        index >= currentLyrics.syncedLyrics.length) {
+        index >= currentLyrics.lines.length) {
       return null;
     }
 
-    return currentLyrics.syncedLyrics[index][0] as int?;
+    return currentLyrics.lines[index].startTime.inMilliseconds;
   }
 
   String formatTimestamp(int timestamp) {

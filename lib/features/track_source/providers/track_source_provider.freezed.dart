@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TrackSourceState {
 
- AudioSource get currentSource; SourceQualities get quality; SourceCodecs get codec;
+ String get activePluginId; List<String> get availablePlugins; SourceQualities get quality; SourceCodecs get codec;
 /// Create a copy of TrackSourceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $TrackSourceStateCopyWith<TrackSourceState> get copyWith => _$TrackSourceStateCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrackSourceState&&(identical(other.currentSource, currentSource) || other.currentSource == currentSource)&&(identical(other.quality, quality) || other.quality == quality)&&(identical(other.codec, codec) || other.codec == codec));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TrackSourceState&&(identical(other.activePluginId, activePluginId) || other.activePluginId == activePluginId)&&const DeepCollectionEquality().equals(other.availablePlugins, availablePlugins)&&(identical(other.quality, quality) || other.quality == quality)&&(identical(other.codec, codec) || other.codec == codec));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentSource,quality,codec);
+int get hashCode => Object.hash(runtimeType,activePluginId,const DeepCollectionEquality().hash(availablePlugins),quality,codec);
 
 @override
 String toString() {
-  return 'TrackSourceState(currentSource: $currentSource, quality: $quality, codec: $codec)';
+  return 'TrackSourceState(activePluginId: $activePluginId, availablePlugins: $availablePlugins, quality: $quality, codec: $codec)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $TrackSourceStateCopyWith<$Res>  {
   factory $TrackSourceStateCopyWith(TrackSourceState value, $Res Function(TrackSourceState) _then) = _$TrackSourceStateCopyWithImpl;
 @useResult
 $Res call({
- AudioSource currentSource, SourceQualities quality, SourceCodecs codec
+ String activePluginId, List<String> availablePlugins, SourceQualities quality, SourceCodecs codec
 });
 
 
@@ -62,10 +62,11 @@ class _$TrackSourceStateCopyWithImpl<$Res>
 
 /// Create a copy of TrackSourceState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentSource = null,Object? quality = null,Object? codec = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? activePluginId = null,Object? availablePlugins = null,Object? quality = null,Object? codec = null,}) {
   return _then(_self.copyWith(
-currentSource: null == currentSource ? _self.currentSource : currentSource // ignore: cast_nullable_to_non_nullable
-as AudioSource,quality: null == quality ? _self.quality : quality // ignore: cast_nullable_to_non_nullable
+activePluginId: null == activePluginId ? _self.activePluginId : activePluginId // ignore: cast_nullable_to_non_nullable
+as String,availablePlugins: null == availablePlugins ? _self.availablePlugins : availablePlugins // ignore: cast_nullable_to_non_nullable
+as List<String>,quality: null == quality ? _self.quality : quality // ignore: cast_nullable_to_non_nullable
 as SourceQualities,codec: null == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
 as SourceCodecs,
   ));
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( AudioSource currentSource,  SourceQualities quality,  SourceCodecs codec)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String activePluginId,  List<String> availablePlugins,  SourceQualities quality,  SourceCodecs codec)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TrackSourceState() when $default != null:
-return $default(_that.currentSource,_that.quality,_that.codec);case _:
+return $default(_that.activePluginId,_that.availablePlugins,_that.quality,_that.codec);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.currentSource,_that.quality,_that.codec);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( AudioSource currentSource,  SourceQualities quality,  SourceCodecs codec)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String activePluginId,  List<String> availablePlugins,  SourceQualities quality,  SourceCodecs codec)  $default,) {final _that = this;
 switch (_that) {
 case _TrackSourceState():
-return $default(_that.currentSource,_that.quality,_that.codec);case _:
+return $default(_that.activePluginId,_that.availablePlugins,_that.quality,_that.codec);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.currentSource,_that.quality,_that.codec);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( AudioSource currentSource,  SourceQualities quality,  SourceCodecs codec)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String activePluginId,  List<String> availablePlugins,  SourceQualities quality,  SourceCodecs codec)?  $default,) {final _that = this;
 switch (_that) {
 case _TrackSourceState() when $default != null:
-return $default(_that.currentSource,_that.quality,_that.codec);case _:
+return $default(_that.activePluginId,_that.availablePlugins,_that.quality,_that.codec);case _:
   return null;
 
 }
@@ -208,10 +209,17 @@ return $default(_that.currentSource,_that.quality,_that.codec);case _:
 
 
 class _TrackSourceState implements TrackSourceState {
-  const _TrackSourceState({this.currentSource = AudioSource.youtube, this.quality = SourceQualities.high, this.codec = SourceCodecs.m4a});
+  const _TrackSourceState({this.activePluginId = '', final  List<String> availablePlugins = const [], this.quality = SourceQualities.high, this.codec = SourceCodecs.m4a}): _availablePlugins = availablePlugins;
   
 
-@override@JsonKey() final  AudioSource currentSource;
+@override@JsonKey() final  String activePluginId;
+ final  List<String> _availablePlugins;
+@override@JsonKey() List<String> get availablePlugins {
+  if (_availablePlugins is EqualUnmodifiableListView) return _availablePlugins;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_availablePlugins);
+}
+
 @override@JsonKey() final  SourceQualities quality;
 @override@JsonKey() final  SourceCodecs codec;
 
@@ -225,16 +233,16 @@ _$TrackSourceStateCopyWith<_TrackSourceState> get copyWith => __$TrackSourceStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrackSourceState&&(identical(other.currentSource, currentSource) || other.currentSource == currentSource)&&(identical(other.quality, quality) || other.quality == quality)&&(identical(other.codec, codec) || other.codec == codec));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TrackSourceState&&(identical(other.activePluginId, activePluginId) || other.activePluginId == activePluginId)&&const DeepCollectionEquality().equals(other._availablePlugins, _availablePlugins)&&(identical(other.quality, quality) || other.quality == quality)&&(identical(other.codec, codec) || other.codec == codec));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentSource,quality,codec);
+int get hashCode => Object.hash(runtimeType,activePluginId,const DeepCollectionEquality().hash(_availablePlugins),quality,codec);
 
 @override
 String toString() {
-  return 'TrackSourceState(currentSource: $currentSource, quality: $quality, codec: $codec)';
+  return 'TrackSourceState(activePluginId: $activePluginId, availablePlugins: $availablePlugins, quality: $quality, codec: $codec)';
 }
 
 
@@ -245,7 +253,7 @@ abstract mixin class _$TrackSourceStateCopyWith<$Res> implements $TrackSourceSta
   factory _$TrackSourceStateCopyWith(_TrackSourceState value, $Res Function(_TrackSourceState) _then) = __$TrackSourceStateCopyWithImpl;
 @override @useResult
 $Res call({
- AudioSource currentSource, SourceQualities quality, SourceCodecs codec
+ String activePluginId, List<String> availablePlugins, SourceQualities quality, SourceCodecs codec
 });
 
 
@@ -262,10 +270,11 @@ class __$TrackSourceStateCopyWithImpl<$Res>
 
 /// Create a copy of TrackSourceState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentSource = null,Object? quality = null,Object? codec = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? activePluginId = null,Object? availablePlugins = null,Object? quality = null,Object? codec = null,}) {
   return _then(_TrackSourceState(
-currentSource: null == currentSource ? _self.currentSource : currentSource // ignore: cast_nullable_to_non_nullable
-as AudioSource,quality: null == quality ? _self.quality : quality // ignore: cast_nullable_to_non_nullable
+activePluginId: null == activePluginId ? _self.activePluginId : activePluginId // ignore: cast_nullable_to_non_nullable
+as String,availablePlugins: null == availablePlugins ? _self._availablePlugins : availablePlugins // ignore: cast_nullable_to_non_nullable
+as List<String>,quality: null == quality ? _self.quality : quality // ignore: cast_nullable_to_non_nullable
 as SourceQualities,codec: null == codec ? _self.codec : codec // ignore: cast_nullable_to_non_nullable
 as SourceCodecs,
   ));

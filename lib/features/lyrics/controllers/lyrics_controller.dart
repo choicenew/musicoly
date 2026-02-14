@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/lyrics/lyrics_interface.dart';
+import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/features/lyrics/providers/lyrics_provider.dart';
 import 'package:pyro_music/features/lyrics/providers/synced_lyrics_provider.dart';
@@ -16,13 +16,13 @@ class LyricsController {
   static final provider = lyricsControllerProvider;
 
   /// 当前歌词
-  final ValueNotifier<LyricsInterface?> currentLyrics = ValueNotifier(null);
+  final ValueNotifier<LyricData?> currentLyrics = ValueNotifier(null);
 
   /// 当前歌词索引
   final ValueNotifier<int> currentLyricIndex = ValueNotifier(-1);
 
   /// 当前播放位置
-  final ValueNotifier<int> currentPosition = ValueNotifier(0);
+  final ValueNotifier<Duration> currentPosition = ValueNotifier(Duration.zero);
 
   /// 是否显示同步歌词
   final ValueNotifier<bool> showSyncedLyrics = ValueNotifier(true);
@@ -95,7 +95,7 @@ class LyricsController {
         _onTrackChanged(next.currentTrack);
       }
       if (previous?.position != next.position) {
-         _onPositionChanged(next.position);
+         _onPositionChanged(Duration(milliseconds: next.position));
       }
     });
   }
@@ -112,7 +112,7 @@ class LyricsController {
   }
 
   /// 播放位置变化处理
-  void _onPositionChanged(int position) {
+  void _onPositionChanged(Duration position) {
     _ref.read(lyricsProvider.notifier).updatePosition(position);
   }
 
@@ -189,14 +189,14 @@ class LyricsController {
   }
 
   /// 搜索歌词
-  Future<List<LyricsInterface>> searchLyrics(String query,
+  Future<List<LyricData>> searchLyrics(String query,
       {int limit = 10, int offset = 0}) async {
     return await _ref.read(lyricsProvider.notifier).searchLyrics(query,
         limit: limit, offset: offset);
   }
 
   /// 保存歌词
-  Future<bool> saveLyrics(LyricsInterface lyrics) async {
+  Future<bool> saveLyrics(LyricData lyrics) async {
     return await _ref.read(lyricsProvider.notifier).saveLyrics(lyrics);
   }
 

@@ -17,31 +17,32 @@ const LyricsEntitySchema = CollectionSchema(
   name: r'LyricsEntity',
   id: 2211502337312147892,
   properties: {
+    r'content': PropertySchema(id: 0, name: r'content', type: IsarType.string),
     r'createdAt': PropertySchema(
-      id: 0,
+      id: 1,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'filePath': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'filePath',
       type: IsarType.string,
     ),
-    r'isSynced': PropertySchema(id: 2, name: r'isSynced', type: IsarType.bool),
+    r'isSynced': PropertySchema(id: 3, name: r'isSynced', type: IsarType.bool),
     r'language': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'language',
       type: IsarType.string,
     ),
     r'lyricsId': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'lyricsId',
       type: IsarType.string,
     ),
-    r'source': PropertySchema(id: 5, name: r'source', type: IsarType.string),
-    r'trackId': PropertySchema(id: 6, name: r'trackId', type: IsarType.string),
+    r'source': PropertySchema(id: 6, name: r'source', type: IsarType.string),
+    r'trackId': PropertySchema(id: 7, name: r'trackId', type: IsarType.string),
     r'updatedAt': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
@@ -109,6 +110,12 @@ int _lyricsEntityEstimateSize(
 ) {
   var bytesCount = offsets.last;
   {
+    final value = object.content;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.filePath;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -137,14 +144,15 @@ void _lyricsEntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDateTime(offsets[0], object.createdAt);
-  writer.writeString(offsets[1], object.filePath);
-  writer.writeBool(offsets[2], object.isSynced);
-  writer.writeString(offsets[3], object.language);
-  writer.writeString(offsets[4], object.lyricsId);
-  writer.writeString(offsets[5], object.source);
-  writer.writeString(offsets[6], object.trackId);
-  writer.writeDateTime(offsets[7], object.updatedAt);
+  writer.writeString(offsets[0], object.content);
+  writer.writeDateTime(offsets[1], object.createdAt);
+  writer.writeString(offsets[2], object.filePath);
+  writer.writeBool(offsets[3], object.isSynced);
+  writer.writeString(offsets[4], object.language);
+  writer.writeString(offsets[5], object.lyricsId);
+  writer.writeString(offsets[6], object.source);
+  writer.writeString(offsets[7], object.trackId);
+  writer.writeDateTime(offsets[8], object.updatedAt);
 }
 
 LyricsEntity _lyricsEntityDeserialize(
@@ -154,15 +162,16 @@ LyricsEntity _lyricsEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = LyricsEntity();
-  object.createdAt = reader.readDateTime(offsets[0]);
-  object.filePath = reader.readStringOrNull(offsets[1]);
+  object.content = reader.readStringOrNull(offsets[0]);
+  object.createdAt = reader.readDateTime(offsets[1]);
+  object.filePath = reader.readStringOrNull(offsets[2]);
   object.id = id;
-  object.isSynced = reader.readBool(offsets[2]);
-  object.language = reader.readStringOrNull(offsets[3]);
-  object.lyricsId = reader.readString(offsets[4]);
-  object.source = reader.readStringOrNull(offsets[5]);
-  object.trackId = reader.readString(offsets[6]);
-  object.updatedAt = reader.readDateTime(offsets[7]);
+  object.isSynced = reader.readBool(offsets[3]);
+  object.language = reader.readStringOrNull(offsets[4]);
+  object.lyricsId = reader.readString(offsets[5]);
+  object.source = reader.readStringOrNull(offsets[6]);
+  object.trackId = reader.readString(offsets[7]);
+  object.updatedAt = reader.readDateTime(offsets[8]);
   return object;
 }
 
@@ -174,20 +183,22 @@ P _lyricsEntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readStringOrNull(offset)) as P;
-    case 6:
+    case 5:
       return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -568,6 +579,165 @@ extension LyricsEntityQueryWhere
 
 extension LyricsEntityQueryFilter
     on QueryBuilder<LyricsEntity, LyricsEntity, QFilterCondition> {
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'content'),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'content'),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentEqualTo(String? value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'content',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentStartsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentEndsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'content',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'content',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'content', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
+  contentIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'content', value: ''),
+      );
+    });
+  }
+
   QueryBuilder<LyricsEntity, LyricsEntity, QAfterFilterCondition>
   createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -1517,6 +1687,18 @@ extension LyricsEntityQueryLinks
 
 extension LyricsEntityQuerySortBy
     on QueryBuilder<LyricsEntity, LyricsEntity, QSortBy> {
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> sortByContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'content', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> sortByContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'content', Sort.desc);
+    });
+  }
+
   QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
@@ -1616,6 +1798,18 @@ extension LyricsEntityQuerySortBy
 
 extension LyricsEntityQuerySortThenBy
     on QueryBuilder<LyricsEntity, LyricsEntity, QSortThenBy> {
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> thenByContent() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'content', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> thenByContentDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'content', Sort.desc);
+    });
+  }
+
   QueryBuilder<LyricsEntity, LyricsEntity, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
@@ -1727,6 +1921,14 @@ extension LyricsEntityQuerySortThenBy
 
 extension LyricsEntityQueryWhereDistinct
     on QueryBuilder<LyricsEntity, LyricsEntity, QDistinct> {
+  QueryBuilder<LyricsEntity, LyricsEntity, QDistinct> distinctByContent({
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'content', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<LyricsEntity, LyricsEntity, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
@@ -1791,6 +1993,12 @@ extension LyricsEntityQueryProperty
   QueryBuilder<LyricsEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<LyricsEntity, String?, QQueryOperations> contentProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'content');
     });
   }
 

@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:isar_community/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pyro_music/core/providers/user_preferences_provider.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 import 'package:pyro_music/generated/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pyro_music/core/init/service_initializer.dart';
+import 'package:pyro_music/core/storage/isar/entities/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 初始化数据库
+  final dir = await getApplicationDocumentsDirectory();
+  final isar = await Isar.open(
+    [
+      TrackEntitySchema,
+      PlaylistEntitySchema,
+      LyricsEntitySchema,
+    ],
+    directory: dir.path,
+  );
+
+  // 初始化核心服务
+  await ServiceInitializer.initialize(isar);
 
   runApp(const ProviderScope(child: PyroMusicApp()));
 }

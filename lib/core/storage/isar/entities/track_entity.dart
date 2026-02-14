@@ -31,6 +31,8 @@ class TrackEntity {
   int? popularity;
 
   String? previewUrl;
+  
+  String? localPath;
 
   // JSON string for platform specific metadata
   String? platformMetadata;

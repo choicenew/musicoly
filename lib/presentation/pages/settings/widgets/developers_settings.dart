@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 import 'dart:io';
+
 
 class DevelopersSettings extends StatefulWidget {
   const DevelopersSettings({super.key});
@@ -16,6 +18,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
   String _apiEndpoint = '';
 
   Future<void> _cleanCache(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final tempDir = await getTemporaryDirectory();
       final cacheDir = Directory('${tempDir.path}/cache');
@@ -25,38 +28,39 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
         await cacheDir.create();
       }
       
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('缓存清理完成')),
+          SnackBar(content: Text(l10n.cache_cleared)),
         );
       }
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('清理失败: $e')),
+          SnackBar(content: Text(l10n.clearing_failed(e.toString()))),
         );
       }
     }
   }
 
   Future<void> _showEndpointDialog(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: _apiEndpoint);
     
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('API端点配置'),
+        title: Text(l10n.api_endpoint_config),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            labelText: 'API服务器地址',
+          decoration: InputDecoration(
+            labelText: l10n.api_server_address,
             hintText: 'https://api.example.com',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('取消'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -65,7 +69,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
               });
               Navigator.pop(context);
             },
-            child: const Text('保存'),
+            child: Text(l10n.save),
           ),
         ],
       ),
@@ -73,36 +77,37 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
   }
 
   Future<void> _exportLogs(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final tempDir = await getTemporaryDirectory();
       final logFile = File('${tempDir.path}/app.log');
       
       if (!await logFile.exists()) {
-        if (mounted) {
+        if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('没有可导出的日志')),
+            SnackBar(content: Text(l10n.no_logs_to_export)),
           );
         }
         return;
       }
       
       final savePath = await FilePicker.platform.saveFile(
-        dialogTitle: '导出日志',
+        dialogTitle: l10n.export_logs,
         fileName: 'pyro_music_logs.txt',
       );
       
       if (savePath != null) {
         await logFile.copy(savePath);
-        if (mounted) {
+        if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('日志导出成功')),
+            SnackBar(content: Text(l10n.logs_exported)),
           );
         }
       }
     } catch (e) {
-      if (mounted) {
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('导出失败: $e')),
+          SnackBar(content: Text(l10n.export_failed(e.toString()))),
         );
       }
     }
@@ -110,6 +115,7 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -117,8 +123,8 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SwitchListTile(
-              title: const Text('调试模式'),
-              subtitle: const Text('启用开发者工具和详细日志'),
+              title: Text(l10n.debug_mode),
+              subtitle: Text(l10n.debug_mode_description),
               value: _debugMode,
               onChanged: (value) {
                 setState(() {
@@ -127,8 +133,8 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
               },
             ),
             SwitchListTile(
-              title: const Text('详细日志'),
-              subtitle: const Text('记录更详细的应用日志'),
+              title: Text(l10n.verbose_logging),
+              subtitle: Text(l10n.verbose_logging_description),
               value: _verboseLogging,
               onChanged: (value) {
                 setState(() {
@@ -137,26 +143,26 @@ class _DevelopersSettingsState extends State<DevelopersSettings> {
               },
             ),
             ListTile(
-              title: const Text('API端点配置'),
-              subtitle: Text(_apiEndpoint.isEmpty ? '使用默认服务器' : _apiEndpoint),
+              title: Text(l10n.api_endpoint_config),
+              subtitle: Text(_apiEndpoint.isEmpty ? l10n.use_default_server : _apiEndpoint),
               trailing: TextButton(
-                child: const Text('配置'),
+                child: Text(l10n.configure),
                 onPressed: () => _showEndpointDialog(context),
               ),
             ),
             ListTile(
-              title: const Text('缓存管理'),
-              subtitle: const Text('清理应用临时缓存数据'),
+              title: Text(l10n.cache_management),
+              subtitle: Text(l10n.cache_management_description),
               trailing: TextButton(
-                child: const Text('清理'),
+                child: Text(l10n.clear),
                 onPressed: () => _cleanCache(context),
               ),
             ),
             ListTile(
-              title: const Text('导出日志'),
-              subtitle: const Text('导出应用日志文件'),
+              title: Text(l10n.export_logs),
+              subtitle: Text(l10n.export_logs_description),
               trailing: TextButton(
-                child: const Text('导出'),
+                child: Text(l10n.export),
                 onPressed: () => _exportLogs(context),
               ),
             ),

@@ -44,7 +44,7 @@ final class LyricsNotifierProvider
   }
 }
 
-String _$lyricsNotifierHash() => r'af5dc80652ca1012ba1a275feb59145ba0630841';
+String _$lyricsNotifierHash() => r'2e59822970790876d0639cc46fae649c064a0d5b';
 
 /// 歌词提供者实现
 

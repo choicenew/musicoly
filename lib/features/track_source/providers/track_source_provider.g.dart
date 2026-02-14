@@ -8,15 +8,15 @@ part of 'track_source_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// 音轨源提供者实现
+/// 音轨源提供者实现 - 使用 TrackSourceManager
 
 @ProviderFor(TrackSourceNotifier)
 final trackSourceProvider = TrackSourceNotifierProvider._();
 
-/// 音轨源提供者实现
+/// 音轨源提供者实现 - 使用 TrackSourceManager
 final class TrackSourceNotifierProvider
     extends $NotifierProvider<TrackSourceNotifier, TrackSourceState> {
-  /// 音轨源提供者实现
+  /// 音轨源提供者实现 - 使用 TrackSourceManager
   TrackSourceNotifierProvider._()
     : super(
         from: null,
@@ -45,9 +45,9 @@ final class TrackSourceNotifierProvider
 }
 
 String _$trackSourceNotifierHash() =>
-    r'29d9907676bb7726a1e3bfc1b4c1ddc2be80e096';
+    r'9506ca83f941ee43cf85bf1820fc3202631e5aec';
 
-/// 音轨源提供者实现
+/// 音轨源提供者实现 - 使用 TrackSourceManager
 
 abstract class _$TrackSourceNotifier extends $Notifier<TrackSourceState> {
   TrackSourceState build();

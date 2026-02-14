@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
-import '../base/services/base_service.dart';
+import 'package:pyro_music/core/base/services/base_service.dart';
 
 /// 服务注册表 - 负责管理所有服务的注册和发现
 ///
@@ -46,6 +46,14 @@ class ServiceRegistry {
     _serviceStatus[type]![platform] = ServiceStatus.initializing;
 
     debugPrint('已注册服务工厂: $type - $platform');
+  }
+
+  /// 注册平台特定服务 (别名，用于语义化)
+  void registerPlatformService<T extends BaseService>(
+    String platform,
+    T Function() factory,
+  ) {
+    registerServiceFactory<T>(platform, factory);
   }
 
   /// 获取指定类型和平台的服务

@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/lyrics/lyrics_interface.dart';
-import 'package:pyro_music/core/base/services/lyrics_service.dart';
-import 'package:pyro_music/features/lyrics/services/lyrics_service_impl.dart';
-import 'package:pyro_music/features/lyrics/services/synced_lyrics_service_impl.dart';
+import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
 
 part 'lyrics_provider.freezed.dart';
 part 'lyrics_provider.g.dart';
@@ -13,9 +11,9 @@ part 'lyrics_provider.g.dart';
 @freezed
 abstract class LyricsState with _$LyricsState {
   const factory LyricsState({
-    LyricsInterface? currentLyrics,
+    LyricData? currentLyrics,
     @Default(true) bool showSyncedLyrics,
-    @Default(0) int currentPosition,
+    @Default(Duration.zero) Duration currentPosition,
     @Default(-1) int currentLyricIndex,
     @Default(false) bool isEditMode,
     @Default(false) bool isLoading,
@@ -26,13 +24,12 @@ abstract class LyricsState with _$LyricsState {
 /// 歌词提供者实现
 @Riverpod(keepAlive: true)
 class LyricsNotifier extends _$LyricsNotifier {
-  late final LyricsService _lyricsService;
-  late final SyncedLyricsServiceImpl _syncedLyricsService;
+  late final LyricManager _lyricManager;
 
   @override
   LyricsState build() {
-    _lyricsService = ref.watch(lyricsServiceProvider);
-    _syncedLyricsService = ref.watch(syncedLyricsServiceProvider);
+    final registry = ServiceRegistry();
+    _lyricManager = registry.getService<LyricManager>('lyric_manager')!;
     return const LyricsState();
   }
 
@@ -40,38 +37,30 @@ class LyricsNotifier extends _$LyricsNotifier {
   Future<void> loadLyrics(TrackInterface track) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final lyrics = await _lyricsService.getLyrics(track);
+      final lyrics = await _lyricManager.getLyric(track.id, metadata: {
+        'title': track.name,
+        'artists': track.artistNames,
+      });
       state = state.copyWith(currentLyrics: lyrics, isLoading: false);
     } catch (e) {
       state = state.copyWith(error: e.toString(), isLoading: false);
     }
   }
 
-  /// 加载同步歌词
-  Future<void> loadSyncedLyrics(TrackInterface track) async {
-    state = state.copyWith(isLoading: true, error: null);
-    try {
-      final lyrics = await _lyricsService.getSyncedLyrics(track);
-      if (lyrics != null && lyrics.isSynced) {
-        state = state.copyWith(currentLyrics: lyrics, isLoading: false);
-      } else {
-        state = state.copyWith(isLoading: false);
-      }
-    } catch (e) {
-      state = state.copyWith(error: e.toString(), isLoading: false);
-    }
-  }
-
   /// 更新播放位置
-  void updatePosition(int position) {
-    int newIndex = state.currentLyricIndex;
+  void updatePosition(Duration position) {
+    int newIndex = -1;
 
-    // 如果有同步歌词，更新当前歌词索引
-    if (state.currentLyrics != null &&
-        state.currentLyrics!.isSynced &&
-        state.showSyncedLyrics) {
-      newIndex = _syncedLyricsService.getCurrentLyricIndex(
-          state.currentLyrics!, position);
+    // 如果有歌词，更新当前歌词索引
+    if (state.currentLyrics != null && state.currentLyrics!.lines.isNotEmpty) {
+      final lines = state.currentLyrics!.lines;
+      for (int i = 0; i < lines.length; i++) {
+        if (lines[i].startTime <= position) {
+          newIndex = i;
+        } else {
+          break;
+        }
+      }
     }
 
     state = state.copyWith(
@@ -80,46 +69,62 @@ class LyricsNotifier extends _$LyricsNotifier {
     );
   }
 
-  /// 获取下一行歌词的时间戳
-  int getNextLyricTimestamp() {
-    if (state.currentLyrics == null ||
-        !state.currentLyrics!.isSynced ||
-        state.currentLyricIndex < 0) {
-      return -1;
-    }
+  /// 加载同步歌词
+  Future<void> loadSyncedLyrics(TrackInterface track) async {
+    // 逻辑类似于 loadLyrics，但可能需要指定特定插件或过滤同步歌词
+    await loadLyrics(track);
+  }
 
-    return _syncedLyricsService.getNextLyricTimestamp(
-        state.currentLyrics!, state.currentLyricIndex);
+  /// 清空歌词
+  void clearLyrics() {
+    state = const LyricsState();
   }
 
   /// 调整歌词时间戳
   Future<void> adjustLyricTimestamp(int index, int newTimestamp) async {
-    if (state.currentLyrics == null || !state.currentLyrics!.isSynced) return;
+    // TODO: 实现调整时间戳逻辑
+    debugPrint('调整歌词索引 $index 的时间戳为 $newTimestamp');
+  }
 
-    final updatedLyrics = await _syncedLyricsService.adjustSyncedLyrics(
-        state.currentLyrics!, index, newTimestamp);
+  /// 搜索歌词
+  Future<List<LyricData>> searchLyrics(String query,
+      {int limit = 10, int offset = 0}) async {
+    try {
+      return await _lyricManager.searchLyrics(query,
+          limit: limit, offset: offset);
+    } catch (e) {
+      debugPrint('搜索歌词失败: $e');
+      return [];
+    }
+  }
 
-    if (updatedLyrics != null) {
-      state = state.copyWith(currentLyrics: updatedLyrics);
+  /// 保存歌词
+  Future<bool> saveLyrics(LyricData lyrics) async {
+    try {
+      // 获取当前曲目 ID，通常是从 state 或外部传入
+      // 这里假设我们需要传入 trackId，或者从 lyrics 元数据中获取
+      final trackId = lyrics.metadata['trackId'] as String?;
+      if (trackId == null) return false;
+      
+      return await _lyricManager.saveLyric(trackId, lyrics);
+    } catch (e) {
+      debugPrint('保存歌词失败: $e');
+      return false;
     }
   }
 
   /// 导出LRC格式歌词
   String exportToLRC() {
-    if (state.currentLyrics == null || !state.currentLyrics!.isSynced) {
+    if (state.currentLyrics == null) {
       return '';
     }
-
-    return _syncedLyricsService.exportToLRC(state.currentLyrics!);
+    // TODO: 实现 LRC 导出逻辑
+    return '';
   }
 
   /// 从LRC格式导入同步歌词
   Future<bool> importFromLRC(String lrcContent, TrackInterface track) async {
-    final lyrics = await _syncedLyricsService.importFromLRC(lrcContent, track);
-    if (lyrics != null) {
-      state = state.copyWith(currentLyrics: lyrics);
-      return true;
-    }
+    // TODO: 实现 LRC 导入逻辑
     return false;
   }
 
@@ -131,28 +136,5 @@ class LyricsNotifier extends _$LyricsNotifier {
   /// 切换同步歌词显示
   void toggleSyncedLyrics() {
     state = state.copyWith(showSyncedLyrics: !state.showSyncedLyrics);
-  }
-
-  /// 搜索歌词
-  Future<List<LyricsInterface>> searchLyrics(String query, {int limit = 10, int offset = 0}) async {
-    try {
-      return await _lyricsService.searchLyrics(query, limit: limit, offset: offset);
-    } catch (e) {
-      return [];
-    }
-  }
-
-  /// 保存歌词
-  Future<bool> saveLyrics(LyricsInterface lyrics) async {
-    try {
-      return await _lyricsService.saveLyrics(lyrics);
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /// 清除当前歌词
-  void clearLyrics() {
-    state = state.copyWith(currentLyrics: null, currentLyricIndex: -1);
   }
 }

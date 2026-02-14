@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LyricsState implements DiagnosticableTreeMixin {
 
- LyricsInterface? get currentLyrics; bool get showSyncedLyrics; int get currentPosition; int get currentLyricIndex; bool get isEditMode; bool get isLoading; String? get error;
+ LyricData? get currentLyrics; bool get showSyncedLyrics; Duration get currentPosition; int get currentLyricIndex; bool get isEditMode; bool get isLoading; String? get error;
 /// Create a copy of LyricsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,7 +51,7 @@ abstract mixin class $LyricsStateCopyWith<$Res>  {
   factory $LyricsStateCopyWith(LyricsState value, $Res Function(LyricsState) _then) = _$LyricsStateCopyWithImpl;
 @useResult
 $Res call({
- LyricsInterface? currentLyrics, bool showSyncedLyrics, int currentPosition, int currentLyricIndex, bool isEditMode, bool isLoading, String? error
+ LyricData? currentLyrics, bool showSyncedLyrics, Duration currentPosition, int currentLyricIndex, bool isEditMode, bool isLoading, String? error
 });
 
 
@@ -71,9 +71,9 @@ class _$LyricsStateCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? currentLyrics = freezed,Object? showSyncedLyrics = null,Object? currentPosition = null,Object? currentLyricIndex = null,Object? isEditMode = null,Object? isLoading = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 currentLyrics: freezed == currentLyrics ? _self.currentLyrics : currentLyrics // ignore: cast_nullable_to_non_nullable
-as LyricsInterface?,showSyncedLyrics: null == showSyncedLyrics ? _self.showSyncedLyrics : showSyncedLyrics // ignore: cast_nullable_to_non_nullable
+as LyricData?,showSyncedLyrics: null == showSyncedLyrics ? _self.showSyncedLyrics : showSyncedLyrics // ignore: cast_nullable_to_non_nullable
 as bool,currentPosition: null == currentPosition ? _self.currentPosition : currentPosition // ignore: cast_nullable_to_non_nullable
-as int,currentLyricIndex: null == currentLyricIndex ? _self.currentLyricIndex : currentLyricIndex // ignore: cast_nullable_to_non_nullable
+as Duration,currentLyricIndex: null == currentLyricIndex ? _self.currentLyricIndex : currentLyricIndex // ignore: cast_nullable_to_non_nullable
 as int,isEditMode: null == isEditMode ? _self.isEditMode : isEditMode // ignore: cast_nullable_to_non_nullable
 as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LyricsInterface? currentLyrics,  bool showSyncedLyrics,  int currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( LyricData? currentLyrics,  bool showSyncedLyrics,  Duration currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LyricsState() when $default != null:
 return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition,_that.currentLyricIndex,_that.isEditMode,_that.isLoading,_that.error);case _:
@@ -183,7 +183,7 @@ return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LyricsInterface? currentLyrics,  bool showSyncedLyrics,  int currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( LyricData? currentLyrics,  bool showSyncedLyrics,  Duration currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _LyricsState():
 return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition,_that.currentLyricIndex,_that.isEditMode,_that.isLoading,_that.error);case _:
@@ -203,7 +203,7 @@ return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LyricsInterface? currentLyrics,  bool showSyncedLyrics,  int currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( LyricData? currentLyrics,  bool showSyncedLyrics,  Duration currentPosition,  int currentLyricIndex,  bool isEditMode,  bool isLoading,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _LyricsState() when $default != null:
 return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition,_that.currentLyricIndex,_that.isEditMode,_that.isLoading,_that.error);case _:
@@ -218,12 +218,12 @@ return $default(_that.currentLyrics,_that.showSyncedLyrics,_that.currentPosition
 
 
 class _LyricsState with DiagnosticableTreeMixin implements LyricsState {
-  const _LyricsState({this.currentLyrics, this.showSyncedLyrics = true, this.currentPosition = 0, this.currentLyricIndex = -1, this.isEditMode = false, this.isLoading = false, this.error});
+  const _LyricsState({this.currentLyrics, this.showSyncedLyrics = true, this.currentPosition = Duration.zero, this.currentLyricIndex = -1, this.isEditMode = false, this.isLoading = false, this.error});
   
 
-@override final  LyricsInterface? currentLyrics;
+@override final  LyricData? currentLyrics;
 @override@JsonKey() final  bool showSyncedLyrics;
-@override@JsonKey() final  int currentPosition;
+@override@JsonKey() final  Duration currentPosition;
 @override@JsonKey() final  int currentLyricIndex;
 @override@JsonKey() final  bool isEditMode;
 @override@JsonKey() final  bool isLoading;
@@ -265,7 +265,7 @@ abstract mixin class _$LyricsStateCopyWith<$Res> implements $LyricsStateCopyWith
   factory _$LyricsStateCopyWith(_LyricsState value, $Res Function(_LyricsState) _then) = __$LyricsStateCopyWithImpl;
 @override @useResult
 $Res call({
- LyricsInterface? currentLyrics, bool showSyncedLyrics, int currentPosition, int currentLyricIndex, bool isEditMode, bool isLoading, String? error
+ LyricData? currentLyrics, bool showSyncedLyrics, Duration currentPosition, int currentLyricIndex, bool isEditMode, bool isLoading, String? error
 });
 
 
@@ -285,9 +285,9 @@ class __$LyricsStateCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? currentLyrics = freezed,Object? showSyncedLyrics = null,Object? currentPosition = null,Object? currentLyricIndex = null,Object? isEditMode = null,Object? isLoading = null,Object? error = freezed,}) {
   return _then(_LyricsState(
 currentLyrics: freezed == currentLyrics ? _self.currentLyrics : currentLyrics // ignore: cast_nullable_to_non_nullable
-as LyricsInterface?,showSyncedLyrics: null == showSyncedLyrics ? _self.showSyncedLyrics : showSyncedLyrics // ignore: cast_nullable_to_non_nullable
+as LyricData?,showSyncedLyrics: null == showSyncedLyrics ? _self.showSyncedLyrics : showSyncedLyrics // ignore: cast_nullable_to_non_nullable
 as bool,currentPosition: null == currentPosition ? _self.currentPosition : currentPosition // ignore: cast_nullable_to_non_nullable
-as int,currentLyricIndex: null == currentLyricIndex ? _self.currentLyricIndex : currentLyricIndex // ignore: cast_nullable_to_non_nullable
+as Duration,currentLyricIndex: null == currentLyricIndex ? _self.currentLyricIndex : currentLyricIndex // ignore: cast_nullable_to_non_nullable
 as int,isEditMode: null == isEditMode ? _self.isEditMode : isEditMode // ignore: cast_nullable_to_non_nullable
 as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable

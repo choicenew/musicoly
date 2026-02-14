@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SearchStateData {
 
- String get query; bool get isSearching; SearchResults? get results; Object? get error;
+ String get query; bool get isSearching; List<SourceInfo> get results; Object? get error;
 /// Create a copy of SearchStateData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,12 +25,12 @@ $SearchStateDataCopyWith<SearchStateData> get copyWith => _$SearchStateDataCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchStateData&&(identical(other.query, query) || other.query == query)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.results, results) || other.results == results)&&const DeepCollectionEquality().equals(other.error, error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SearchStateData&&(identical(other.query, query) || other.query == query)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&const DeepCollectionEquality().equals(other.results, results)&&const DeepCollectionEquality().equals(other.error, error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,isSearching,results,const DeepCollectionEquality().hash(error));
+int get hashCode => Object.hash(runtimeType,query,isSearching,const DeepCollectionEquality().hash(results),const DeepCollectionEquality().hash(error));
 
 @override
 String toString() {
@@ -45,7 +45,7 @@ abstract mixin class $SearchStateDataCopyWith<$Res>  {
   factory $SearchStateDataCopyWith(SearchStateData value, $Res Function(SearchStateData) _then) = _$SearchStateDataCopyWithImpl;
 @useResult
 $Res call({
- String query, bool isSearching, SearchResults? results, Object? error
+ String query, bool isSearching, List<SourceInfo> results, Object? error
 });
 
 
@@ -62,12 +62,12 @@ class _$SearchStateDataCopyWithImpl<$Res>
 
 /// Create a copy of SearchStateData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? query = null,Object? isSearching = null,Object? results = freezed,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? query = null,Object? isSearching = null,Object? results = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,isSearching: null == isSearching ? _self.isSearching : isSearching // ignore: cast_nullable_to_non_nullable
-as bool,results: freezed == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
-as SearchResults?,error: freezed == error ? _self.error : error ,
+as bool,results: null == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
+as List<SourceInfo>,error: freezed == error ? _self.error : error ,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  bool isSearching,  SearchResults? results,  Object? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String query,  bool isSearching,  List<SourceInfo> results,  Object? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SearchStateData() when $default != null:
 return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
@@ -173,7 +173,7 @@ return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  bool isSearching,  SearchResults? results,  Object? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String query,  bool isSearching,  List<SourceInfo> results,  Object? error)  $default,) {final _that = this;
 switch (_that) {
 case _SearchStateData():
 return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
@@ -193,7 +193,7 @@ return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  bool isSearching,  SearchResults? results,  Object? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String query,  bool isSearching,  List<SourceInfo> results,  Object? error)?  $default,) {final _that = this;
 switch (_that) {
 case _SearchStateData() when $default != null:
 return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
@@ -208,12 +208,18 @@ return $default(_that.query,_that.isSearching,_that.results,_that.error);case _:
 
 
 class _SearchStateData implements SearchStateData {
-  const _SearchStateData({this.query = '', this.isSearching = false, this.results, this.error});
+  const _SearchStateData({this.query = '', this.isSearching = false, final  List<SourceInfo> results = const [], this.error}): _results = results;
   
 
 @override@JsonKey() final  String query;
 @override@JsonKey() final  bool isSearching;
-@override final  SearchResults? results;
+ final  List<SourceInfo> _results;
+@override@JsonKey() List<SourceInfo> get results {
+  if (_results is EqualUnmodifiableListView) return _results;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_results);
+}
+
 @override final  Object? error;
 
 /// Create a copy of SearchStateData
@@ -226,12 +232,12 @@ _$SearchStateDataCopyWith<_SearchStateData> get copyWith => __$SearchStateDataCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchStateData&&(identical(other.query, query) || other.query == query)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&(identical(other.results, results) || other.results == results)&&const DeepCollectionEquality().equals(other.error, error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SearchStateData&&(identical(other.query, query) || other.query == query)&&(identical(other.isSearching, isSearching) || other.isSearching == isSearching)&&const DeepCollectionEquality().equals(other._results, _results)&&const DeepCollectionEquality().equals(other.error, error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,query,isSearching,results,const DeepCollectionEquality().hash(error));
+int get hashCode => Object.hash(runtimeType,query,isSearching,const DeepCollectionEquality().hash(_results),const DeepCollectionEquality().hash(error));
 
 @override
 String toString() {
@@ -246,7 +252,7 @@ abstract mixin class _$SearchStateDataCopyWith<$Res> implements $SearchStateData
   factory _$SearchStateDataCopyWith(_SearchStateData value, $Res Function(_SearchStateData) _then) = __$SearchStateDataCopyWithImpl;
 @override @useResult
 $Res call({
- String query, bool isSearching, SearchResults? results, Object? error
+ String query, bool isSearching, List<SourceInfo> results, Object? error
 });
 
 
@@ -263,12 +269,12 @@ class __$SearchStateDataCopyWithImpl<$Res>
 
 /// Create a copy of SearchStateData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? query = null,Object? isSearching = null,Object? results = freezed,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? query = null,Object? isSearching = null,Object? results = null,Object? error = freezed,}) {
   return _then(_SearchStateData(
 query: null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
 as String,isSearching: null == isSearching ? _self.isSearching : isSearching // ignore: cast_nullable_to_non_nullable
-as bool,results: freezed == results ? _self.results : results // ignore: cast_nullable_to_non_nullable
-as SearchResults?,error: freezed == error ? _self.error : error ,
+as bool,results: null == results ? _self._results : results // ignore: cast_nullable_to_non_nullable
+as List<SourceInfo>,error: freezed == error ? _self.error : error ,
   ));
 }
 

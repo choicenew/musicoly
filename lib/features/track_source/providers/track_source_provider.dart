@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
-import 'package:pyro_music/features/track_source/services/track_source_service_impl.dart';
+import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
 
 part 'track_source_provider.freezed.dart';
 part 'track_source_provider.g.dart';
@@ -10,55 +12,53 @@ part 'track_source_provider.g.dart';
 @freezed
 abstract class TrackSourceState with _$TrackSourceState {
   const factory TrackSourceState({
-    @Default(AudioSource.youtube) AudioSource currentSource,
+    @Default('') String activePluginId,
+    @Default([]) List<String> availablePlugins,
     @Default(SourceQualities.high) SourceQualities quality,
     @Default(SourceCodecs.m4a) SourceCodecs codec,
   }) = _TrackSourceState;
 }
 
-/// 音轨源提供者实现
+/// 音轨源提供者实现 - 使用 TrackSourceManager
 @Riverpod(keepAlive: true)
 class TrackSourceNotifier extends _$TrackSourceNotifier {
-  late final TrackSourceServiceImpl _service;
+  late final TrackSourceManager _manager;
 
   @override
   TrackSourceState build() {
-    _service = TrackSourceServiceImpl();
-    // Initialize state from service
+    _manager = ServiceRegistry().getService<TrackSourceManager>('track_source_manager')!;
+    
     return TrackSourceState(
-      currentSource: _service.currentSource,
-      quality: _service.quality,
-      codec: _service.codec,
+      activePluginId: _manager.activePluginId,
+      availablePlugins: _manager.availablePlugins,
+      // 暂时使用默认值，将来可以从 manager 获取
+      quality: SourceQualities.high,
+      codec: SourceCodecs.m4a,
     );
   }
 
-  void setSource(AudioSource source) {
-    _service.setSource(source);
-    state = state.copyWith(currentSource: source);
+  void setSource(String pluginId) {
+    _manager.setActivePlugin(pluginId);
+    state = state.copyWith(activePluginId: pluginId);
   }
 
   void setQuality(SourceQualities quality) {
-    _service.setQuality(quality);
+    // _manager.setQuality(quality); // 如果 manager 实现了这些接口
     state = state.copyWith(quality: quality);
   }
 
   void setCodec(SourceCodecs codec) {
-    _service.setCodec(codec);
+    // _manager.setCodec(codec);
     state = state.copyWith(codec: codec);
   }
 
   /// 搜索音源
   Future<List<SourceInfo>> search(String query) {
-    return _service.search(query);
+    return _manager.search(query);
   }
 
   /// 从轨道获取音源
-  Future<SourcedTrack> fetchFromTrack({required dynamic track}) {
-    return _service.fetchFromTrack(track: track);
-  }
-
-  /// 从备选音源获取轨道
-  Future<SourcedTrack> fetchFromTrackAltSource({required dynamic track}) {
-    return _service.fetchFromTrackAltSource(track: track);
+  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) {
+    return _manager.fetchFromTrack(track: track);
   }
 }

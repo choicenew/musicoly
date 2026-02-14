@@ -1,313 +1,284 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/base/services/playback_service.dart';
+import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
 import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
+import 'package:pyro_music/core/base/interfaces/player/queue_interface.dart';
+import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
 
-import '../../../core/base/services/base_service.dart';
-import '../../../core/base/services/playback_service.dart';
-import '../../../core/base/interfaces/player/playback_interface.dart';
-import '../../../core/services/service_registry.dart';
-import '../../../core/platform/platform_registry.dart';
-
-/// 播放控制服务实现 - 管理播放状态和控制
-///
-/// 提供统一的播放控制接口，整合不同平台的播放控制功能
-class PlaybackServiceImpl extends BaseService implements PlaybackService {
-  /// 服务注册表实例
+/// 播放服务实现 - 使用 just_audio
+class PlaybackServiceImpl extends PlaybackService {
+  final AudioPlayer _player = AudioPlayer();
+  final ConcatenatingAudioSource _playlist = ConcatenatingAudioSource(children: []);
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
 
-  /// 平台注册表实例
-  final PlatformRegistry _platformRegistry = PlatformRegistry();
-
-  /// 当前活跃的播放控制服务
   PlaybackService? _activePlaybackService;
+  QueueInterface? _queueService;
+  TrackSourceManager? _trackSourceManager;
 
-  /// 播放位置控制器
+  // 状态流控制器
   final _positionController = StreamController<Duration>.broadcast();
-
-  /// 缓冲位置控制器
   final _bufferedPositionController = StreamController<Duration>.broadcast();
-
-  /// 总时长控制器
   final _durationController = StreamController<Duration>.broadcast();
-
-  /// 播放状态控制器
   final _playbackStateController = StreamController<PlaybackState>.broadcast();
-
-  /// 当前曲目控制器
   final _currentTrackController = StreamController<String?>.broadcast();
-
-  /// 音量控制器
   final _volumeController = StreamController<double>.broadcast();
-
-  /// 当前播放状态
-  PlaybackState _currentState = PlaybackState.none;
-
-  /// 当前音量
-  double _volume = 1.0;
-
-  /// 当前播放位置
-  Duration _position = Duration.zero;
-
-  /// 当前缓冲位置
-  Duration _bufferedPosition = Duration.zero;
-
-  /// 当前总时长
-  Duration _duration = Duration.zero;
-
-  /// 当前曲目ID
-  String? _currentTrackId;
-
-  /// 当前重复模式
-  RepeatMode _repeatMode = RepeatMode.off;
-
-  /// 当前随机播放模式
-  bool _shuffleMode = false;
-
-  /// 重复模式控制器
   final _repeatModeController = StreamController<RepeatMode>.broadcast();
-
-  /// 随机播放模式控制器
   final _shuffleModeController = StreamController<bool>.broadcast();
 
-  /// 定时器，用于模拟播放进度
-  Timer? _progressTimer;
+  // 内部状态
+  PlaybackState _currentState = PlaybackState.none;
+  String? _currentTrackId;
+  double _volume = 1.0;
+  RepeatMode _repeatMode = RepeatMode.off;
+  bool _shuffleMode = false;
 
-  /// 构造函数
+  // 订阅
+  StreamSubscription? _playerStateSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _bufferedPositionSubscription;
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _volumeSubscription;
+  StreamSubscription? _currentIndexSubscription;
+
   PlaybackServiceImpl() {
-    _initializeActiveService();
-    _setupProgressTimer();
+    _initStreams();
   }
 
-  /// 初始化活跃服务
-  Future<void> _initializeActiveService() async {
-    final platformId = _platformRegistry.activePlatformId;
-    if (platformId.isNotEmpty) {
-      _activePlaybackService =
-          _serviceRegistry.getService<PlaybackService>(platformId);
-      if (_activePlaybackService != null) {
-        debugPrint('已设置活跃播放控制服务: $platformId');
+  void _initStreams() {
+    _playerStateSubscription = _player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.loading ||
+          state.processingState == ProcessingState.buffering) {
+        _currentState = PlaybackState.buffering;
+      } else if (state.playing) {
+        _currentState = PlaybackState.playing;
+      } else if (state.processingState == ProcessingState.ready) {
+        _currentState = PlaybackState.paused;
+      } else if (state.processingState == ProcessingState.completed) {
+        _currentState = PlaybackState.completed;
+      } else {
+        _currentState = PlaybackState.none;
       }
-    }
-  }
+      _playbackStateController.add(_currentState);
+    });
 
-  /// 设置进度定时器
-  void _setupProgressTimer() {
-    _progressTimer?.cancel();
-    _progressTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      if (_currentState == PlaybackState.playing) {
-        // 模拟播放进度
-        _position += const Duration(milliseconds: 500);
-        _positionController.add(_position);
+    _positionSubscription = _player.positionStream.listen((pos) {
+      _positionController.add(pos);
+    });
 
-        // 模拟缓冲进度
-        if (_bufferedPosition < _duration &&
-            _bufferedPosition < _position + const Duration(seconds: 30)) {
-          _bufferedPosition = _position + const Duration(seconds: 30);
-          if (_bufferedPosition > _duration) {
-            _bufferedPosition = _duration;
-          }
-          _bufferedPositionController.add(_bufferedPosition);
-        }
+    _bufferedPositionSubscription = _player.bufferedPositionStream.listen((pos) {
+      _bufferedPositionController.add(pos);
+    });
 
-        // 检查是否播放完成
-        if (_position >= _duration && _duration > Duration.zero) {
-          _currentState = PlaybackState.completed;
-          _playbackStateController.add(_currentState);
-          timer.cancel();
+    _durationSubscription = _player.durationStream.listen((dur) {
+      if (dur != null) {
+        _durationController.add(dur);
+      }
+    });
+
+    _volumeSubscription = _player.volumeStream.listen((vol) {
+      _volume = vol;
+      _volumeController.add(vol);
+    });
+
+    _currentIndexSubscription = _player.currentIndexStream.listen((index) async {
+      if (index != null && _queueService != null) {
+        final queue = await _queueService!.getQueue();
+        if (index >= 0 && index < queue.length) {
+          _currentTrackId = queue[index];
+          _currentTrackController.add(_currentTrackId);
         }
       }
     });
+  }
+
+  Future<void> _initializeActiveService() async {
+    // 可以在这里根据平台初始化活跃服务
   }
 
   @override
   String get serviceId => 'playback_service';
 
   @override
-  String get serviceName => '播放控制服务';
+  String get serviceName => '播放服务';
 
   @override
   String get serviceVersion => '1.0.0';
 
   @override
-  String? get platform => null; // 不依赖特定平台
+  String? get platform => null;
 
   @override
   Future<void> initialize() async {
     await _initializeActiveService();
+
+    _queueService = _serviceRegistry.getService<QueueInterface>('queue_service');
+    _trackSourceManager =
+        _serviceRegistry.getService<TrackSourceManager>('track_source_manager');
+
+    await _player.setAudioSource(_playlist);
   }
 
   @override
   Future<void> playTrack(String trackId) async {
     if (_activePlaybackService != null) {
       await _activePlaybackService!.playTrack(trackId);
+      return;
     }
 
-    // 更新播放状态
-    _currentTrackId = trackId;
-    _currentTrackController.add(trackId);
-    _currentState = PlaybackState.playing;
-    _playbackStateController.add(_currentState);
+    if (_queueService == null) {
+      debugPrint('错误: QueueService 未初始化');
+      return;
+    }
 
-    // 重置播放位置
-    _position = Duration.zero;
-    _positionController.add(_position);
+    final queue = await _queueService!.getQueue();
+    final index = queue.indexOf(trackId);
 
-    // 设置模拟的总时长
-    _duration = const Duration(minutes: 3, seconds: 30); // 默认3分30秒
-    _durationController.add(_duration);
+    if (index == -1) {
+      debugPrint('错误: 曲目 $trackId 不在队列中');
+      return;
+    }
 
-    // 设置模拟的缓冲位置
-    _bufferedPosition = const Duration(seconds: 10);
-    _bufferedPositionController.add(_bufferedPosition);
+    try {
+      await _syncPlaylistWithQueue(queue);
 
-    // 重新设置进度定时器
-    _setupProgressTimer();
+      await _player.seek(Duration.zero, index: index);
+      await _player.play();
 
-    debugPrint('开始播放曲目: $trackId');
+      _currentTrackId = trackId;
+      _currentTrackController.add(trackId);
+      debugPrint('开始播放队列索引 $index 的曲目: $trackId');
+    } catch (e) {
+      debugPrint('播放失败: $e');
+      _currentState = PlaybackState.error;
+      _playbackStateController.add(_currentState);
+    }
+  }
+
+  Future<void> _syncPlaylistWithQueue(List<String> trackIds) async {
+    if (_playlist.length != trackIds.length) {
+      await _playlist.clear();
+      final sources = <AudioSource>[];
+      for (final id in trackIds) {
+        sources.add(await _createAudioSource(id));
+      }
+      await _playlist.addAll(sources);
+      debugPrint('已同步播放列表，共 ${trackIds.length} 首曲目');
+    }
+  }
+
+  Future<AudioSource> _createAudioSource(String trackId) async {
+    // 这里需要获取 TrackInterface，目前由于解耦，我们可能需要通过 TrackSourceManager 获取
+    // 暂时使用占位逻辑，实际应从 MetadataService 或类似服务获取
+    
+    // 兜底方案：使用测试音频
+    return AudioSource.uri(
+      Uri.parse('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'),
+      tag: trackId,
+    );
   }
 
   @override
   Future<void> pausePlayback() async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.pausePlayback();
-    }
-
-    // 更新播放状态
-    _currentState = PlaybackState.paused;
-    _playbackStateController.add(_currentState);
+    await _player.pause();
     debugPrint('暂停播放');
   }
 
   @override
   Future<void> resumePlayback() async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.resumePlayback();
-    }
-
-    // 更新播放状态
-    _currentState = PlaybackState.playing;
-    _playbackStateController.add(_currentState);
+    await _player.play();
     debugPrint('恢复播放');
   }
 
   @override
-  Future<void> seekToPosition(int positionMs) async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.seekToPosition(positionMs);
-    }
-
-    // 更新播放位置
-    _position = Duration(milliseconds: positionMs);
-    _positionController.add(_position);
-    debugPrint('跳转到位置: ${positionMs}ms');
+  Future<void> stopPlayback() async {
+    await _player.stop();
+    debugPrint('停止播放');
   }
 
   @override
-  Future<void> setVolume(double volume) async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.setVolume(volume);
-    }
-
-    // 更新音量
-    _volume = volume;
-    _volumeController.add(_volume);
-    debugPrint('设置音量: $volume');
+  Future<void> seekTo(Duration position) async {
+    await _player.seek(position);
+    debugPrint('跳转到位置: $position');
   }
 
   @override
-  Future<Map<String, dynamic>> getPlaybackState() async {
-    if (_activePlaybackService != null) {
-      return _activePlaybackService!.getPlaybackState();
+  Future<void> skipToNext() async {
+    if (_player.hasNext) {
+      await _player.seekToNext();
     }
-
-    // 返回当前播放状态
-    return {
-      'state': _currentState.toString(),
-      'position': _position.inMilliseconds,
-      'bufferedPosition': _bufferedPosition.inMilliseconds,
-      'duration': _duration.inMilliseconds,
-      'volume': _volume,
-      'trackId': _currentTrackId,
-      'repeatMode': _repeatMode.toString(),
-      'shuffleMode': _shuffleMode,
-    };
+    debugPrint('切换到下一首');
   }
 
   @override
-  Future<void> nextTrack() async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.nextTrack();
+  Future<void> skipToPrevious() async {
+    if (_player.hasPrevious) {
+      await _player.seekToPrevious();
     }
-
-    // 模拟切换到下一曲
-    final nextTrackId = 'track-${DateTime.now().millisecondsSinceEpoch}';
-    await playTrack(nextTrackId);
-    debugPrint('切换到下一曲: $nextTrackId');
+    debugPrint('切换到上一首');
   }
 
   @override
-  Future<void> previousTrack() async {
-    if (_activePlaybackService != null) {
-      await _activePlaybackService!.previousTrack();
-    }
-
-    // 模拟切换到上一曲
-    final prevTrackId = 'track-${DateTime.now().millisecondsSinceEpoch - 1000}';
-    await playTrack(prevTrackId);
-    debugPrint('切换到上一曲: $prevTrackId');
-  }
-
-  /// 获取播放位置流
-  Stream<Duration> get positionStream => _positionController.stream;
-
-  /// 获取缓冲位置流
-  Stream<Duration> get bufferedPositionStream =>
-      _bufferedPositionController.stream;
-
-  /// 获取总时长流
-  Stream<Duration> get durationStream => _durationController.stream;
-
-  /// 获取播放状态流
-  Stream<PlaybackState> get playbackStateStream =>
-      _playbackStateController.stream;
-
-  /// 获取当前曲目流
-  Stream<String?> get currentTrackStream => _currentTrackController.stream;
-
-  /// 获取音量流
-  Stream<double> get volumeStream => _volumeController.stream;
-
-  /// 获取重复模式流
-  Stream<RepeatMode> get repeatModeStream => _repeatModeController.stream;
-
-  /// 获取随机播放模式流
-  Stream<bool> get shuffleModeStream => _shuffleModeController.stream;
-
-  /// 设置重复模式
   Future<void> setRepeatMode(RepeatMode mode) async {
-    if (_activePlaybackService != null) {
-      // 如果有活跃的服务，调用其方法
-      // 这里需要在PlaybackService接口中添加相应的方法
-    }
-
-    // 更新重复模式
     _repeatMode = mode;
+    switch (mode) {
+      case RepeatMode.off:
+        await _player.setLoopMode(LoopMode.off);
+        break;
+      case RepeatMode.one:
+        await _player.setLoopMode(LoopMode.one);
+        break;
+      case RepeatMode.all:
+        await _player.setLoopMode(LoopMode.all);
+        break;
+    }
     _repeatModeController.add(mode);
     debugPrint('设置重复模式: $mode');
   }
 
-  /// 设置随机播放模式
+  @override
   Future<void> setShuffleMode(bool enabled) async {
-    if (_activePlaybackService != null) {
-      // 如果有活跃的服务，调用其方法
-      // 这里需要在PlaybackService接口中添加相应的方法
-    }
-
-    // 更新随机播放模式
     _shuffleMode = enabled;
+    await _player.setShuffleModeEnabled(enabled);
     _shuffleModeController.add(enabled);
-    debugPrint('设置随机播放模式: $enabled');
+    debugPrint('设置随机播放: $enabled');
   }
+
+  @override
+  Future<void> setVolume(double volume) async {
+    await _player.setVolume(volume);
+    _volume = volume;
+    _volumeController.add(volume);
+    debugPrint('设置音量: $volume');
+  }
+
+  @override
+  Stream<Duration> get positionStream => _positionController.stream;
+
+  @override
+  Stream<Duration> get bufferedPositionStream => _bufferedPositionController.stream;
+
+  @override
+  Stream<Duration> get durationStream => _durationController.stream;
+
+  @override
+  Stream<PlaybackState> get playbackStateStream => _playbackStateController.stream;
+
+  @override
+  Stream<String?> get currentTrackStream => _currentTrackController.stream;
+
+  @override
+  Stream<double> get volumeStream => _volumeController.stream;
+
+  @override
+  Stream<RepeatMode> get repeatModeStream => _repeatModeController.stream;
+
+  @override
+  Stream<bool> get shuffleModeStream => _shuffleModeController.stream;
 
   @override
   Future<bool> isAvailable() async {
@@ -320,6 +291,9 @@ class PlaybackServiceImpl extends BaseService implements PlaybackService {
       'autoPlay': true,
       'preloadNext': true,
       'gaplessPlayback': true,
+      'crossfade': true,
+      'crossfadeDuration': 3000,
+      'replayGain': true,
     };
   }
 
@@ -340,15 +314,21 @@ class PlaybackServiceImpl extends BaseService implements PlaybackService {
 
   @override
   Future<void> dispose() async {
-    _progressTimer?.cancel();
-    _positionController.close();
-    _bufferedPositionController.close();
-    _durationController.close();
-    _playbackStateController.close();
-    _currentTrackController.close();
-    _volumeController.close();
-    _repeatModeController.close();
-    _shuffleModeController.close();
-    debugPrint('释放播放控制服务资源');
+    await _playerStateSubscription?.cancel();
+    await _positionSubscription?.cancel();
+    await _bufferedPositionSubscription?.cancel();
+    await _durationSubscription?.cancel();
+    await _volumeSubscription?.cancel();
+    await _currentIndexSubscription?.cancel();
+    await _player.dispose();
+    await _positionController.close();
+    await _bufferedPositionController.close();
+    await _durationController.close();
+    await _playbackStateController.close();
+    await _currentTrackController.close();
+    await _volumeController.close();
+    await _repeatModeController.close();
+    await _shuffleModeController.close();
+    await super.dispose();
   }
 }

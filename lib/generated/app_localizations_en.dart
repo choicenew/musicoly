@@ -640,6 +640,73 @@ class AppLocalizationsEn extends AppLocalizations {
   String get something_went_wrong => 'Something went wrong';
 
   @override
+  String get developers_settings => 'Developers Settings';
+
+  @override
+  String get debug_mode => 'Debug Mode';
+
+  @override
+  String get debug_mode_description =>
+      'Enable developer tools and verbose logging';
+
+  @override
+  String get verbose_logging => 'Verbose Logging';
+
+  @override
+  String get verbose_logging_description =>
+      'Record more detailed application logs';
+
+  @override
+  String get api_endpoint_config => 'API Endpoint Configuration';
+
+  @override
+  String get use_default_server => 'Use default server';
+
+  @override
+  String get configure => 'Configure';
+
+  @override
+  String get api_server_address => 'API Server Address';
+
+  @override
+  String get cache_management => 'Cache Management';
+
+  @override
+  String get cache_management_description =>
+      'Clear application temporary cache data';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get export_logs => 'Export Logs';
+
+  @override
+  String get export_logs_description => 'Export application log files';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get cache_cleared => 'Cache clearing completed';
+
+  @override
+  String clearing_failed(Object error) {
+    return 'Clearing failed: $error';
+  }
+
+  @override
+  String get no_logs_to_export => 'No logs available to export';
+
+  @override
+  String get logs_exported => 'Logs exported successfully';
+
+  @override
+  String export_failed(Object error) {
+    return 'Export failed: $error';
+  }
+
+  @override
   String get piped_instance => 'Piped Server Instance';
 
   @override
@@ -1326,7 +1393,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cache_folder => 'Cache folder';
 
   @override
-  String get export => 'Export';
+  String get open_cache_folder => 'Open Cache folder';
 
   @override
   String get clear_cache => 'Clear cache';
@@ -1453,4 +1520,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get japanese => 'Japanese';
+
+  @override
+  String get cookie_import_success => 'Cookie imported successfully';
+
+  @override
+  String import_failed(Object error) {
+    return 'Import failed: $error';
+  }
+
+  @override
+  String get export_cookie => 'Export Cookie';
+
+  @override
+  String get cookie_export_success => 'Cookie exported successfully';
+
+  @override
+  String get cookie_cleared => 'Cookie cleared';
+
+  @override
+  String clear_failed(Object error) {
+    return 'Clear failed: $error';
+  }
+
+  @override
+  String get audio_quality_description => 'Select audio playback quality';
+
+  @override
+  String get low_quality => 'Low';
+
+  @override
+  String get medium_quality => 'Medium';
+
+  @override
+  String get high_quality => 'High';
+
+  @override
+  String get crossfade => 'Crossfade';
+
+  @override
+  String get crossfade_description => 'Set transition effect between songs';
+
+  @override
+  String get off => 'Off';
+
+  @override
+  String seconds(Object count) {
+    return '$count seconds';
+  }
 }

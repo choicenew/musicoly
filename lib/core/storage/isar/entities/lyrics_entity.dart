@@ -14,6 +14,8 @@ class LyricsEntity {
 
   String? filePath;
 
+  String? content;
+
   bool isSynced = false;
 
   String? language;

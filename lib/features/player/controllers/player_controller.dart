@@ -64,7 +64,7 @@ class PlayerController {
 
   /// 跳转到指定位置
   Future<void> seekTo(Duration position) async {
-    await _playbackStateNotifier.seekTo(position);
+    await _playerStateNotifier.seek(position);
   }
 
   /// 设置音量

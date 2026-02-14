@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/base/services/base_service.dart';
 import '../../../core/base/interfaces/player/queue_interface.dart';
+import '../../../core/base/interfaces/media/track_interface.dart';
 import '../../../core/services/service_registry.dart';
 import '../../../core/platform/platform_registry.dart';
 
@@ -38,7 +39,7 @@ class QueueServiceImpl extends BaseService implements QueueInterface {
     if (platformId.isNotEmpty) {
       final service = _serviceRegistry.getService<BaseService>(platformId);
       if (service is QueueInterface) {
-        _activeQueueService = service as QueueInterface;  // Explicit cast
+        _activeQueueService = service;
         debugPrint('已设置活跃队列服务: $platformId');
         // 同步队列状态
         _syncQueueState();
@@ -102,7 +103,7 @@ class QueueServiceImpl extends BaseService implements QueueInterface {
 
     // 更新本地队列
     _queue.remove(trackId);
-    debugPrint('已从队列移除曲目: $trackId');
+    debugPrint('已从队列中移除曲目: $trackId');
   }
 
   @override
@@ -114,7 +115,7 @@ class QueueServiceImpl extends BaseService implements QueueInterface {
     // 更新本地队列
     if (index >= 0 && index < _queue.length) {
       _queue.removeAt(index);
-      debugPrint('已从队列移除索引为$index的曲目');
+      debugPrint('已从队列中移除索引为 $index 的曲目');
 
       // 更新当前索引
       if (index < _currentIndex) {
@@ -164,8 +165,8 @@ class QueueServiceImpl extends BaseService implements QueueInterface {
         oldIndex < _queue.length &&
         newIndex >= 0 &&
         newIndex < _queue.length) {
-      final track = _queue.removeAt(oldIndex);
-      _queue.insert(newIndex, track);
+      final trackId = _queue.removeAt(oldIndex);
+      _queue.insert(newIndex, trackId);
       debugPrint('已移动队列中的曲目: $oldIndex -> $newIndex');
 
       // 更新当前索引

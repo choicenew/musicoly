@@ -42,7 +42,7 @@ final class SyncedLyricsNotifierProvider
 }
 
 String _$syncedLyricsNotifierHash() =>
-    r'a80b3cfeadeefd19d028fd9b1ded254ee8c9817b';
+    r'e2daa57e9090874f63a34eb27479a32e11f25354';
 
 abstract class _$SyncedLyricsNotifier extends $Notifier<SyncedLyricsState> {
   SyncedLyricsState build();

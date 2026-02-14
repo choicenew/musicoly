@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
+import '../../services/base_service.dart';
+import '../media/track_interface.dart';
 
 /// Interface for player queue functionality
 ///
 /// Defines the methods and properties for managing the playback queue
-@immutable
-abstract class QueueInterface {
+abstract class QueueInterface extends BaseService {
   /// Add a track to the queue
   Future<void> addTrack(String trackId);
 
@@ -20,7 +21,7 @@ abstract class QueueInterface {
   /// Clear the entire queue
   Future<void> clearQueue();
 
-  /// Get all track IDs in the current queue
+  /// Get all tracks in the current queue
   Future<List<String>> getQueue();
 
   /// Get the current index in the queue

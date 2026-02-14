@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 /// Interface for player functionality
 ///
 /// Defines the core methods and properties that any player implementation must provide
-@immutable
 abstract class PlayerInterface {
   /// Initialize the player
   Future<void> initialize();

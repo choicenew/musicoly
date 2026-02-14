@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/core/base/services/auth_service.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class CookieImportExportSettings extends StatelessWidget {
   const CookieImportExportSettings({super.key});
 
   Future<void> _handleImport(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -31,19 +33,20 @@ class CookieImportExportSettings extends StatelessWidget {
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cookie导入成功')),
+          SnackBar(content: Text(l10n.cookie_import_success)),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('导入失败: $e')),
+          SnackBar(content: Text(l10n.import_failed(e.toString()))),
         );
       }
     }
   }
 
   Future<void> _handleExport(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final platformRegistry = PlatformRegistry();
       final authServices = platformRegistry.getAllServicesOfType<AuthService>();
@@ -57,7 +60,7 @@ class CookieImportExportSettings extends StatelessWidget {
       
       final jsonData = jsonEncode(exportData);
       final path = await FilePicker.platform.saveFile(
-        dialogTitle: '导出Cookie',
+        dialogTitle: l10n.export_cookie,
         fileName: 'pyro_music_cookies.json',
       );
       
@@ -65,20 +68,21 @@ class CookieImportExportSettings extends StatelessWidget {
         await File(path).writeAsString(jsonData);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Cookie导出成功')),
+            SnackBar(content: Text(l10n.cookie_export_success)),
           );
         }
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('导出失败: $e')),
+          SnackBar(content: Text(l10n.export_failed(e.toString()))),
         );
       }
     }
   }
 
   Future<void> _handleClear(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final platformRegistry = PlatformRegistry();
       final authServices = platformRegistry.getAllServicesOfType<AuthService>();
@@ -89,13 +93,13 @@ class CookieImportExportSettings extends StatelessWidget {
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cookie已清除')),
+          SnackBar(content: Text(l10n.cookie_cleared)),
         );
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('清除失败: $e')),
+          SnackBar(content: Text(l10n.clear_failed(e.toString()))),
         );
       }
     }

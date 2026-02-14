@@ -4,7 +4,6 @@ import 'player_interface.dart';
 /// Interface for playback state and control
 ///
 /// Defines the methods and properties for monitoring and controlling playback state
-@immutable
 abstract class PlaybackInterface {
   /// Stream of playback positions
   Stream<Duration> get positionStream;

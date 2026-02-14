@@ -82,7 +82,7 @@ class FeaturedPlaylists extends StatelessWidget {
           Icon(
             Icons.playlist_play,
             size: 48,
-            color: theme.colorScheme.primary.withOpacity(0.5),
+            color: theme.colorScheme.primary.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(

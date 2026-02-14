@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/track_model.dart';
-import 'package:pyro_music/features/player/providers/player_state_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../features/player/providers/player_state_provider.dart';
+import '../../../features/player/controllers/player_controller.dart';
 
 /// A widget that displays the currently playing track at the bottom of the app
-class PlayerBar extends StatelessWidget {
+class PlayerBar extends ConsumerWidget {
   /// Callback when the player bar is tapped to expand the full player
   final VoidCallback? onTap;
 
@@ -13,11 +14,13 @@ class PlayerBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    // This would normally come from a provider
-    const bool isPlaying = true;
-    const TrackModel? currentTrack = null; // Would come from player provider
+    final playerState = ref.watch(playerStateProvider);
+    final playerController = ref.watch(playerControllerProvider);
+    
+    final currentTrack = playerState.currentTrack;
+    final isPlaying = playerState.isPlaying;
 
     // If no track is playing, don't show the player bar
     if (currentTrack == null) {
@@ -90,21 +93,21 @@ class PlayerBar extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.skip_previous),
-                  onPressed: () {
-                    // Skip to previous track
-                  },
+                  onPressed: () => playerController.previous(),
                 ),
                 IconButton(
                   icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
                   onPressed: () {
-                    // Implement play/pause functionality
+                    if (isPlaying) {
+                      playerController.pause();
+                    } else {
+                      playerController.resume();
+                    }
                   },
                 ),
                 IconButton(
                   icon: const Icon(Icons.skip_next),
-                  onPressed: () {
-                    // Skip to next track
-                  },
+                  onPressed: () => playerController.next(),
                 ),
               ],
             ),

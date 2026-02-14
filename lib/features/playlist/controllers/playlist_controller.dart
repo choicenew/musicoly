@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import '../providers/playlist_provider.dart';
 
 /// Controller for playlist functionality

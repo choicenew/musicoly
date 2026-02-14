@@ -30,8 +30,11 @@ class AppLogger {
     );
   }
 
-  /// 记录详细调试信息 
-  static void verbose(String message) => _logger.v(message);
+  /// 记录跟踪信息
+  static void trace(String message) => _logger.t(message);
+
+  /// 记录详细调试信息 (兼容旧代码)
+  static void verbose(String message) => _logger.t(message);
 
   /// 记录调试信息
   static void debug(String message) => _logger.d(message);

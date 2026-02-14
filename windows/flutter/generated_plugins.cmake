@@ -8,10 +8,10 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_window
   file_selector_windows
   flutter_inappwebview_windows
-  flutter_new_pipe_extractor
   flutter_secure_storage_windows
   flutter_timezone
   isar_community_flutter_libs
+  just_audio_windows
   local_notifier
   media_kit_libs_windows_audio
   permission_handler_windows

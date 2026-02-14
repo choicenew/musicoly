@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 
-import '../../../core/base/services/base_service.dart';
-import '../../../core/base/services/player_service.dart';
-import '../../../core/base/interfaces/player/player_interface.dart';
-import '../../../core/base/interfaces/player/queue_interface.dart';
-import '../../../core/base/interfaces/player/playback_interface.dart';
-import '../../../core/services/service_registry.dart';
-import '../../../core/platform/platform_registry.dart';
+import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
+import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
+import 'package:pyro_music/core/platform/platform_registry.dart';
 
 /// 播放器服务实现 - 整合多平台播放功能
 ///
@@ -289,13 +288,6 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
 
   // 队列接口实现
   @override
-  Future<void> addToQueue(String trackId) async {
-    if (_activePlayerService != null) {
-      await _activePlayerService!.addToQueue(trackId);
-    }
-  }
-
-  @override
   Future<void> addTrack(String trackId) async {
     if (_activePlayerService != null) {
       await _activePlayerService!.addTrack(trackId);
@@ -317,13 +309,6 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
   }
 
   @override
-  Future<void> removeFromQueue(int index) async {
-    if (_activePlayerService != null) {
-      await _activePlayerService!.removeTrackAt(index);
-    }
-  }
-
-  @override
   Future<void> clearQueue() async {
     if (_activePlayerService != null) {
       await _activePlayerService!.clearQueue();
@@ -340,6 +325,7 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
 
 
 
+  @override
   Future<TrackInterface?> getCurrentTrack() async {
     if (_activePlayerService != null) {
       return _activePlayerService!.getCurrentTrack();

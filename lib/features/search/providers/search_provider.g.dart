@@ -8,58 +8,6 @@ part of 'search_provider.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Provider for the search service implementation
-
-@ProviderFor(searchService)
-final searchServiceProvider = SearchServiceProvider._();
-
-/// Provider for the search service implementation
-
-final class SearchServiceProvider
-    extends
-        $FunctionalProvider<
-          SearchServiceImpl,
-          SearchServiceImpl,
-          SearchServiceImpl
-        >
-    with $Provider<SearchServiceImpl> {
-  /// Provider for the search service implementation
-  SearchServiceProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'searchServiceProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$searchServiceHash();
-
-  @$internal
-  @override
-  $ProviderElement<SearchServiceImpl> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  SearchServiceImpl create(Ref ref) {
-    return searchService(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(SearchServiceImpl value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<SearchServiceImpl>(value),
-    );
-  }
-}
-
-String _$searchServiceHash() => r'c80b53e071d60d804614c9a33817ac421674cbe1';
-
 /// Notifier for search state
 
 @ProviderFor(SearchNotifier)
@@ -96,7 +44,7 @@ final class SearchNotifierProvider
   }
 }
 
-String _$searchNotifierHash() => r'623b348ebe4943915cfa201428559a1ee66247c7';
+String _$searchNotifierHash() => r'16a4c85b5688250b302cdc8597a61b037d37885a';
 
 /// Notifier for search state
 

@@ -23,7 +23,7 @@ class HomeHeader extends StatelessWidget {
         Text(
           'Welcome back, $username',
           style: theme.textTheme.titleMedium?.copyWith(
-            color: theme.textTheme.titleMedium?.color?.withOpacity(0.7),
+            color: theme.textTheme.titleMedium?.color?.withValues(alpha: 0.7),
           ),
         ),
       ],

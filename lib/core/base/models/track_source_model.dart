@@ -19,7 +19,10 @@ class SourceInfoModel implements SourceInfo {
   final Duration duration;
 
   @override
-  final AudioSource source;
+  final String sourceId;
+
+  @override
+  final String? url;
 
   const SourceInfoModel({
     required this.id,
@@ -27,19 +30,20 @@ class SourceInfoModel implements SourceInfo {
     required this.artist,
     required this.thumbnailUrl,
     required this.duration,
-    required this.source,
+    required this.sourceId,
+    this.url,
   });
 }
 
 /// 源映射模型
 class SourceMapModel {
   final String id;
-  final AudioSource source;
+  final String sourceId;
   final Map<String, dynamic> metadata;
 
   const SourceMapModel({
     required this.id,
-    required this.source,
+    required this.sourceId,
     this.metadata = const {},
   });
 }
@@ -56,7 +60,7 @@ class SourcedTrackModel implements SourcedTrack {
   final List<SourceInfo> siblings;
 
   @override
-  final AudioSource source;
+  final String sourceId;
 
   @override
   final SourceCodecs codec;
@@ -65,7 +69,7 @@ class SourcedTrackModel implements SourcedTrack {
     required this.track,
     required this.sourceInfo,
     required this.siblings,
-    required this.source,
+    required this.sourceId,
     required this.codec,
   });
 }

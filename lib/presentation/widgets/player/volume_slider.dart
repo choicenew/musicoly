@@ -43,9 +43,9 @@ class VolumeSlider extends StatelessWidget {
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8.0),
               overlayShape: const RoundSliderOverlayShape(overlayRadius: 16.0),
               activeTrackColor: theme.colorScheme.primary,
-              inactiveTrackColor: theme.colorScheme.primary.withOpacity(0.3),
+              inactiveTrackColor: theme.colorScheme.primary.withValues(alpha: 0.3),
               thumbColor: theme.colorScheme.primary,
-              overlayColor: theme.colorScheme.primary.withOpacity(0.2),
+              overlayColor: theme.colorScheme.primary.withValues(alpha: 0.2),
             ),
             child: Slider(
               value: isMuted ? 0.0 : volume,

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/lyrics/controllers/lyrics_controller.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/lyrics/lyrics_interface.dart';
+import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/presentation/pages/lyrics/widgets/synced_lyrics_widget.dart';
 import 'package:pyro_music/presentation/pages/lyrics/widgets/plain_lyrics_widget.dart';
 import 'package:pyro_music/presentation/widgets/common/loading_indicator.dart';
@@ -88,7 +88,7 @@ class LyricsPage extends ConsumerWidget {
       ),
       body: currentTrack == null
           ? const Center(child: Text('没有正在播放的曲目'))
-          : ValueListenableBuilder<LyricsInterface?>(
+          : ValueListenableBuilder<LyricData?>(
               valueListenable: lyricsController.currentLyrics,
               builder: (context, lyrics, _) {
                 if (lyrics == null) {
@@ -272,9 +272,8 @@ class LyricsPage extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final lyrics = results[index];
                         return ListTile(
-                          title: Text(lyrics.track.name),
-                          // 使用 artistNames 替代 artists
-                          subtitle: Text(lyrics.track.artistNames.join(', ')),
+                          title: Text(lyrics.trackName),
+                          subtitle: Text(lyrics.artistNames),
                           trailing: Icon(lyrics.isSynced ? Icons.sync : Icons.sync_disabled),
                           onTap: () async {
                             await controller.saveLyrics(lyrics);

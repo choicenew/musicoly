@@ -466,7 +466,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get playback => 'Playback';
 
   @override
-  String get audio_quality => 'Audio Quality';
+  String get audio_quality => '音频质量';
 
   @override
   String get high => 'High';
@@ -637,6 +637,70 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get something_went_wrong => 'Something went wrong';
+
+  @override
+  String get developers_settings => '开发者设置';
+
+  @override
+  String get debug_mode => '调试模式';
+
+  @override
+  String get debug_mode_description => '启用开发者工具和详细日志';
+
+  @override
+  String get verbose_logging => '详细日志';
+
+  @override
+  String get verbose_logging_description => '记录更详细的应用日志';
+
+  @override
+  String get api_endpoint_config => 'API端点配置';
+
+  @override
+  String get use_default_server => '使用默认服务器';
+
+  @override
+  String get configure => '配置';
+
+  @override
+  String get api_server_address => 'API服务器地址';
+
+  @override
+  String get cache_management => '缓存管理';
+
+  @override
+  String get cache_management_description => '清理应用临时缓存数据';
+
+  @override
+  String get clear => '清理';
+
+  @override
+  String get export_logs => '导出日志';
+
+  @override
+  String get export_logs_description => '导出应用日志文件';
+
+  @override
+  String get export => '导出';
+
+  @override
+  String get cache_cleared => '缓存清理完成';
+
+  @override
+  String clearing_failed(Object error) {
+    return '清理失败: $error';
+  }
+
+  @override
+  String get no_logs_to_export => '没有可导出的日志';
+
+  @override
+  String get logs_exported => '日志导出成功';
+
+  @override
+  String export_failed(Object error) {
+    return '导出失败: $error';
+  }
 
   @override
   String get piped_instance => 'Piped Server Instance';
@@ -1243,7 +1307,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get minutes_listened => 'Minutes listened';
 
   @override
-  String get streamed_songs => 'Streamed songs';
+  String get streamed_songs => '已播歌曲';
 
   @override
   String count_streams(Object count) {
@@ -1325,7 +1389,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cache_folder => 'Cache folder';
 
   @override
-  String get export => 'Export';
+  String get open_cache_folder => 'Open Cache folder';
 
   @override
   String get clear_cache => 'Clear cache';
@@ -1436,20 +1500,68 @@ class AppLocalizationsZh extends AppLocalizations {
   String get generate => 'Generate';
 
   @override
-  String get timeZone => 'Time Zone';
+  String get timeZone => '时区';
 
   @override
-  String get timeFormat => 'Time Format';
+  String get timeFormat => '时间格式';
 
   @override
-  String get use24HourFormat => 'Use 24-hour format';
+  String get use24HourFormat => '使用24小时格式';
 
   @override
-  String get chinese => 'Chinese';
+  String get chinese => '中文';
 
   @override
-  String get english => 'English';
+  String get english => '英文';
 
   @override
-  String get japanese => 'Japanese';
+  String get japanese => '日文';
+
+  @override
+  String get cookie_import_success => 'Cookie导入成功';
+
+  @override
+  String import_failed(Object error) {
+    return '导入失败: $error';
+  }
+
+  @override
+  String get export_cookie => '导出Cookie';
+
+  @override
+  String get cookie_export_success => 'Cookie导出成功';
+
+  @override
+  String get cookie_cleared => 'Cookie已清除';
+
+  @override
+  String clear_failed(Object error) {
+    return '清除失败: $error';
+  }
+
+  @override
+  String get audio_quality_description => '选择音频播放质量';
+
+  @override
+  String get low_quality => '低';
+
+  @override
+  String get medium_quality => '中';
+
+  @override
+  String get high_quality => '高';
+
+  @override
+  String get crossfade => '淡入淡出';
+
+  @override
+  String get crossfade_description => '设置歌曲之间的过渡效果';
+
+  @override
+  String get off => '关闭';
+
+  @override
+  String seconds(Object count) {
+    return '$count 秒';
+  }
 }

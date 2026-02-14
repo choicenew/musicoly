@@ -27,6 +27,7 @@ class _AboutSettingsState extends State<AboutSettings> {
         releaseChannel: ReleaseChannel.stable, // 从Env获取实际渠道
       );
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('检查更新失败'))
       );
@@ -34,8 +35,9 @@ class _AboutSettingsState extends State<AboutSettings> {
   }
 
   void _launchUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 
@@ -44,8 +46,6 @@ class _AboutSettingsState extends State<AboutSettings> {
     return FutureBuilder<PackageInfo>(
       future: _packageInfo,
       builder: (context, snapshot) {
-        final packageInfo = snapshot.data;
-        
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

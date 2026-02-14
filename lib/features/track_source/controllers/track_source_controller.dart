@@ -15,8 +15,8 @@ class TrackSourceController {
   TrackSourceNotifier get _notifier => _ref.read(trackSourceProvider.notifier);
   TrackSourceState get _state => _ref.read(trackSourceProvider);
 
-  /// 获取当前音频源
-  AudioSource get currentSource => _state.currentSource;
+  /// 获取当前音频源插件ID
+  String get activePluginId => _state.activePluginId;
 
   /// 获取当前音频质量
   SourceQualities get quality => _state.quality;
@@ -24,9 +24,9 @@ class TrackSourceController {
   /// 获取当前音频编解码器
   SourceCodecs get codec => _state.codec;
 
-  /// 设置音频源
-  void setSource(AudioSource source) {
-    _notifier.setSource(source);
+  /// 设置音频源插件
+  void setSource(String pluginId) {
+    _notifier.setSource(pluginId);
   }
 
   /// 设置音频质量
@@ -49,22 +49,8 @@ class TrackSourceController {
     return _notifier.fetchFromTrack(track: track);
   }
 
-  /// 从备选音源获取轨道
-  Future<SourcedTrack> fetchFromTrackAltSource(
-      {required TrackInterface track}) {
-    return _notifier.fetchFromTrackAltSource(track: track);
-  }
-
-  /// 切换到下一个可用音源
-  void switchToNextSource() {
-    const sources = AudioSource.values;
-    final currentIndex = sources.indexOf(currentSource);
-    final nextIndex = (currentIndex + 1) % sources.length;
-    setSource(sources[nextIndex]);
-  }
-
-  /// 获取所有可用音源
-  List<AudioSource> getAvailableSources() {
-    return AudioSource.values;
+  /// 获取所有可用音源插件
+  List<String> getAvailableSources() {
+    return _state.availablePlugins;
   }
 }

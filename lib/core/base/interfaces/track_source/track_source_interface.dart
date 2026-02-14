@@ -1,14 +1,5 @@
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 
-/// 定义音轨源管理的接口
-enum AudioSource {
-  youtube,
-  piped,
-  jiosaavn,
-  invidious,
-  soundcloud,
-}
-
 enum SourceQualities {
   low,
   medium,
@@ -19,6 +10,9 @@ enum SourceCodecs {
   m4a,
   opus,
   webm,
+  mp3,
+  flac,
+  wav,
 }
 
 /// 音轨源信息接口
@@ -28,13 +22,14 @@ abstract class SourceInfo {
   String get artist;
   String get thumbnailUrl;
   Duration get duration;
-  AudioSource get source;
+  String get sourceId; // 使用 String 代替枚举以支持插件化
+  String? get url; // 可选的流媒体URL
 }
 
 /// 音轨源接口
 abstract class TrackSourceInterface {
-  /// 当前选择的音频源
-  AudioSource get currentSource;
+  /// 获取当前活跃的插件ID
+  String get activePluginId;
 
   /// 音频质量
   SourceQualities get quality;
@@ -51,8 +46,8 @@ abstract class TrackSourceInterface {
   /// 搜索音源
   Future<List<SourceInfo>> search(String query);
 
-  /// 设置当前音频源
-  void setSource(AudioSource source);
+  /// 设置当前音频源插件
+  void setSource(String sourceId);
 
   /// 设置音频质量
   void setQuality(SourceQualities quality);
@@ -66,6 +61,6 @@ abstract class SourcedTrack {
   TrackInterface get track;
   SourceInfo get sourceInfo;
   List<SourceInfo> get siblings;
-  AudioSource get source;
+  String get sourceId;
   SourceCodecs get codec;
 }

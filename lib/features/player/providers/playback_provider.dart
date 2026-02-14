@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
+import 'package:pyro_music/core/base/services/playback_service.dart';
 
-import '../../../core/base/interfaces/player/playback_interface.dart';
-import '../services/playback_service_impl.dart';
+import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
 
 part 'playback_provider.freezed.dart';
 part 'playback_provider.g.dart';
@@ -24,19 +25,20 @@ abstract class PlaybackStateData with _$PlaybackStateData {
   }) = _PlaybackStateData;
 }
 
-
 /// 播放控制状态提供者 - 管理播放控制状态
 @Riverpod(keepAlive: true)
 class PlaybackStateNotifier extends _$PlaybackStateNotifier {
   /// 播放控制服务
-  late final PlaybackServiceImpl _playbackService;
+  late final PlaybackService _playbackService;
 
   /// 订阅列表
   final List<StreamSubscription> _subscriptions = [];
 
   @override
   PlaybackStateData build() {
-    _playbackService = PlaybackServiceImpl();
+    final registry = ServiceRegistry();
+    _playbackService = registry.getService<PlaybackService>('playback_service')!;
+    
     _initialize();
     
     // 清理资源
@@ -44,7 +46,6 @@ class PlaybackStateNotifier extends _$PlaybackStateNotifier {
       for (final subscription in _subscriptions) {
         subscription.cancel();
       }
-      _playbackService.dispose();
     });
 
     return const PlaybackStateData();
@@ -100,9 +101,24 @@ class PlaybackStateNotifier extends _$PlaybackStateNotifier {
     await _playbackService.resumePlayback();
   }
 
+  /// 停止播放
+  Future<void> stop() async {
+    await _playbackService.stopPlayback();
+  }
+
+  /// 切换到下一首
+  Future<void> next() async {
+    await _playbackService.skipToNext();
+  }
+
+  /// 切换到前一首
+  Future<void> previous() async {
+    await _playbackService.skipToPrevious();
+  }
+
   /// 跳转到指定位置
   Future<void> seekTo(Duration position) async {
-    await _playbackService.seekToPosition(position.inMilliseconds);
+    await _playbackService.seekTo(position);
   }
 
   /// 设置音量
@@ -110,25 +126,13 @@ class PlaybackStateNotifier extends _$PlaybackStateNotifier {
     await _playbackService.setVolume(volume);
   }
 
-  /// 下一曲
-  Future<void> next() async {
-    await _playbackService.nextTrack();
-  }
-
-  /// 上一曲
-  Future<void> previous() async {
-    await _playbackService.previousTrack();
-  }
-
-  /// 设置重复模式
+  /// 设置循环模式
   Future<void> setRepeatMode(RepeatMode mode) async {
     await _playbackService.setRepeatMode(mode);
-    state = state.copyWith(repeatMode: mode);
   }
 
-  /// 设置随机播放模式
+  /// 设置随机播放
   Future<void> setShuffleMode(bool enabled) async {
     await _playbackService.setShuffleMode(enabled);
-    state = state.copyWith(shuffleMode: enabled);
   }
 }

@@ -1262,6 +1262,126 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get something_went_wrong;
 
+  /// No description provided for @developers_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Developers Settings'**
+  String get developers_settings;
+
+  /// No description provided for @debug_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug Mode'**
+  String get debug_mode;
+
+  /// No description provided for @debug_mode_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable developer tools and verbose logging'**
+  String get debug_mode_description;
+
+  /// No description provided for @verbose_logging.
+  ///
+  /// In en, this message translates to:
+  /// **'Verbose Logging'**
+  String get verbose_logging;
+
+  /// No description provided for @verbose_logging_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Record more detailed application logs'**
+  String get verbose_logging_description;
+
+  /// No description provided for @api_endpoint_config.
+  ///
+  /// In en, this message translates to:
+  /// **'API Endpoint Configuration'**
+  String get api_endpoint_config;
+
+  /// No description provided for @use_default_server.
+  ///
+  /// In en, this message translates to:
+  /// **'Use default server'**
+  String get use_default_server;
+
+  /// No description provided for @configure.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get configure;
+
+  /// No description provided for @api_server_address.
+  ///
+  /// In en, this message translates to:
+  /// **'API Server Address'**
+  String get api_server_address;
+
+  /// No description provided for @cache_management.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Management'**
+  String get cache_management;
+
+  /// No description provided for @cache_management_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear application temporary cache data'**
+  String get cache_management_description;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @export_logs.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Logs'**
+  String get export_logs;
+
+  /// No description provided for @export_logs_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Export application log files'**
+  String get export_logs_description;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @cache_cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache clearing completed'**
+  String get cache_cleared;
+
+  /// No description provided for @clearing_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Clearing failed: {error}'**
+  String clearing_failed(Object error);
+
+  /// No description provided for @no_logs_to_export.
+  ///
+  /// In en, this message translates to:
+  /// **'No logs available to export'**
+  String get no_logs_to_export;
+
+  /// No description provided for @logs_exported.
+  ///
+  /// In en, this message translates to:
+  /// **'Logs exported successfully'**
+  String get logs_exported;
+
+  /// No description provided for @export_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export failed: {error}'**
+  String export_failed(Object error);
+
   /// No description provided for @piped_instance.
   ///
   /// In en, this message translates to:
@@ -2510,11 +2630,11 @@ abstract class AppLocalizations {
   /// **'Cache folder'**
   String get cache_folder;
 
-  /// No description provided for @export.
+  /// No description provided for @open_cache_folder.
   ///
   /// In en, this message translates to:
-  /// **'Export'**
-  String get export;
+  /// **'Open Cache folder'**
+  String get open_cache_folder;
 
   /// No description provided for @clear_cache.
   ///
@@ -2737,6 +2857,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Japanese'**
   String get japanese;
+
+  /// No description provided for @cookie_import_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie imported successfully'**
+  String get cookie_import_success;
+
+  /// No description provided for @import_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {error}'**
+  String import_failed(Object error);
+
+  /// No description provided for @export_cookie.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Cookie'**
+  String get export_cookie;
+
+  /// No description provided for @cookie_export_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie exported successfully'**
+  String get cookie_export_success;
+
+  /// No description provided for @cookie_cleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Cookie cleared'**
+  String get cookie_cleared;
+
+  /// No description provided for @clear_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear failed: {error}'**
+  String clear_failed(Object error);
+
+  /// No description provided for @audio_quality_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Select audio playback quality'**
+  String get audio_quality_description;
+
+  /// No description provided for @low_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get low_quality;
+
+  /// No description provided for @medium_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get medium_quality;
+
+  /// No description provided for @high_quality.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get high_quality;
+
+  /// No description provided for @crossfade.
+  ///
+  /// In en, this message translates to:
+  /// **'Crossfade'**
+  String get crossfade;
+
+  /// No description provided for @crossfade_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Set transition effect between songs'**
+  String get crossfade_description;
+
+  /// No description provided for @off.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get off;
+
+  /// No description provided for @seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} seconds'**
+  String seconds(Object count);
 }
 
 class _AppLocalizationsDelegate

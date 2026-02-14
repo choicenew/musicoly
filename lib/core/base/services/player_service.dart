@@ -53,12 +53,6 @@ abstract class PlayerService extends BaseService
   /// Transfer playback to another device (if supported)
   Future<bool> transferPlayback(String deviceId);
 
-  /// Add a track to the queue
-  Future<void> addToQueue(String trackId);
-
-  /// Remove a track from the queue by its position
-  Future<void> removeFromQueue(int index);
-
   /// Clear the queue
   @override
   Future<void> clearQueue();

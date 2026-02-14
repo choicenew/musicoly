@@ -45,7 +45,7 @@ final class PlaybackStateNotifierProvider
 }
 
 String _$playbackStateNotifierHash() =>
-    r'249e3a12f2fb93fc8d98b3bbda4e1676a6ae1e9f';
+    r'2d632223ac4786df294e157b2b7d344d31abf8ae';
 
 /// 播放控制状态提供者 - 管理播放控制状态
 
