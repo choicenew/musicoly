@@ -5,12 +5,12 @@ import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
-part 'lyrics_provider.freezed.dart';
-part 'lyrics_provider.g.dart';
+part 'lyric_provider.freezed.dart';
+part 'lyric_provider.g.dart';
 
 @freezed
-abstract class LyricsState with _$LyricsState {
-  const factory LyricsState({
+abstract class LyricState with _$LyricState {
+  const factory LyricState({
     LyricData? currentLyrics,
     @Default(true) bool showSyncedLyrics,
     @Default(Duration.zero) Duration currentPosition,
@@ -18,19 +18,19 @@ abstract class LyricsState with _$LyricsState {
     @Default(false) bool isEditMode,
     @Default(false) bool isLoading,
     String? error,
-  }) = _LyricsState;
+  }) = _LyricState;
 }
 
 /// 歌词提供者实现
 @Riverpod(keepAlive: true)
-class LyricsNotifier extends _$LyricsNotifier {
+class LyricNotifier extends _$LyricNotifier {
   late final LyricManager _lyricManager;
 
   @override
-  LyricsState build() {
+  LyricState build() {
     final registry = ServiceRegistry();
     _lyricManager = registry.getService<LyricManager>('lyric_manager')!;
-    return const LyricsState();
+    return const LyricState();
   }
 
   /// 加载歌词
@@ -77,7 +77,7 @@ class LyricsNotifier extends _$LyricsNotifier {
 
   /// 清空歌词
   void clearLyrics() {
-    state = const LyricsState();
+    state = const LyricState();
   }
 
   /// 调整歌词时间戳

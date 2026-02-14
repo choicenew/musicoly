@@ -1,12 +1,12 @@
 name: pyro_music
-description: Open source Spotify client that doesn't require Premium nor uses Electron! Available for both desktop & mobile!
+description: 
 
 publish_to: "none"
 
 version: 3.9.0+38
 
-homepage: https://pyro_music.krtirtho.dev
-repository: https://github.com/KRTirtho/pyro_music
+homepage: 
+repository: 
 
 environment:
   sdk: ">=3.8.0"

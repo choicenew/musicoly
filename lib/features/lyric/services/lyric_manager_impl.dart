@@ -69,11 +69,7 @@ class LyricManagerImpl extends LyricManager {
 
   @override
   Future<bool> saveLyric(String trackId, LyricData lyric) async {
-    // 默认保存到本地插件
-    final localPlugin = _serviceRegistry.getService<LyricPlugin>('local');
-    if (localPlugin != null) {
-      return await localPlugin.saveLyric(trackId, lyric);
-    }
+    // 将来由插件负责保存逻辑
     return false;
   }
 }

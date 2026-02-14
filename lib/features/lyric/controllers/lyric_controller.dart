@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/features/lyrics/providers/lyrics_provider.dart';
-import 'package:pyro_music/features/lyrics/providers/synced_lyrics_provider.dart';
+import 'package:pyro_music/features/lyric/providers/lyric_provider.dart';
+import 'package:pyro_music/features/lyric/providers/synced_lyric_provider.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
 
-final lyricsControllerProvider = Provider((ref) => LyricsController(ref));
+final lyricControllerProvider = Provider((ref) => LyricController(ref));
 
 /// 歌词控制器
-class LyricsController {
+class LyricController {
   final Ref _ref;
 
-  /// Provider for the lyrics controller
-  static final provider = lyricsControllerProvider;
+  /// Provider for the lyric controller
+  static final provider = lyricControllerProvider;
 
   /// 当前歌词
   final ValueNotifier<LyricData?> currentLyrics = ValueNotifier(null);
@@ -46,13 +46,13 @@ class LyricsController {
   final ValueNotifier<double> lineSpacing = ValueNotifier(1.5);
 
   /// 构造函数
-  LyricsController(this._ref) {
+  LyricController(this._ref) {
     _initListeners();
   }
 
   void _initListeners() {
-    // Listen to LyricsNotifier state
-    _ref.listen(lyricsProvider, (previous, next) {
+    // Listen to LyricNotifier state
+    _ref.listen(lyricProvider, (previous, next) {
       if (previous?.currentLyrics != next.currentLyrics) {
         currentLyrics.value = next.currentLyrics;
       }
@@ -70,8 +70,8 @@ class LyricsController {
       }
     });
 
-    // Listen to SyncedLyricsNotifier state
-    _ref.listen(syncedLyricsProvider, (previous, next) {
+    // Listen to SyncedLyricNotifier state
+    _ref.listen(syncedLyricProvider, (previous, next) {
       if (previous?.autoScroll != next.autoScroll) {
         autoScroll.value = next.autoScroll;
       }
@@ -103,7 +103,7 @@ class LyricsController {
   /// 曲目变化处理
   void _onTrackChanged(TrackInterface? track) {
     if (track == null) {
-      _ref.read(lyricsProvider.notifier).clearLyrics();
+      _ref.read(lyricProvider.notifier).clearLyrics();
       return;
     }
 
@@ -113,28 +113,28 @@ class LyricsController {
 
   /// 播放位置变化处理
   void _onPositionChanged(Duration position) {
-    _ref.read(lyricsProvider.notifier).updatePosition(position);
+    _ref.read(lyricProvider.notifier).updatePosition(position);
   }
 
   /// 加载歌词
   Future<void> _loadLyrics(TrackInterface track) async {
     // 优先尝试加载同步歌词
     if (showSyncedLyrics.value) {
-      await _ref.read(lyricsProvider.notifier).loadSyncedLyrics(track);
+      await _ref.read(lyricProvider.notifier).loadSyncedLyrics(track);
       // Check if loaded successfully? The notifier updates state, and we listen to it.
       // But we need to know if we should fallback.
       // Accessing state directly:
-      final lyrics = _ref.read(lyricsProvider).currentLyrics;
+      final lyrics = _ref.read(lyricProvider).currentLyrics;
       if (lyrics != null && lyrics.isSynced) return;
     }
 
     // 如果没有同步歌词或不显示同步歌词，加载普通歌词
-    await _ref.read(lyricsProvider.notifier).loadLyrics(track);
+    await _ref.read(lyricProvider.notifier).loadLyrics(track);
   }
 
   /// 切换同步歌词显示
   void toggleSyncedLyrics() {
-    _ref.read(lyricsProvider.notifier).toggleSyncedLyrics();
+    _ref.read(lyricProvider.notifier).toggleSyncedLyrics();
 
     // 重新加载当前曲目的歌词
     final track = _ref.read(playerStateProvider).currentTrack;
@@ -145,59 +145,59 @@ class LyricsController {
 
   /// 切换自动滚动
   void toggleAutoScroll() {
-    _ref.read(syncedLyricsProvider.notifier).toggleAutoScroll();
+    _ref.read(syncedLyricProvider.notifier).toggleAutoScroll();
   }
 
   /// 切换高亮当前行
   void toggleHighlightCurrentLine() {
-    _ref.read(syncedLyricsProvider.notifier).toggleHighlightCurrentLine();
+    _ref.read(syncedLyricProvider.notifier).toggleHighlightCurrentLine();
   }
 
   /// 切换显示翻译
   void toggleShowTranslation() {
-    _ref.read(syncedLyricsProvider.notifier).toggleShowTranslation();
+    _ref.read(syncedLyricProvider.notifier).toggleShowTranslation();
   }
 
   /// 切换编辑模式
   void toggleEditMode() {
-    _ref.read(lyricsProvider.notifier).toggleEditMode();
+    _ref.read(lyricProvider.notifier).toggleEditMode();
   }
 
   /// 设置字体大小
   void setFontSize(double size) {
-    _ref.read(syncedLyricsProvider.notifier).setFontSize(size);
+    _ref.read(syncedLyricProvider.notifier).setFontSize(size);
   }
 
   /// 设置行间距
   void setLineSpacing(double spacing) {
-    _ref.read(syncedLyricsProvider.notifier).setLineSpacing(spacing);
+    _ref.read(syncedLyricProvider.notifier).setLineSpacing(spacing);
   }
 
   /// 调整歌词时间戳
   Future<void> adjustLyricTimestamp(int index, int newTimestamp) async {
-    await _ref.read(lyricsProvider.notifier).adjustLyricTimestamp(index, newTimestamp);
+    await _ref.read(lyricProvider.notifier).adjustLyricTimestamp(index, newTimestamp);
   }
 
   /// 导出LRC格式歌词
   String exportToLRC() {
-    return _ref.read(lyricsProvider.notifier).exportToLRC();
+    return _ref.read(lyricProvider.notifier).exportToLRC();
   }
 
   /// 从LRC格式导入同步歌词
   Future<bool> importFromLRC(String lrcContent, TrackInterface track) async {
-    return await _ref.read(lyricsProvider.notifier).importFromLRC(lrcContent, track);
+    return await _ref.read(lyricProvider.notifier).importFromLRC(lrcContent, track);
   }
 
   /// 搜索歌词
   Future<List<LyricData>> searchLyrics(String query,
       {int limit = 10, int offset = 0}) async {
-    return await _ref.read(lyricsProvider.notifier).searchLyrics(query,
+    return await _ref.read(lyricProvider.notifier).searchLyrics(query,
         limit: limit, offset: offset);
   }
 
   /// 保存歌词
   Future<bool> saveLyrics(LyricData lyrics) async {
-    return await _ref.read(lyricsProvider.notifier).saveLyrics(lyrics);
+    return await _ref.read(lyricProvider.notifier).saveLyrics(lyrics);
   }
 
   /// 释放资源

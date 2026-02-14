@@ -8,7 +8,6 @@ import 'package:pyro_music/core/base/services/playback_service.dart';
 import 'package:pyro_music/core/base/services/track_source_service.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/features/lyric/services/lyric_manager_impl.dart';
-import 'package:pyro_music/features/lyric/sources/local.dart';
 import 'package:pyro_music/features/track_source/services/track_source_manager_impl.dart';
 import 'package:pyro_music/features/track_source/sources/local.dart';
 import 'package:pyro_music/core/base/services/base_service.dart';
@@ -19,12 +18,7 @@ class ServiceInitializer {
   static Future<void> initialize(Isar isar) async {
     final registry = ServiceRegistry();
 
-    // 1. 注册基础核心插件 (如本地歌词、本地音源)
-    registry.registerPlatformService<LyricPlugin>(
-      'local',
-      () => LocalLyricPlugin(isar),
-    );
-
+    // 1. 注册基础核心插件 (如本地音源)
     registry.registerPlatformService<TrackSourceService>(
       'local',
       () => LocalTrackSourceService(isar),

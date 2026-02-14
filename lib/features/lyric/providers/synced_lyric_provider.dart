@@ -1,27 +1,27 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/features/lyrics/providers/lyrics_provider.dart';
+import 'package:pyro_music/features/lyric/providers/lyric_provider.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 
-part 'synced_lyrics_provider.freezed.dart';
-part 'synced_lyrics_provider.g.dart';
+part 'synced_lyric_provider.freezed.dart';
+part 'synced_lyric_provider.g.dart';
 
 @freezed
-abstract class SyncedLyricsState with _$SyncedLyricsState {
-  const factory SyncedLyricsState({
+abstract class SyncedLyricState with _$SyncedLyricState {
+  const factory SyncedLyricState({
     @Default(true) bool autoScroll,
     @Default(true) bool highlightCurrentLine,
     @Default(false) bool showTranslation,
     @Default(16.0) double fontSize,
     @Default(1.5) double lineSpacing,
-  }) = _SyncedLyricsState;
+  }) = _SyncedLyricState;
 }
 
 @Riverpod(keepAlive: true)
-class SyncedLyricsNotifier extends _$SyncedLyricsNotifier {
+class SyncedLyricNotifier extends _$SyncedLyricNotifier {
   @override
-  SyncedLyricsState build() {
-    return const SyncedLyricsState();
+  SyncedLyricState build() {
+    return const SyncedLyricState();
   }
 
   void toggleAutoScroll() {
@@ -44,12 +44,12 @@ class SyncedLyricsNotifier extends _$SyncedLyricsNotifier {
     state = state.copyWith(lineSpacing: spacing);
   }
 
-  // Helper methods that depend on LyricsProvider state
+  // Helper methods that depend on LyricProvider state
   // These should probably be extension methods or used via ref in UI/Controller
   
   String? getLyricText(int index) {
-    final lyricsState = ref.read(lyricsProvider);
-    final currentLyrics = lyricsState.currentLyrics;
+    final lyricState = ref.read(lyricProvider);
+    final currentLyrics = lyricState.currentLyrics;
     
     if (currentLyrics == null ||
         !currentLyrics.isSynced ||
@@ -62,8 +62,8 @@ class SyncedLyricsNotifier extends _$SyncedLyricsNotifier {
   }
 
   int? getLyricTimestamp(int index) {
-    final lyricsState = ref.read(lyricsProvider);
-    final currentLyrics = lyricsState.currentLyrics;
+    final lyricState = ref.read(lyricProvider);
+    final currentLyrics = lyricState.currentLyrics;
 
     if (currentLyrics == null ||
         !currentLyrics.isSynced ||

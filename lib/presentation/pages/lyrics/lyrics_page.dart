@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/features/lyrics/controllers/lyrics_controller.dart';
+import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
@@ -15,7 +15,7 @@ class LyricsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lyricsController = ref.watch(LyricsController.provider);
+    final lyricController = ref.watch(LyricController.provider);
     // 仅监听 currentTrack 的变化，提高性能
     final currentTrack = ref.watch(playerStateProvider.select((s) => s.currentTrack));
 
@@ -25,31 +25,31 @@ class LyricsPage extends ConsumerWidget {
         actions: [
           // 同步歌词切换按钮
           IconButton(
-            icon: Icon(lyricsController.showSyncedLyrics.value ? Icons.sync : Icons.sync_disabled),
-            tooltip: lyricsController.showSyncedLyrics.value ? '显示普通歌词' : '显示同步歌词',
-            onPressed: lyricsController.toggleSyncedLyrics,
+            icon: Icon(lyricController.showSyncedLyrics.value ? Icons.sync : Icons.sync_disabled),
+            tooltip: lyricController.showSyncedLyrics.value ? '显示普通歌词' : '显示同步歌词',
+            onPressed: lyricController.toggleSyncedLyrics,
           ),
           // 编辑模式切换按钮
           IconButton(
-            icon: Icon(lyricsController.isEditMode.value ? Icons.edit_off : Icons.edit),
-            tooltip: lyricsController.isEditMode.value ? '退出编辑模式' : '进入编辑模式',
-            onPressed: lyricsController.toggleEditMode,
+            icon: Icon(lyricController.isEditMode.value ? Icons.edit_off : Icons.edit),
+            tooltip: lyricController.isEditMode.value ? '退出编辑模式' : '进入编辑模式',
+            onPressed: lyricController.toggleEditMode,
           ),
           // 更多选项菜单
           PopupMenuButton<String>(
             onSelected: (value) {
               switch (value) {
                 case 'export':
-                  _exportLyrics(context, lyricsController);
+                  _exportLyrics(context, lyricController);
                   break;
                 case 'import':
-                  _importLyrics(context, lyricsController, currentTrack);
+                  _importLyrics(context, lyricController, currentTrack);
                   break;
                 case 'search':
-                  _searchLyrics(context, lyricsController, currentTrack);
+                  _searchLyrics(context, lyricController, currentTrack);
                   break;
                 case 'settings':
-                  _showLyricsSettings(context, lyricsController);
+                  _showLyricsSettings(context, lyricController);
                   break;
               }
             },
@@ -89,7 +89,7 @@ class LyricsPage extends ConsumerWidget {
       body: currentTrack == null
           ? const Center(child: Text('没有正在播放的曲目'))
           : ValueListenableBuilder<LyricData?>(
-              valueListenable: lyricsController.currentLyrics,
+              valueListenable: lyricController.currentLyrics,
               builder: (context, lyrics, _) {
                 if (lyrics == null) {
                   return const Center(
@@ -105,7 +105,7 @@ class LyricsPage extends ConsumerWidget {
                 }
                 
                 return ValueListenableBuilder<bool>(
-                  valueListenable: lyricsController.showSyncedLyrics,
+                  valueListenable: lyricController.showSyncedLyrics,
                   builder: (context, showSynced, _) {
                     if (showSynced && lyrics.isSynced) {
                       // 使用正确的组件名称
@@ -122,7 +122,7 @@ class LyricsPage extends ConsumerWidget {
   }
   
   // 导出歌词
-  void _exportLyrics(BuildContext context, LyricsController controller) {
+  void _exportLyrics(BuildContext context, LyricController controller) {
     final lyrics = controller.currentLyrics.value;
     if (lyrics == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -159,7 +159,7 @@ class LyricsPage extends ConsumerWidget {
   }
   
   // 导入歌词
-  void _importLyrics(BuildContext context, LyricsController controller, dynamic currentTrack) {
+  void _importLyrics(BuildContext context, LyricController controller, dynamic currentTrack) {
     if (currentTrack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('没有正在播放的曲目')),
@@ -211,7 +211,7 @@ class LyricsPage extends ConsumerWidget {
   }
   
   // 搜索歌词
-  void _searchLyrics(BuildContext context, LyricsController controller, dynamic currentTrack) {
+  void _searchLyrics(BuildContext context, LyricController controller, dynamic currentTrack) {
     if (currentTrack == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('没有正在播放的曲目')),
@@ -303,7 +303,7 @@ class LyricsPage extends ConsumerWidget {
   }
   
   // 显示歌词设置
-  void _showLyricsSettings(BuildContext context, LyricsController controller) {
+  void _showLyricsSettings(BuildContext context, LyricController controller) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

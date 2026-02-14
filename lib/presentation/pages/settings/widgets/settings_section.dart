@@ -6,52 +6,65 @@ import 'package:pyro_music/presentation/pages/settings/widgets/cookie_import_exp
 import 'package:pyro_music/presentation/pages/settings/widgets/desktop_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/developers_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/downloads_settings.dart';
-import 'package:pyro_music/presentation/pages/settings/widgets/language_region_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/playback_settings.dart';
+import 'package:pyro_music/features/language/pages/language_settings_page.dart';
+import 'package:pyro_music/generated/app_localizations.dart';
 
 class SettingsSection extends StatelessWidget {
   const SettingsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final l10n = AppLocalizations.of(context);
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 账户设置
-        _SectionTitle(title: '账户'),
-        AccountsSettings(),
+        const _SectionTitle(title: '账户'),
+        const AccountsSettings(),
 
         // 外观设置
-        _SectionTitle(title: '外观'),
-        AppearanceSettings(),
+        const _SectionTitle(title: '外观'),
+        const AppearanceSettings(),
 
         // 播放设置
-        _SectionTitle(title: '播放'),
-        PlaybackSettings(),
+        const _SectionTitle(title: '播放'),
+        const PlaybackSettings(),
 
         // 下载设置
-        _SectionTitle(title: '下载'),
-        DownloadsSettings(),
+        const _SectionTitle(title: '下载'),
+        const DownloadsSettings(),
 
         // 语言和地区设置
-        _SectionTitle(title: '语言和地区'),
-        LanguageRegionSettings(),
+        _SectionTitle(title: l10n.language_region),
+        ListTile(
+          leading: const Icon(Icons.language),
+          title: Text(l10n.language_region),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const LanguageSettingsPage(),
+              ),
+            );
+          },
+        ),
 
         // 桌面设置
-        _SectionTitle(title: '桌面'),
-        DesktopSettings(),
+        const _SectionTitle(title: '桌面'),
+        const DesktopSettings(),
 
         // 开发者选项
-        _SectionTitle(title: '开发者选项'),
-        DevelopersSettings(),
+        const _SectionTitle(title: '开发者选项'),
+        const DevelopersSettings(),
 
         // Cookie导入导出
-        _SectionTitle(title: 'Cookie管理'),
-        CookieImportExportSettings(),
+        const _SectionTitle(title: 'Cookie管理'),
+        const CookieImportExportSettings(),
 
         // 关于
-        _SectionTitle(title: '关于'),
-        AboutSettings(),
+        const _SectionTitle(title: '关于'),
+        const AboutSettings(),
       ],
     );
   }
