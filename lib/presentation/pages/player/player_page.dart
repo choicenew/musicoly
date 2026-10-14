@@ -19,6 +19,9 @@ import 'package:pyro_music/presentation/pages/lyrics/widgets/synced_lyrics_widge
 import 'package:pyro_music/presentation/pages/lyrics/widgets/plain_lyrics_widget.dart';
 import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
+import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
+import 'package:pyro_music/core/base/services/playlist_service.dart';
 
 /// 全屏播放器页面
 class PlayerPage extends ConsumerStatefulWidget {
@@ -46,7 +49,6 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
     }
 
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       body: Stack(
@@ -93,44 +95,51 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     children: [
-                      // 歌曲信息 (如果封面在中间，这里可以放歌曲名)
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(width: 48), // Spacer for heart icon balance
-                          Expanded(
-                            child: Text(
-                              track.name,
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
                           IconButton(
                             icon: Icon(
                               track.isFavorite ? Icons.favorite : Icons.favorite_border,
-                              color: track.isFavorite ? Colors.red : Colors.white70,
+                              color: track.isFavorite ? Colors.red : null,
                             ),
                             onPressed: () async {
-                              await ref.read(playlistServiceProvider).toggleFavorite(track.id);
-                              // The playback state might not update immediately if it's cached.
-                              // But the UI will rebuild if the provider emits a new state.
+                              final success = await ref.read(playlistServiceProvider).toggleFavorite(track.id);
+                              if (success) {
+                                // 刷新当前曲目状态以更新 UI
+                                ref.read(playerStateProvider.notifier).refreshCurrentTrack();
+                              }
                             },
                           ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  track.name,
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  track.artistNames.join(', '),
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                        color: theme.textTheme.bodySmall?.color,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.more_vert),
+                            onPressed: () => _showMoreOptions(context, track, ref),
+                          ),
                         ],
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        track.artistNames.join(', '),
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                       
                       const SizedBox(height: 32),
@@ -175,6 +184,317 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
     );
   }
 
+  void _showMoreOptions(BuildContext context, TrackInterface track, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.equalizer),
+                title: Text(l10n.equalizer),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showEqualizer(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.timer),
+                title: Text(l10n.sleep_timer),
+                subtitle: ref.watch(sleepTimerProvider) != null
+                    ? Text(l10n.minutes_remaining(ref.watch(sleepTimerProvider)!.inMinutes.toString()))
+                    : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  _showSleepTimerDialog(context, ref);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.playlist_add),
+                title: Text(l10n.add_to_playlist),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showPlaylistPicker(context, track, ref);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.album),
+                title: Text(l10n.go_to_album),
+                onTap: () {
+                  Navigator.pop(context);
+                  if (track.albumId != null) {
+                    context.push('/album/${track.albumId}');
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.person),
+                title: Text(l10n.go_to_artist),
+                onTap: () {
+                  Navigator.pop(context);
+                  if (track.artistIds.length > 1) {
+                    _showArtistPicker(context, track);
+                  } else if (track.artistIds.isNotEmpty) {
+                    context.push('/artist/${track.artistIds.first}');
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: Text(l10n.track_details),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showTrackDetails(context, track);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showEqualizer(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const AlertDialog(
+        content: EqualizerSettings(),
+      ),
+    );
+  }
+
+  void _showSleepTimerDialog(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final minutes = [10, 15, 30, 45, 60, 90];
+    
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  l10n.sleep_timer,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              ...minutes.map((m) => ListTile(
+                title: Text('$m ${l10n.minutes}'),
+                onTap: () {
+                  ref.read(sleepTimerProvider.notifier).start(Duration(minutes: m));
+                  Navigator.pop(context);
+                },
+              )),
+              ListTile(
+                title: Text(l10n.cancel_timer),
+                textColor: Colors.red,
+                onTap: () {
+                  ref.read(sleepTimerProvider.notifier).stop();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPlaylistPicker(BuildContext context, TrackInterface track, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final playlistService = ref.read(playlistServiceProvider);
+    
+    // Show a loading indicator while fetching playlists
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return FutureBuilder<List<PlaylistInterface>>(
+          future: playlistService.getUserPlaylists(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SizedBox(
+                height: 200,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+            
+            if (snapshot.hasError) {
+              return SizedBox(
+                height: 200,
+                child: Center(child: Text('Error: ${snapshot.error}')),
+              );
+            }
+            
+            final playlists = snapshot.data ?? [];
+            if (playlists.isEmpty) {
+              return SizedBox(
+                height: 200,
+                child: Center(child: Text(l10n.no_results_found('Playlists'))),
+              );
+            }
+            
+            return SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      l10n.add_to_playlist,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: playlists.length,
+                      itemBuilder: (context, index) {
+                        final playlist = playlists[index];
+                        return ListTile(
+                          leading: const Icon(Icons.playlist_play),
+                          title: Text(playlist.name),
+                          onTap: () async {
+                            final success = await playlistService.addTracksToPlaylist(
+                              playlistId: playlist.id, 
+                              trackIds: [track.id],
+                            );
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(success 
+                                    ? l10n.added_to_playlist 
+                                    : 'Failed to add track to playlist'
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showArtistPicker(BuildContext context, TrackInterface track) {
+    final l10n = AppLocalizations.of(context);
+    
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  l10n.go_to_artist,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: track.artistIds.length,
+                  itemBuilder: (context, index) {
+                    final artistId = track.artistIds[index];
+                    final artistName = track.artistNames.length > index 
+                        ? track.artistNames[index] 
+                        : 'Unknown Artist';
+                        
+                    return ListTile(
+                      leading: const Icon(Icons.person),
+                      title: Text(artistName),
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.push('/artist/$artistId');
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showTrackDetails(BuildContext context, TrackInterface track) {
+    final l10n = AppLocalizations.of(context);
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.details),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _detailRow(l10n.title, track.name),
+            _detailRow(l10n.artist, track.artistNames.join(', ')),
+            if (track.albumName != null) _detailRow(l10n.album, track.albumName!),
+            _detailRow(l10n.duration, _formatDuration(Duration(milliseconds: track.durationMs))),
+            _detailRow('ID', track.id),
+            _detailRow('Platform', track.platform),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(child: Text(value)),
+        ],
+      ),
+    );
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if (duration.inHours > 0) {
+      return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+    }
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   Widget _buildBackground(String? imageUrl) {
     return Stack(
       children: [
@@ -202,15 +522,16 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
 
   Widget _buildLyricsView() {
     final lyricController = ref.watch(LyricController.provider);
+    final l10n = AppLocalizations.of(context);
     
     return ValueListenableBuilder<LyricData?>(
       valueListenable: lyricController.currentLyrics,
       builder: (context, lyrics, _) {
         if (lyrics == null) {
-          return const Center(
+          return Center(
             child: Text(
-              "No Lyrics Found",
-              style: TextStyle(color: Colors.white70),
+              l10n.no_lyrics_found,
+              style: const TextStyle(color: Colors.white70),
             ),
           );
         }
@@ -223,7 +544,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
   }
 
   Widget _buildBottomActions(BuildContext context, AppLocalizations l10n) {
-    final remainingTime = ref.watch(sleepTimerProvider);
+    final sleepTimer = ref.watch(sleepTimerProvider);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -239,11 +560,11 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           children: [
             IconButton(
               icon: const Icon(Icons.timer_outlined),
-              color: remainingTime != null ? Theme.of(context).colorScheme.primary : Colors.white70,
-              onPressed: () => _showSleepTimerDialog(context),
+              color: sleepTimer != null ? Theme.of(context).colorScheme.primary : Colors.white70,
+              onPressed: () => _showSleepTimerDialog(context, ref),
               tooltip: l10n.sleep_timer,
             ),
-            if (remainingTime != null)
+            if (sleepTimer != null)
               Positioned(
                 right: 0,
                 top: 0,
@@ -254,7 +575,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                     shape: BoxShape.circle,
                   ),
                   child: Text(
-                    '${remainingTime.inMinutes}',
+                    '${sleepTimer.inMinutes}',
                     style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -274,93 +595,6 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           tooltip: l10n.queue,
         ),
       ],
-    );
-  }
-
-  void _showSleepTimerDialog(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final notifier = ref.read(sleepTimerProvider.notifier);
-    
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              l10n.sleep_timer,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            _buildTimerOption(context, '15 min', const Duration(minutes: 15), notifier),
-            _buildTimerOption(context, '30 min', const Duration(minutes: 30), notifier),
-            _buildTimerOption(context, '45 min', const Duration(minutes: 45), notifier),
-            _buildTimerOption(context, '60 min', const Duration(minutes: 60), notifier),
-            _buildTimerOption(context, '90 min', const Duration(minutes: 90), notifier),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.timer_off_outlined, color: Colors.red),
-              title: Text(l10n.cancel, style: const TextStyle(color: Colors.red)),
-              onTap: () {
-                notifier.stop();
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTimerOption(BuildContext context, String title, Duration duration, SleepTimerNotifier notifier) {
-    return ListTile(
-      leading: const Icon(Icons.access_time),
-      title: Text(title),
-      onTap: () {
-        notifier.start(duration);
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  void _showEqualizer(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (context) => Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: const Wrap(
-          children: [
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: SizedBox(
-                  width: 40,
-                  height: 4,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white24,
-                      borderRadius: BorderRadius.all(Radius.circular(2)),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            EqualizerSettings(),
-          ],
-        ),
-      ),
     );
   }
 

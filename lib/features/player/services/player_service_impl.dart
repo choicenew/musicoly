@@ -11,6 +11,7 @@ import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/core/services/desktop_service.dart';
+import 'package:pyro_music/core/services/scrobbler_manager.dart';
 import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
 
 /// 播放器服务实现 - 整合多平台播放功能
@@ -45,48 +46,98 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
         _playback.setSource(service.playback);
         debugPrint('已设置活跃播放器服务: $platformId');
         
-        // Listen to playback changes to update DesktopService
-        _setupDesktopIntegration();
+        // 设置外部集成（桌面端 & 回传服务）
+        _setupExternalIntegrations();
       }
     }
   }
 
-  void _setupDesktopIntegration() {
+  void _setupExternalIntegrations() {
     final desktopService = _serviceRegistry.getService<DesktopService>('desktop_service');
-    if (desktopService == null) return;
+    final scrobblerManager = _serviceRegistry.getService<ScrobblerManager>('scrobbler_manager');
 
-    _playback.playbackStateStream.listen((state) {
-      desktopService.updatePlaybackState(state == PlaybackState.playing);
-      desktopService.setTaskbarStatus(state == PlaybackState.playing);
-    });
+    String? lastTrackId;
+    bool scrobbled = false;
 
-    _playback.positionStream.listen((pos) {
-      if (_playback.duration.inMilliseconds > 0) {
-        desktopService.updateTaskbarProgress(
-          pos.inMilliseconds / _playback.duration.inMilliseconds,
-        );
-      }
-    });
-
+    // 监听切歌
     _playback.currentTrackStream.listen((trackId) async {
-      if (trackId == null) return;
-      
+      if (trackId == null) {
+        desktopService?.updatePlaybackState(false);
+        return;
+      }
+      if (trackId == lastTrackId) return;
+
+      lastTrackId = trackId;
+      scrobbled = false;
+
       final isar = GetIt.instance<Isar>();
       final track = await isar.trackEntitys.filter().trackIdEqualTo(trackId).findFirst();
       if (track != null) {
-        desktopService.updateMetadata(
-          track.name,
-          track.artistNames?.join(', ') ?? 'Unknown Artist',
-          album: track.albumName,
-          imageUrl: track.imageUrl,
-        );
+        final trackModel = track.toModel();
         
-        // Also show notification if needed
-        await desktopService.showNotification(
-          track.name,
-          track.artistNames?.join(', ') ?? 'Unknown Artist',
-          imagePath: track.imageUrl,
-        );
+        // 1. 通知 Scrobbler
+        if (scrobblerManager != null) {
+          await scrobblerManager.notifyNowPlaying(trackModel);
+        }
+
+        // 2. 更新桌面端元数据
+        if (desktopService != null) {
+          desktopService.updateMetadata(
+            trackModel.name,
+            trackModel.artistNames.join(", "),
+            album: trackModel.albumName,
+            imageUrl: trackModel.imageUrl,
+          );
+          
+          // 发送通知
+          await desktopService.showNotification(
+            trackModel.name,
+            trackModel.artistNames.join(", "),
+            imagePath: trackModel.imageUrl,
+          );
+        }
+      }
+    });
+
+    // 监听播放状态
+    _playback.playbackStateStream.listen((state) {
+      if (desktopService != null) {
+        final isPlaying = state == PlaybackState.playing;
+        desktopService.updatePlaybackState(isPlaying);
+        desktopService.setTaskbarStatus(isPlaying);
+      }
+    });
+
+    // 监听进度（用于进度条和 Scrobble）
+    _playback.positionStream.listen((pos) async {
+      final duration = _playback.duration;
+      
+      // 更新任务栏进度
+      if (desktopService != null && duration.inMilliseconds > 0) {
+        desktopService.updateTaskbarProgress(pos.inMilliseconds / duration.inMilliseconds);
+      }
+
+      // Scrobble 逻辑
+      if (scrobblerManager == null || scrobbled || lastTrackId == null) return;
+      if (duration.inSeconds < 30) return; // 歌曲太短不记录
+
+      // Scrobble 条件: 50% 或者 4 分钟 (240秒)
+      final scrobbleThreshold = duration.inSeconds > 480 ? 240 : duration.inSeconds ~/ 2;
+
+      if (pos.inSeconds >= scrobbleThreshold) {
+        scrobbled = true;
+        final isar = GetIt.instance<Isar>();
+        final track = await isar.trackEntitys
+            .filter()
+            .trackIdEqualTo(lastTrackId!)
+            .findFirst();
+        if (track != null) {
+          await scrobblerManager.notifyScrobble(
+            track.toModel(),
+            duration: pos.inSeconds,
+            isComplete: false,
+          );
+        }
       }
     });
   }
@@ -370,6 +421,13 @@ class PlayerServiceImpl extends BaseService implements PlayerService {
   }
 
   @override
+  Future<void> seek(Duration position) async {
+    if (_activePlayerService != null) {
+      await _activePlayerService!.seek(position);
+    }
+  }
+
+  @override
   Future<List<String>> getQueue() async {
     if (_activePlayerService != null) {
       return _activePlayerService!.getQueue();
@@ -465,6 +523,9 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
   /// 当前播放状态
   PlaybackState _currentState = PlaybackState.none;
 
+  /// 当前播放位置
+  Duration _position = Duration.zero;
+
   /// 当前音量
   double _volume = 1.0;
 
@@ -489,36 +550,25 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
     _subscriptions.clear();
 
     // 订阅新数据源
-    _subscriptions.add(source.positionStream.listen((p) => _positionController.add(p)));
-    _subscriptions.add(source.bufferedPositionStream.listen((p) => _bufferedPositionController.add(p)));
+    _subscriptions.add(source.positionStream.listen(updatePosition));
+    _subscriptions.add(source.bufferedPositionStream.listen(updateBufferedPosition));
     _subscriptions.add(source.durationStream.listen((p) {
       _duration = p;
       _durationController.add(p);
     }));
-    _subscriptions.add(source.playbackStateStream.listen((s) {
-      _currentState = s;
-      _playbackStateController.add(s);
-    }));
-    _subscriptions.add(source.currentTrackStream.listen((t) => _currentTrackController.add(t)));
-    _subscriptions.add(source.volumeStream.listen((v) {
-      _volume = v;
-      _volumeController.add(v);
-    }));
-    _subscriptions.add(source.repeatModeStream.listen((m) {
-      _repeatMode = m;
-      _repeatModeController.add(m);
-    }));
-    _subscriptions.add(source.shuffleModeStream.listen((s) {
-      _shuffleMode = s;
-      _shuffleModeController.add(s);
-    }));
+    _subscriptions.add(source.playbackStateStream.listen(updatePlaybackState));
+    _subscriptions.add(source.currentTrackStream.listen(updateCurrentTrack));
+    _subscriptions.add(source.volumeStream.listen(updateVolume));
+    _subscriptions.add(source.repeatModeStream.listen(updateRepeatMode));
+    _subscriptions.add(source.shuffleModeStream.listen(updateShuffleMode));
 
-    // 更新当前值
+    // 初始同步
+    _position = source.position;
+    _duration = source.duration;
     _currentState = source.currentState;
     _volume = source.volume;
     _repeatMode = source.repeatMode;
     _shuffleMode = source.shuffleMode;
-    _duration = source.duration;
   }
 
   @override
@@ -562,8 +612,12 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
   @override
   Duration get duration => _duration;
 
+  @override
+  Duration get position => _position;
+
   /// 更新播放位置
   void updatePosition(Duration position) {
+    _position = position;
     _positionController.add(position);
   }
 
@@ -617,11 +671,4 @@ class PlaybackInterfaceImpl implements PlaybackInterface {
     _repeatModeController.close();
     _shuffleModeController.close();
   }
-
-
-
-
-
-
-
 }

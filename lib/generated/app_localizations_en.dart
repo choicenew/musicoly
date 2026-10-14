@@ -274,6 +274,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get time => 'Time';
 
   @override
+  String get duration => 'Duration';
+
+  @override
+  String get ok => 'OK';
+
+  @override
   String get more_actions => 'More actions';
 
   @override
@@ -343,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save_as_favorite => 'Save as favorite';
 
   @override
-  String get add_to_playlist => 'Add to playlist';
+  String get add_to_playlist => 'Add to Playlist';
 
   @override
   String get remove_from_playlist => 'Remove from playlist';
@@ -655,6 +661,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blacklist_description => 'Blacklisted tracks and artists';
 
   @override
+  String get equalizer => 'Equalizer';
+
+  @override
+  String get sleep_timer => 'Sleep Timer';
+
+  @override
+  String minutes_remaining(Object minutes) {
+    return '$minutes minutes remaining';
+  }
+
+  @override
+  String get go_to_album => 'Go to Album';
+
+  @override
+  String get go_to_artist => 'Go to Artist';
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get not_connected => 'Not connected';
+
+  @override
+  String get scrobbler => 'Scrobbler';
+
+  @override
+  String get lastfm_scrobbler => 'Last.fm Scrobbler';
+
+  @override
   String get wait_for_download_to_finish =>
       'Please wait for the current download to finish';
 
@@ -910,24 +945,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get scan_completed => 'Scan Completed';
 
   @override
-  String get equalizer => 'Equalizer';
-
-  @override
   String get enable_equalizer => 'Enable Equalizer';
 
   @override
-  String get sleep_timer => 'Sleep Timer';
-
-  @override
-  String minutes(num count) {
-    return '$count minutes';
-  }
+  String get minutes => 'minutes';
 
   @override
   String get sleep_timer_description => 'Stop playback after a set time';
 
   @override
   String get accounts => 'Accounts';
+
+  @override
+  String get track_details => 'Track Details';
+
+  @override
+  String get cancel_timer => 'Cancel Timer';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get scrobbler_description =>
+      'Sync your playback history to external services';
+
+  @override
+  String get enable_scrobbler => 'Enable Scrobbler';
+
+  @override
+  String get lastfm_scrobbler_description =>
+      'Sync your listening history to Last.fm';
 
   @override
   String get backup_restore => 'Backup & Restore';
@@ -1120,9 +1167,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get line_spacing => 'Line Spacing';
 
   @override
-  String get ok => 'OK';
-
-  @override
   String get playlist_not_found => 'Playlist not found';
 
   @override
@@ -1215,9 +1259,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get password => 'Password';
 
   @override
-  String get login => 'Login';
-
-  @override
   String get recently_played => 'Recently Played';
 
   @override
@@ -1278,4 +1319,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_recommended_artists => 'No recommended artists';
+
+  @override
+  String get lastfm_settings => 'Last.fm Settings';
+
+  @override
+  String get enable_lastfm_scrobbling => 'Enable Last.fm Scrobbling';
+
+  @override
+  String added_to_playlist_success(Object playlist) {
+    return 'Added to $playlist';
+  }
+
+  @override
+  String get added_to_playlist_error => 'Failed to add to playlist';
 }

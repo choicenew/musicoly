@@ -8,6 +8,7 @@ import 'package:pyro_music/presentation/pages/settings/widgets/developers_settin
 import 'package:pyro_music/presentation/pages/settings/widgets/downloads_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/playback_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/equalizer_settings.dart';
+import 'package:pyro_music/presentation/pages/settings/widgets/scrobbler_settings.dart';
 import 'package:pyro_music/presentation/pages/settings/widgets/backup_restore_settings.dart';
 import 'package:pyro_music/features/language/pages/language_settings_page.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
@@ -36,6 +37,10 @@ class SettingsSection extends StatelessWidget {
         // 均衡器
         _SectionTitle(title: l10n.equalizer),
         const EqualizerSettings(),
+
+        // 记录设置
+        _SectionTitle(title: l10n.scrobbler),
+        const ScrobblerSettings(),
 
         // 下载设置
         _SectionTitle(title: l10n.downloads),

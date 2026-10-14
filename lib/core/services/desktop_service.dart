@@ -162,8 +162,21 @@ class DesktopService extends BaseService with TrayListener, WindowListener {
   Future<void> _updateTrayMenu() async {
     final playerService = ServiceRegistry().getService<PlayerService>('player_service');
     final isPlaying = playerService?.playback.currentState == PlaybackState.playing;
+    final track = await playerService?.getCurrentTrack();
+    
+    // Use system context for l10n if possible, or fallback to English
+    // Note: In a service, we don't have a BuildContext. We can use the current locale or just defaults.
+    // For now, let's keep it simple or use a static translation map if needed.
 
     List<MenuItem> items = [
+      if (track != null) ...[
+        MenuItem(
+          key: 'current_track',
+          label: '${track.name} - ${track.artistNames.join(", ")}',
+          disabled: true,
+        ),
+        MenuItem.separator(),
+      ],
       MenuItem(
         key: 'show_window',
         label: 'Show Window',

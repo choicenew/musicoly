@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar_community/isar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
+import 'package:pyro_music/core/base/interfaces/scrobbler/scrobbler_interface.dart';
 import 'package:pyro_music/core/base/interfaces/player/queue_interface.dart';
 import 'package:pyro_music/features/player/services/queue_service_impl.dart';
 import 'package:pyro_music/features/player/services/playback_service_impl.dart';
@@ -15,6 +16,8 @@ import 'package:pyro_music/core/services/local_scanner_service.dart';
 import 'package:pyro_music/core/services/backup_service.dart';
 import 'package:pyro_music/core/services/equalizer_service.dart';
 import 'package:pyro_music/core/services/desktop_service.dart';
+import 'package:pyro_music/core/services/scrobbler_manager.dart';
+import 'package:pyro_music/features/scrobbler/plugins/lastfm_scrobbler.dart';
 import 'package:pyro_music/features/stats/services/play_stats_service_impl.dart';
 import 'package:pyro_music/core/base/services/stats_service.dart';
 import 'package:metadata_god/metadata_god.dart';
@@ -140,6 +143,18 @@ class ServiceInitializer {
       () => PlayStatsServiceImpl(),
     );
 
+    // 4.12 注册 Scrobbler 管理器
+    registry.registerServiceFactory<ScrobblerManager>(
+      'scrobbler_manager',
+      () => ScrobblerManager(),
+    );
+
+    // 4.13 注册 Scrobbler 插件 (将来可动态加载)
+    registry.registerPlatformService<ScrobblerPlugin>(
+      'lastfm',
+      () => LastfmScrobbler(),
+    );
+
     // 5. 启动基础服务
     final playerService = registry.getService<PlayerService>('player_service');
     if (playerService != null) {
@@ -156,6 +171,12 @@ class ServiceInitializer {
     final statsService = registry.getService<StatsService>('play_stats_service');
     if (statsService != null) {
       await statsService.initialize();
+    }
+
+    // 初始化 Scrobbler 管理器
+    final scrobblerManager = registry.getService<ScrobblerManager>('scrobbler_manager');
+    if (scrobblerManager != null) {
+      await scrobblerManager.initialize();
     }
 
     debugPrint('核心服务初始化完成 (Pure Core)');

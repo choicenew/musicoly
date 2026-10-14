@@ -301,6 +301,11 @@ class PlaybackServiceImpl extends PlayerService {
   Future<void> seekTo(Duration position) async => await _player.seek(position);
 
   @override
+  Future<void> seek(Duration position) async {
+    await _player.seek(position);
+  }
+
+  @override
   Future<void> next() async {
     if (_player.hasNext) {
       await _player.seekToNext();
@@ -596,6 +601,9 @@ class _PlaybackInterfaceWrapper implements PlaybackInterface {
 
   @override
   Stream<Duration> get positionStream => _service._positionController.stream;
+
+  @override
+  Duration get position => _service.position;
 
   @override
   Stream<Duration> get bufferedPositionStream => _service._bufferedPositionController.stream;

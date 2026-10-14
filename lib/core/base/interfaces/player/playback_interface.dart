@@ -43,6 +43,9 @@ abstract class PlaybackInterface {
 
   /// Get the current total duration
   Duration get duration;
+
+  /// Get the current playback position
+  Duration get position;
 }
 
 /// Enum representing the current state of playback

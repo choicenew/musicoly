@@ -58,6 +58,13 @@ class PlayerStateNotifier extends _$PlayerStateNotifier {
     return const PlayerState();
   }
 
+  /// 刷新当前曲目信息
+  Future<void> refreshCurrentTrack() async {
+    if (state.currentTrackId != null) {
+      await _updateCurrentTrack(state.currentTrackId);
+    }
+  }
+
   /// 更新当前曲目信息
   Future<void> _updateCurrentTrack(String? trackId) async {
     if (trackId == null) {

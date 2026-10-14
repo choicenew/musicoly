@@ -11,7 +11,11 @@ import 'package:pyro_music/core/storage/isar/entities/playlist_entity.dart';
 import 'package:pyro_music/core/storage/isar/entities/lyrics_entity.dart';
 import 'package:pyro_music/core/init/service_initializer.dart';
 import 'package:pyro_music/core/services/pyro_audio_handler.dart';
+import 'package:pyro_music/presentation/widgets/keyboard_shortcuts_handler.dart';
+import 'package:pyro_music/core/services/scrobbler_manager.dart';
+import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:audio_service/audio_service.dart';
+import 'package:app_links/app_links.dart';
 
 late AudioHandler audioHandler;
 
@@ -31,6 +35,13 @@ void main() async {
 
   // 初始化核心服务
   await ServiceInitializer.initialize(isar);
+
+  // 处理深层链接
+  final appLinks = AppLinks();
+  appLinks.uriLinkStream.listen((uri) {
+    final scrobblerManager = ServiceRegistry().getService<ScrobblerManager>('scrobbler_manager');
+    scrobblerManager?.handleDeepLink(uri);
+  });
 
   // 初始化 AudioService
   audioHandler = await AudioService.init(
@@ -84,6 +95,9 @@ class PyroMusicApp extends ConsumerWidget {
           locale: prefs.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           routerConfig: router,
+          builder: (context, child) {
+            return KeyboardShortcutsHandler(child: child!);
+          },
         );
       },
       loading: () => const MaterialApp(

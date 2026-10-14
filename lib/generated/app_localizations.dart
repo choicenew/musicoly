@@ -596,6 +596,18 @@ abstract class AppLocalizations {
   /// **'Time'**
   String get time;
 
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
   /// No description provided for @more_actions.
   ///
   /// In en, this message translates to:
@@ -701,7 +713,7 @@ abstract class AppLocalizations {
   /// No description provided for @add_to_playlist.
   ///
   /// In en, this message translates to:
-  /// **'Add to playlist'**
+  /// **'Add to Playlist'**
   String get add_to_playlist;
 
   /// No description provided for @remove_from_playlist.
@@ -1292,6 +1304,60 @@ abstract class AppLocalizations {
   /// **'Blacklisted tracks and artists'**
   String get blacklist_description;
 
+  /// No description provided for @equalizer.
+  ///
+  /// In en, this message translates to:
+  /// **'Equalizer'**
+  String get equalizer;
+
+  /// No description provided for @sleep_timer.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep Timer'**
+  String get sleep_timer;
+
+  /// No description provided for @minutes_remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} minutes remaining'**
+  String minutes_remaining(Object minutes);
+
+  /// No description provided for @go_to_album.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Album'**
+  String get go_to_album;
+
+  /// No description provided for @go_to_artist.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Artist'**
+  String get go_to_artist;
+
+  /// No description provided for @connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// No description provided for @not_connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected'**
+  String get not_connected;
+
+  /// No description provided for @scrobbler.
+  ///
+  /// In en, this message translates to:
+  /// **'Scrobbler'**
+  String get scrobbler;
+
+  /// No description provided for @lastfm_scrobbler.
+  ///
+  /// In en, this message translates to:
+  /// **'Last.fm Scrobbler'**
+  String get lastfm_scrobbler;
+
   /// No description provided for @wait_for_download_to_finish.
   ///
   /// In en, this message translates to:
@@ -1748,29 +1814,17 @@ abstract class AppLocalizations {
   /// **'Scan Completed'**
   String get scan_completed;
 
-  /// No description provided for @equalizer.
-  ///
-  /// In en, this message translates to:
-  /// **'Equalizer'**
-  String get equalizer;
-
   /// No description provided for @enable_equalizer.
   ///
   /// In en, this message translates to:
   /// **'Enable Equalizer'**
   String get enable_equalizer;
 
-  /// No description provided for @sleep_timer.
-  ///
-  /// In en, this message translates to:
-  /// **'Sleep Timer'**
-  String get sleep_timer;
-
   /// No description provided for @minutes.
   ///
   /// In en, this message translates to:
-  /// **'{count} minutes'**
-  String minutes(num count);
+  /// **'minutes'**
+  String get minutes;
 
   /// No description provided for @sleep_timer_description.
   ///
@@ -1783,6 +1837,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounts'**
   String get accounts;
+
+  /// No description provided for @track_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Details'**
+  String get track_details;
+
+  /// No description provided for @cancel_timer.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Timer'**
+  String get cancel_timer;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @scrobbler_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your playback history to external services'**
+  String get scrobbler_description;
+
+  /// No description provided for @enable_scrobbler.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Scrobbler'**
+  String get enable_scrobbler;
+
+  /// No description provided for @lastfm_scrobbler_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your listening history to Last.fm'**
+  String get lastfm_scrobbler_description;
 
   /// No description provided for @backup_restore.
   ///
@@ -2108,12 +2198,6 @@ abstract class AppLocalizations {
   /// **'Line Spacing'**
   String get line_spacing;
 
-  /// No description provided for @ok.
-  ///
-  /// In en, this message translates to:
-  /// **'OK'**
-  String get ok;
-
   /// No description provided for @playlist_not_found.
   ///
   /// In en, this message translates to:
@@ -2276,12 +2360,6 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get password;
 
-  /// No description provided for @login.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
   /// No description provided for @recently_played.
   ///
   /// In en, this message translates to:
@@ -2395,6 +2473,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No recommended artists'**
   String get no_recommended_artists;
+
+  /// No description provided for @lastfm_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Last.fm Settings'**
+  String get lastfm_settings;
+
+  /// No description provided for @enable_lastfm_scrobbling.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Last.fm Scrobbling'**
+  String get enable_lastfm_scrobbling;
+
+  /// No description provided for @added_to_playlist_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to {playlist}'**
+  String added_to_playlist_success(Object playlist);
+
+  /// No description provided for @added_to_playlist_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add to playlist'**
+  String get added_to_playlist_error;
 }
 
 class _AppLocalizationsDelegate

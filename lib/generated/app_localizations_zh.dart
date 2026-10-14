@@ -124,7 +124,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
-  String get none => 'None';
+  String get none => '无';
 
   @override
   String get sort_a_z => 'Sort by A-Z';
@@ -223,7 +223,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get artist => 'Artist';
+  String get artist => '艺人';
 
   @override
   String get blacklisted => 'Blacklisted';
@@ -266,10 +266,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get title => 'Title';
+  String get title => '标题';
 
   @override
   String get time => 'Time';
+
+  @override
+  String get duration => '时长';
+
+  @override
+  String get ok => '确定';
 
   @override
   String get more_actions => 'More actions';
@@ -295,7 +301,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get album => 'Album';
+  String get album => '专辑';
 
   @override
   String copied_to_clipboard(Object data) {
@@ -341,7 +347,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get save_as_favorite => 'Save as favorite';
 
   @override
-  String get add_to_playlist => 'Add to playlist';
+  String get add_to_playlist => '添加到歌单';
 
   @override
   String get remove_from_playlist => 'Remove from playlist';
@@ -436,7 +442,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get connect_with_youtube => 'Connect with Youtube';
 
   @override
-  String get logout => 'Logout';
+  String get logout => '注销';
 
   @override
   String get logout_of_this_account => 'Logout of this account';
@@ -644,6 +650,35 @@ class AppLocalizationsZh extends AppLocalizations {
   String get blacklist_description => 'Blacklisted tracks and artists';
 
   @override
+  String get equalizer => '均衡器';
+
+  @override
+  String get sleep_timer => '睡眠定时器';
+
+  @override
+  String minutes_remaining(Object minutes) {
+    return '剩余 $minutes 分钟';
+  }
+
+  @override
+  String get go_to_album => '转到专辑';
+
+  @override
+  String get go_to_artist => '转到艺人';
+
+  @override
+  String get connected => '已连接';
+
+  @override
+  String get not_connected => '未连接';
+
+  @override
+  String get scrobbler => '音乐记录 (Scrobbler)';
+
+  @override
+  String get lastfm_scrobbler => 'Last.fm 记录';
+
+  @override
   String get wait_for_download_to_finish =>
       'Please wait for the current download to finish';
 
@@ -697,7 +732,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get close_behavior => 'Close Behavior';
 
   @override
-  String get close => 'Close';
+  String get close => '关闭';
 
   @override
   String get show_tray_icon => 'Show System tray icon';
@@ -890,30 +925,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get scan_completed => '扫描完成';
 
   @override
-  String get equalizer => '均衡器';
-
-  @override
   String get enable_equalizer => '启用均衡器';
 
   @override
-  String get sleep_timer => '睡眠定时器';
-
-  @override
-  String minutes(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count 分钟',
-      one: '1 分钟',
-    );
-    return '$_temp0';
-  }
+  String get minutes => '分钟';
 
   @override
   String get sleep_timer_description => '设置定时停止播放音乐';
 
   @override
   String get accounts => '账户';
+
+  @override
+  String get track_details => '歌曲详情';
+
+  @override
+  String get cancel_timer => '取消定时';
+
+  @override
+  String get login => '登录';
+
+  @override
+  String get scrobbler_description => '同步您的播放记录到外部服务';
+
+  @override
+  String get enable_scrobbler => '启用记录';
+
+  @override
+  String get lastfm_scrobbler_description => '将您的听歌记录同步到 Last.fm';
 
   @override
   String get backup_restore => '备份与恢复';
@@ -978,7 +1017,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get cookie_cleared => 'Cookie 已清除';
+  String get cookie_cleared => 'Cookie已清除';
 
   @override
   String clear_failed(Object error) {
@@ -1092,19 +1131,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get cookie_import_success => 'Cookie 导入成功';
+  String get cookie_import_success => 'Cookie导入成功';
 
   @override
-  String get cookie_export_success => 'Cookie 导出成功';
+  String get cookie_export_success => 'Cookie导出成功';
 
   @override
   String get text_size => 'Text Size';
 
   @override
   String get line_spacing => '行间距';
-
-  @override
-  String get ok => '确定';
 
   @override
   String get playlist_not_found => '未找到歌单';
@@ -1124,7 +1160,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get details => 'Details';
+  String get details => '详情';
 
   @override
   String get search_for_music => '搜索音乐';
@@ -1198,9 +1234,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get password => 'Password';
 
   @override
-  String get login => 'Login';
-
-  @override
   String get recently_played => 'Recently Played';
 
   @override
@@ -1260,4 +1293,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get no_recommended_artists => '暂无推荐艺人';
+
+  @override
+  String get lastfm_settings => 'Last.fm 设置';
+
+  @override
+  String get enable_lastfm_scrobbling => '启用 Last.fm 记录';
+
+  @override
+  String added_to_playlist_success(Object playlist) {
+    return '已添加到 $playlist';
+  }
+
+  @override
+  String get added_to_playlist_error => '添加到歌单失败';
 }

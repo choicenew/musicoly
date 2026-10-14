@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +28,7 @@ abstract class UserPreferencesState with _$UserPreferencesState {
     @Default(true) bool minimizeToTray,
     @Default(true) bool mediaKeyControl,
     @Default(true) bool systemNotifications,
+    @Default({}) Map<String, bool> scrobblerEnabledStates,
   }) = _UserPreferencesState;
 
   const UserPreferencesState._();
@@ -60,6 +62,8 @@ class UserPreferences extends _$UserPreferences {
     final minimizeToTray = prefs.getBool('minimizeToTray') ?? true;
     final mediaKeyControl = prefs.getBool('mediaKeyControl') ?? true;
     final systemNotifications = prefs.getBool('systemNotifications') ?? true;
+    final scrobblerStatesJson = prefs.getString('scrobblerEnabledStates') ?? '{}';
+    final scrobblerEnabledStates = Map<String, bool>.from(jsonDecode(scrobblerStatesJson));
 
     return UserPreferencesState(
       themeMode: ThemeMode.values[themeModeIndex],
@@ -77,7 +81,18 @@ class UserPreferences extends _$UserPreferences {
       minimizeToTray: minimizeToTray,
       mediaKeyControl: mediaKeyControl,
       systemNotifications: systemNotifications,
+      scrobblerEnabledStates: scrobblerEnabledStates,
     );
+  }
+
+  Future<void> setScrobblerEnabled(String id, bool enabled) async {
+    state = await AsyncValue.guard(() async {
+      final prefs = await SharedPreferences.getInstance();
+      final currentStates = Map<String, bool>.from(state.requireValue.scrobblerEnabledStates);
+      currentStates[id] = enabled;
+      await prefs.setString('scrobblerEnabledStates', jsonEncode(currentStates));
+      return state.requireValue.copyWith(scrobblerEnabledStates: currentStates);
+    });
   }
 
   Future<void> setThemeMode(ThemeMode mode) async {

@@ -1,4 +1,5 @@
 import 'package:isar_community/isar.dart';
+import 'package:pyro_music/core/base/models/track_model.dart';
 
 part 'track_entity.g.dart';
 
@@ -54,4 +55,25 @@ class TrackEntity {
 
   @Index()
   int totalPlayDuration = 0;
+
+  /// Convert to TrackModel
+  TrackModel toModel() {
+    return TrackModel(
+      id: trackId,
+      name: name,
+      platform: platform,
+      imageUrl: imageUrl,
+      artistIds: artistIds ?? [],
+      artistNames: artistNames ?? [],
+      albumId: albumId,
+      albumName: albumName,
+      durationMs: durationMs,
+      isPlayable: isPlayable,
+      isExplicit: isExplicit,
+      popularity: popularity,
+      previewUrl: previewUrl,
+      localPath: localPath,
+      isFavorite: isFavorite,
+    );
+  }
 }

@@ -56,6 +56,9 @@ abstract class PlayerService extends BaseService
   @override
   Future<void> clearQueue();
 
+  /// Seek to a specific position
+  Future<void> seek(Duration position);
+
   /// Add tracks to play next (after current track)
   Future<void> addTracksNext(List<String> trackIds);
 
