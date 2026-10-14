@@ -5,7 +5,7 @@ enclosed in quotation marks, you should use an editor that supports UTF-8, not t
   <metadata>
     <!-- == PACKAGE SPECIFIC SECTION == -->
     <id>pyro_music</id>
-    <version>%{{SPOTUBE_VERSION}}%</version>
+    <version>%{{MUSICOLY_VERSION}}%</version>
     <packageSourceUrl>https://github.com/KRTirtho/pyro_music/tree/master/choco-struct</packageSourceUrl>
     <owners>Kingkor Roy Tirtho</owners>
     <!-- ============================== -->
@@ -47,7 +47,7 @@ enclosed in quotation marks, you should use an editor that supports UTF-8, not t
       - Time synced lyrics
       - Downloadable tracks
     </description>
-    <releaseNotes>https://github.com/KRTirtho/pyro_music/releases/tag/v%{{SPOTUBE_VERSION}}%</releaseNotes>
+    <releaseNotes>https://github.com/KRTirtho/pyro_music/releases/tag/v%{{MUSICOLY_VERSION}}%</releaseNotes>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />

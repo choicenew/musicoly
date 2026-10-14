@@ -1,6 +1,6 @@
 # Maintainer: Kingkor Roy Tirtho <krtirho@gmail.com>
 pkgname=pyro_music-bin
-pkgver=%{{SPOTUBE_VERSION}}%
+pkgver=%{{MUSICOLY_VERSION}}%
 pkgrel=%{{PKGREL}}%
 epoch=
 pkgdesc="Open source Spotify client that doesn't require Premium nor uses Electron! Available for both desktop & mobile!"

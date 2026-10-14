@@ -48,9 +48,9 @@ class WindowsBuildCommand extends Command with BuildCommandCommonSteps {
     runnerRCFile.writeAsStringSync(
       runnerRCFile
           .readAsStringSync()
-          .replaceAll("%{{SPOTUBE_VERSION}}%", versionWithoutBuildNumber)
+          .replaceAll("%{{MUSICOLY_VERSION}}%", versionWithoutBuildNumber)
           .replaceAll(
-            "%{{SPOTUBE_VERSION_AS_NUMBER}}%",
+            "%{{MUSICOLY_VERSION_AS_NUMBER}}%",
             [
               pubspec.version!.major,
               pubspec.version!.minor,
