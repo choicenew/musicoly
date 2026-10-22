@@ -656,6 +656,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sleep_timer => '睡眠定时器';
 
   @override
+  String get sleep_timer_description => '设置定时停止播放音乐';
+
+  @override
   String minutes_remaining(Object minutes) {
     return '剩余 $minutes 分钟';
   }
@@ -928,179 +931,78 @@ class AppLocalizationsZh extends AppLocalizations {
   String get enable_equalizer => '启用均衡器';
 
   @override
-  String get minutes => '分钟';
-
-  @override
-  String get sleep_timer_description => '设置定时停止播放音乐';
-
-  @override
-  String get accounts => '账户';
-
-  @override
-  String get track_details => '歌曲详情';
+  String minutes(Object count) {
+    return '分钟';
+  }
 
   @override
   String get cancel_timer => '取消定时';
 
   @override
-  String get login => '登录';
+  String get track_details => '歌曲详情';
 
   @override
-  String get scrobbler_description => '同步您的播放记录到外部服务';
+  String added_to_playlist_success(Object playlist) {
+    return '已添加到 $playlist';
+  }
 
   @override
-  String get enable_scrobbler => '启用记录';
+  String get details => '详情';
 
   @override
-  String get lastfm_scrobbler_description => '将您的听歌记录同步到 Last.fm';
+  String get go_back => '返回';
+
+  @override
+  String get release_date => '发行日期';
+
+  @override
+  String get see_all => '查看全部';
+
+  @override
+  String followers_count(Object count) {
+    return '$count 位关注者';
+  }
+
+  @override
+  String get featured_playlists => '精选歌单';
+
+  @override
+  String get no_featured_playlists => '暂无精选歌单';
+
+  @override
+  String welcome_back(Object username) {
+    return '欢迎回来，$username';
+  }
+
+  @override
+  String get good_morning => '早上好';
+
+  @override
+  String get good_afternoon => '下午好';
+
+  @override
+  String get good_evening => '晚上好';
+
+  @override
+  String get recent_tracks => '最近播放';
+
+  @override
+  String get no_recent_tracks => '暂无最近播放';
+
+  @override
+  String get start_listening_hint => '开始听歌以在此显示';
+
+  @override
+  String get recommended_artists => '推荐艺人';
+
+  @override
+  String get no_recommended_artists => '暂无推荐艺人';
+
+  @override
+  String get login_with_lastfm => '使用 Last.fm 登录';
 
   @override
   String get backup_restore => '备份与恢复';
-
-  @override
-  String get developers_options => '开发者选项';
-
-  @override
-  String get cookie_management => 'Cookie管理';
-
-  @override
-  String by_author(Object author) {
-    return '作者: $author';
-  }
-
-  @override
-  String selected_count(Object count) {
-    return '已选择 $count 项';
-  }
-
-  @override
-  String get pause => '暂停';
-
-  @override
-  String get repeat => '重复播放';
-
-  @override
-  String get queue_is_empty => '队列为空';
-
-  @override
-  String get add_tracks_to_get_started => '添加一些歌曲以开始播放';
-
-  @override
-  String queue_count(Object count) {
-    return '$count 首歌曲';
-  }
-
-  @override
-  String get no_tracks => 'No tracks';
-
-  @override
-  String get removed_from_playlist => 'Removed from playlist';
-
-  @override
-  String import_success(Object count) {
-    return '导入成功';
-  }
-
-  @override
-  String import_failed(Object error) {
-    return '导入失败: $error';
-  }
-
-  @override
-  String export_success(Object path) {
-    return 'Successfully exported to $path';
-  }
-
-  @override
-  String export_failed(Object error) {
-    return '导出失败: $error';
-  }
-
-  @override
-  String get cookie_cleared => 'Cookie已清除';
-
-  @override
-  String clear_failed(Object error) {
-    return '清除失败: $error';
-  }
-
-  @override
-  String get clear => '清理';
-
-  @override
-  String get cache_cleared => '缓存清理完成';
-
-  @override
-  String clearing_failed(Object error) {
-    return '清理失败: $error';
-  }
-
-  @override
-  String get api_endpoint_config => 'API端点配置';
-
-  @override
-  String get api_server_address => 'API服务器地址';
-
-  @override
-  String get no_logs_to_export => '没有可导出的日志';
-
-  @override
-  String logs_exported(Object path) {
-    return '日志导出成功';
-  }
-
-  @override
-  String get debug_mode => '调试模式';
-
-  @override
-  String get debug_mode_description => '启用开发者工具和详细日志';
-
-  @override
-  String get verbose_logging => '详细日志';
-
-  @override
-  String get verbose_logging_description => '记录更详细的应用日志';
-
-  @override
-  String get use_default_server => '使用默认服务器';
-
-  @override
-  String get configure => '配置';
-
-  @override
-  String get cache_management => '缓存管理';
-
-  @override
-  String get cache_management_description => '清理应用临时缓存数据';
-
-  @override
-  String logged_in(Object name) {
-    return '已登录: $name';
-  }
-
-  @override
-  String get not_logged_in => '未登录';
-
-  @override
-  String get choose_theme_mode => '选择应用的主题模式';
-
-  @override
-  String get follow_system => '跟随系统';
-
-  @override
-  String get light_mode => '浅色';
-
-  @override
-  String get dark_mode => '深色';
-
-  @override
-  String get amoled_mode => 'AMOLED模式';
-
-  @override
-  String get amoled_mode_description => '使用纯黑背景的深色主题';
-
-  @override
-  String get choose_accent_color => '选择应用的强调色方案';
 
   @override
   String get export_backup => '导出备份';
@@ -1131,74 +1033,145 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get cookie_import_success => 'Cookie导入成功';
+  String get cookie_import_success => 'Cookie 导入成功';
 
   @override
-  String get cookie_export_success => 'Cookie导出成功';
-
-  @override
-  String get text_size => 'Text Size';
-
-  @override
-  String get line_spacing => '行间距';
-
-  @override
-  String get playlist_not_found => '未找到歌单';
-
-  @override
-  String get something_went_wrong => 'Something went wrong';
-
-  @override
-  String get edit_playlist => 'Edit Playlist';
-
-  @override
-  String get delete_playlist => 'Delete Playlist';
-
-  @override
-  String delete_playlist_confirm(Object name) {
-    return 'Are you sure you want to delete the playlist \'$name\'?';
+  String import_failed(Object error) {
+    return '导入失败：$error';
   }
 
   @override
-  String get details => '详情';
+  String get cookie_export_success => 'Cookie 导出成功';
 
   @override
-  String get search_for_music => '搜索音乐';
+  String export_failed(Object error) {
+    return '导出失败：$error';
+  }
 
   @override
-  String get search_hint => '查找你喜欢的歌曲、艺人、专辑和歌单';
+  String get cookie_cleared => 'Cookie 已清除';
 
   @override
-  String get all => '全部';
+  String clear_failed(Object error) {
+    return '清除失败：$error';
+  }
+
+  @override
+  String get clear => '清除';
+
+  @override
+  String get pause => '暂停';
+
+  @override
+  String get repeat => '重复播放';
+
+  @override
+  String get cache_cleared => '缓存已清除';
+
+  @override
+  String clearing_failed(Object error) {
+    return '清除缓存失败：$error';
+  }
+
+  @override
+  String get api_endpoint_config => 'API 端点配置';
+
+  @override
+  String get api_server_address => 'API 服务器地址';
+
+  @override
+  String get no_logs_to_export => '无可导出的日志';
+
+  @override
+  String logs_exported(Object path) {
+    return '日志已导出至 $path';
+  }
+
+  @override
+  String get debug_mode => '调试模式';
+
+  @override
+  String get debug_mode_description => '启用额外诊断日志与 UI 浮层';
+
+  @override
+  String get verbose_logging => '详细日志';
+
+  @override
+  String get verbose_logging_description => '详细记录网络与播放事件';
+
+  @override
+  String get use_default_server => '使用默认服务器';
+
+  @override
+  String get configure => '配置';
+
+  @override
+  String get cache_management => '缓存管理';
+
+  @override
+  String get cache_management_description => '管理磁盘缓存与临时文件';
+
+  @override
+  String get scrobbler_description => '将播放记录同步至外部统计服务';
 
   @override
   String no_results_found(Object query) {
-    return '未找到 \"$query\" 的结果';
+    return '未找到与 \"$query\" 相关的结果';
   }
 
   @override
-  String logged_out(Object platform) {
-    return '$platform 已登出';
+  String get login => '登录';
+
+  @override
+  String get accounts => '账号';
+
+  @override
+  String get developers_options => '开发者选项';
+
+  @override
+  String get cookie_management => 'Cookie 管理';
+
+  @override
+  String by_author(Object author) {
+    return '作者：$author';
   }
 
   @override
-  String logout_failed(Object error) {
-    return '登出失败: $error';
+  String selected_count(Object count) {
+    return '已选择 $count 项';
   }
 
   @override
-  String get account_management => '账户管理';
+  String get queue_is_empty => '队列为空';
 
   @override
-  String logged_in_on(Object name, Object platform) {
-    return 'Logged in as $name on $platform';
+  String get add_tracks_to_get_started => '添加一些歌曲以开始播放';
+
+  @override
+  String queue_count(Object count) {
+    return '$count 首歌曲';
   }
 
   @override
-  String get paste_lrc_here => '粘贴LRC格式歌词...';
+  String get username => '用户名';
+
+  @override
+  String get password => '密码';
+
+  @override
+  String get recently_played => '最近播放';
+
+  @override
+  String get paste_lrc_here => '在此粘贴 LRC 歌词...';
 
   @override
   String get lyrics_content_cannot_be_empty => '歌词内容不能为空';
+
+  @override
+  String get lyrics_imported_successfully => '歌词导入成功';
+
+  @override
+  String get failed_to_import_lyrics => '导入歌词失败';
 
   @override
   String get input_search_keywords => '输入搜索关键词...';
@@ -1207,7 +1180,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get search_keywords_cannot_be_empty => '搜索关键词不能为空';
 
   @override
-  String get no_lyrics_found => '未找到匹配的歌词';
+  String get no_lyrics_found => '未找到歌词';
 
   @override
   String get search_results => '搜索结果';
@@ -1228,83 +1201,79 @@ class AppLocalizationsZh extends AppLocalizations {
   String get font_size => '字体大小';
 
   @override
-  String get username => 'Username';
+  String get line_spacing => '行间距';
 
   @override
-  String get password => 'Password';
+  String get no_tracks => '暂无歌曲';
 
   @override
-  String get recently_played => 'Recently Played';
+  String get playlist_not_found => '未找到歌单';
 
   @override
-  String get lyrics_imported_successfully => 'Lyrics imported successfully';
+  String get something_went_wrong => '出错了';
 
   @override
-  String get failed_to_import_lyrics => 'Failed to import lyrics';
+  String get edit_playlist => '编辑歌单';
 
   @override
-  String get recent_tracks => '最近播放';
+  String get delete_playlist => '删除歌单';
 
   @override
-  String get see_all => '查看全部';
-
-  @override
-  String get no_recent_tracks => '暂无最近播放记录';
-
-  @override
-  String get start_listening_hint => '开始听歌以在此处查看历史记录';
-
-  @override
-  String get login_with_lastfm => '使用 Last.fm 登录';
-
-  @override
-  String get go_back => '返回';
-
-  @override
-  String get release_date => '发行日期';
-
-  @override
-  String followers_count(Object count) {
-    return '$count 位关注者';
+  String delete_playlist_confirm(Object name) {
+    return '确定要删除 $name 吗？';
   }
 
   @override
-  String get featured_playlists => '推荐歌单';
+  String get removed_from_playlist => '已从歌单移除';
 
   @override
-  String get no_featured_playlists => '暂无推荐歌单';
+  String get search_for_music => '搜索歌曲、艺人、专辑...';
 
   @override
-  String welcome_back(Object name) {
-    return '欢迎回来, $name';
+  String get search_hint => '输入关键词搜索';
+
+  @override
+  String get all => '全部';
+
+  @override
+  String logged_out(Object platform) {
+    return '已从 $platform 退出登录';
   }
 
   @override
-  String get good_morning => '早上好';
-
-  @override
-  String get good_afternoon => '下午好';
-
-  @override
-  String get good_evening => '晚上好';
-
-  @override
-  String get recommended_artists => '推荐艺人';
-
-  @override
-  String get no_recommended_artists => '暂无推荐艺人';
-
-  @override
-  String get lastfm_settings => 'Last.fm 设置';
-
-  @override
-  String get enable_lastfm_scrobbling => '启用 Last.fm 记录';
-
-  @override
-  String added_to_playlist_success(Object playlist) {
-    return '已添加到 $playlist';
+  String logout_failed(Object error) {
+    return '退出登录失败：$error';
   }
 
   @override
-  String get added_to_playlist_error => '添加到歌单失败';
+  String get account_management => '账号管理';
+
+  @override
+  String logged_in(Object name) {
+    return '已登录为 $name';
+  }
+
+  @override
+  String get not_logged_in => '未登录';
+
+  @override
+  String get choose_theme_mode => '选择主题模式';
+
+  @override
+  String get follow_system => '跟随系统';
+
+  @override
+  String get light_mode => '浅色模式';
+
+  @override
+  String get dark_mode => '深色模式';
+
+  @override
+  String get amoled_mode => 'AMOLED 纯黑';
+
+  @override
+  String get amoled_mode_description => '为 OLED/AMOLED 屏幕使用纯黑背景';
+
+  @override
+  String get choose_accent_color => '选择强调色';
 }

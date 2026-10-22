@@ -1,16 +1,13 @@
 import 'package:flutter/foundation.dart';
+import '../interfaces/media/media_interface.dart';
 import '../interfaces/media/playlist_interface.dart';
 import 'media_model.dart';
 
 /// Model class for playlists
 ///
-/// Implements the PlaylistInterface and extends MediaModel
+/// Implements PlaylistInterface and extends MediaModel
 @immutable
 class PlaylistModel extends MediaModel implements PlaylistInterface {
-  /// Description of the playlist
-  @override
-  final String? description;
-
   @override
   final String? ownerId;
 
@@ -35,7 +32,9 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
     required super.platform,
     required super.name,
     super.imageUrl,
-    this.description,
+    super.mediaType = MediaType.playlist,
+    super.description,
+    super.tags,
     this.ownerId,
     this.ownerName,
     this.isPublic = true,
@@ -47,7 +46,6 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        'description': description,
         'ownerId': ownerId,
         'ownerName': ownerName,
         'isPublic': isPublic,
@@ -62,7 +60,9 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
     String? description,
+    List<String>? tags,
     String? ownerId,
     String? ownerName,
     bool? isPublic,
@@ -75,7 +75,9 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
       platform: platform ?? this.platform,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
+      mediaType: mediaType ?? this.mediaType,
       description: description ?? this.description,
+      tags: tags ?? this.tags,
       ownerId: ownerId ?? this.ownerId,
       ownerName: ownerName ?? this.ownerName,
       isPublic: isPublic ?? this.isPublic,
@@ -91,7 +93,6 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
       super == other &&
           other is PlaylistModel &&
           runtimeType == other.runtimeType &&
-          description == other.description &&
           ownerId == other.ownerId &&
           ownerName == other.ownerName &&
           isPublic == other.isPublic &&
@@ -101,7 +102,6 @@ class PlaylistModel extends MediaModel implements PlaylistInterface {
   @override
   int get hashCode =>
       super.hashCode ^
-      description.hashCode ^
       ownerId.hashCode ^
       ownerName.hashCode ^
       isPublic.hashCode ^

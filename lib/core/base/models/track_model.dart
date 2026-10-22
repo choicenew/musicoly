@@ -1,65 +1,70 @@
 import 'package:flutter/foundation.dart';
+import '../interfaces/media/media_interface.dart';
 import '../interfaces/media/track_interface.dart';
 import 'media_model.dart';
 
-/// Model class for tracks
+/// Model class for music tracks, podcast episodes, and custom audio items
 ///
-/// Implements the TrackInterface and extends MediaModel
+/// Implements TrackInterface and extends MediaModel
 @immutable
 class TrackModel extends MediaModel implements TrackInterface {
-  /// List of artist IDs associated with this track
   @override
   final List<String> artistIds;
 
-  /// List of artist names associated with this track
   @override
   final List<String> artistNames;
 
-  /// Album ID this track belongs to
   @override
   final String? albumId;
 
-  /// Album name this track belongs to
   @override
   final String? albumName;
 
-  /// Duration of the track in milliseconds
   @override
   final int durationMs;
 
-  /// Whether this track is playable
   @override
   final bool isPlayable;
 
-  /// Track number in the album
   @override
   final int? trackNumber;
 
-  /// Disc number in the album
   @override
   final int? discNumber;
 
-  /// Popularity score (0-100)
+  @override
+  final int? episodeNumber;
+
+  @override
+  final int? seasonNumber;
+
+  @override
+  final DateTime? publishDate;
+
   @override
   final int? popularity;
 
-  /// Whether this track is explicit
   @override
   final bool isExplicit;
 
-  /// Preview URL for the track (if available)
   @override
   final String? previewUrl;
 
-  /// Local file path (if available)
+  @override
+  final String? audioStreamUrl;
+
+  @override
+  final String? mimeType;
+
   @override
   final String? localPath;
 
-  /// Whether this track is marked as favorite
   @override
   final bool isFavorite;
 
-  /// Platform-specific metadata
+  @override
+  final String? lyrics;
+
   @override
   final Map<String, dynamic> platformMetadata;
 
@@ -69,6 +74,9 @@ class TrackModel extends MediaModel implements TrackInterface {
     required super.platform,
     required super.name,
     super.imageUrl,
+    super.mediaType = MediaType.musicTrack,
+    super.description,
+    super.tags,
     required this.artistIds,
     required this.artistNames,
     this.albumId,
@@ -77,11 +85,17 @@ class TrackModel extends MediaModel implements TrackInterface {
     this.isPlayable = true,
     this.trackNumber,
     this.discNumber,
+    this.episodeNumber,
+    this.seasonNumber,
+    this.publishDate,
     this.popularity,
     this.isExplicit = false,
     this.previewUrl,
+    this.audioStreamUrl,
+    this.mimeType,
     this.localPath,
     this.isFavorite = false,
+    this.lyrics,
     this.platformMetadata = const {},
   });
 
@@ -96,11 +110,17 @@ class TrackModel extends MediaModel implements TrackInterface {
         'isPlayable': isPlayable,
         'trackNumber': trackNumber,
         'discNumber': discNumber,
+        'episodeNumber': episodeNumber,
+        'seasonNumber': seasonNumber,
+        'publishDate': publishDate?.toIso8601String(),
         'popularity': popularity,
         'isExplicit': isExplicit,
         'previewUrl': previewUrl,
+        'audioStreamUrl': audioStreamUrl,
+        'mimeType': mimeType,
         'localPath': localPath,
         'isFavorite': isFavorite,
+        'lyrics': lyrics,
         'platformMetadata': platformMetadata,
       };
 
@@ -110,6 +130,9 @@ class TrackModel extends MediaModel implements TrackInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
+    String? description,
+    List<String>? tags,
     List<String>? artistIds,
     List<String>? artistNames,
     String? albumId,
@@ -118,10 +141,17 @@ class TrackModel extends MediaModel implements TrackInterface {
     bool? isPlayable,
     int? trackNumber,
     int? discNumber,
+    int? episodeNumber,
+    int? seasonNumber,
+    DateTime? publishDate,
     int? popularity,
     bool? isExplicit,
     String? previewUrl,
+    String? audioStreamUrl,
+    String? mimeType,
     String? localPath,
+    bool? isFavorite,
+    String? lyrics,
     Map<String, dynamic>? platformMetadata,
   }) {
     return TrackModel(
@@ -129,6 +159,9 @@ class TrackModel extends MediaModel implements TrackInterface {
       platform: platform ?? this.platform,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
+      mediaType: mediaType ?? this.mediaType,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
       artistIds: artistIds ?? this.artistIds,
       artistNames: artistNames ?? this.artistNames,
       albumId: albumId ?? this.albumId,
@@ -137,10 +170,17 @@ class TrackModel extends MediaModel implements TrackInterface {
       isPlayable: isPlayable ?? this.isPlayable,
       trackNumber: trackNumber ?? this.trackNumber,
       discNumber: discNumber ?? this.discNumber,
+      episodeNumber: episodeNumber ?? this.episodeNumber,
+      seasonNumber: seasonNumber ?? this.seasonNumber,
+      publishDate: publishDate ?? this.publishDate,
       popularity: popularity ?? this.popularity,
       isExplicit: isExplicit ?? this.isExplicit,
       previewUrl: previewUrl ?? this.previewUrl,
+      audioStreamUrl: audioStreamUrl ?? this.audioStreamUrl,
+      mimeType: mimeType ?? this.mimeType,
       localPath: localPath ?? this.localPath,
+      isFavorite: isFavorite ?? this.isFavorite,
+      lyrics: lyrics ?? this.lyrics,
       platformMetadata: platformMetadata ?? this.platformMetadata,
     );
   }
@@ -154,6 +194,9 @@ class TrackModel extends MediaModel implements TrackInterface {
       platform: interface.platform,
       name: interface.name,
       imageUrl: interface.imageUrl,
+      mediaType: interface.mediaType,
+      description: interface.description,
+      tags: interface.tags,
       artistIds: interface.artistIds,
       artistNames: interface.artistNames,
       albumId: interface.albumId,
@@ -162,10 +205,17 @@ class TrackModel extends MediaModel implements TrackInterface {
       isPlayable: interface.isPlayable,
       trackNumber: interface.trackNumber,
       discNumber: interface.discNumber,
+      episodeNumber: interface.episodeNumber,
+      seasonNumber: interface.seasonNumber,
+      publishDate: interface.publishDate,
       popularity: interface.popularity,
       isExplicit: interface.isExplicit,
       previewUrl: interface.previewUrl,
+      audioStreamUrl: interface.audioStreamUrl,
+      mimeType: interface.mimeType,
       localPath: interface.localPath,
+      isFavorite: interface.isFavorite,
+      lyrics: interface.lyrics,
       platformMetadata: interface.platformMetadata,
     );
   }
@@ -184,9 +234,17 @@ class TrackModel extends MediaModel implements TrackInterface {
           isPlayable == other.isPlayable &&
           trackNumber == other.trackNumber &&
           discNumber == other.discNumber &&
+          episodeNumber == other.episodeNumber &&
+          seasonNumber == other.seasonNumber &&
+          publishDate == other.publishDate &&
           popularity == other.popularity &&
           isExplicit == other.isExplicit &&
-          previewUrl == other.previewUrl;
+          previewUrl == other.previewUrl &&
+          audioStreamUrl == other.audioStreamUrl &&
+          mimeType == other.mimeType &&
+          localPath == other.localPath &&
+          isFavorite == other.isFavorite &&
+          lyrics == other.lyrics;
 
   @override
   int get hashCode =>
@@ -199,7 +257,15 @@ class TrackModel extends MediaModel implements TrackInterface {
       isPlayable.hashCode ^
       trackNumber.hashCode ^
       discNumber.hashCode ^
+      episodeNumber.hashCode ^
+      seasonNumber.hashCode ^
+      publishDate.hashCode ^
       popularity.hashCode ^
       isExplicit.hashCode ^
-      previewUrl.hashCode;
+      previewUrl.hashCode ^
+      audioStreamUrl.hashCode ^
+      mimeType.hashCode ^
+      localPath.hashCode ^
+      isFavorite.hashCode ^
+      lyrics.hashCode;
 }

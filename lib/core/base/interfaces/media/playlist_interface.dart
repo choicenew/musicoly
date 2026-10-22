@@ -7,6 +7,7 @@ import 'media_interface.dart';
 @immutable
 abstract class PlaylistInterface extends MediaInterface {
   /// Description of the playlist
+  @override
   String? get description;
 
   /// Owner ID of the playlist

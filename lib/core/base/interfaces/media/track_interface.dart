@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'media_interface.dart';
 
-/// Interface for track media type
+/// Interface for audio track / podcast episode / media item
 ///
-/// Defines the properties and methods specific to music tracks
+/// Defines properties for music tracks, podcast episodes, audiobook chapters, etc.
 @immutable
 abstract class TrackInterface extends MediaInterface {
-  /// List of artist IDs associated with this track
+  /// List of artist / creator / host IDs associated with this track/episode
   List<String> get artistIds;
 
-  /// List of artist names associated with this track
+  /// List of artist / creator / host names associated with this track/episode
   List<String> get artistNames;
 
-  /// Album ID this track belongs to
+  /// Album or podcast show ID this track belongs to
   String? get albumId;
 
-  /// Album name this track belongs to
+  /// Album or podcast show name this track belongs to
   String? get albumName;
 
   /// Duration of the track in milliseconds
@@ -24,11 +24,20 @@ abstract class TrackInterface extends MediaInterface {
   /// Whether this track is playable
   bool get isPlayable;
 
-  /// Track number in the album
+  /// Track number in the album or episode number in a podcast
   int? get trackNumber;
 
-  /// Disc number in the album
+  /// Disc number or season number
   int? get discNumber;
+
+  /// Podcast episode number
+  int? get episodeNumber;
+
+  /// Podcast season number
+  int? get seasonNumber;
+
+  /// Release date or podcast publication date
+  DateTime? get publishDate;
 
   /// Popularity score (0-100)
   int? get popularity;
@@ -36,14 +45,23 @@ abstract class TrackInterface extends MediaInterface {
   /// Whether this track is explicit
   bool get isExplicit;
 
-  /// Preview URL for the track (if available)
+  /// Preview URL for the track
   String? get previewUrl;
 
-  /// Local file path (if available)
+  /// Direct audio stream URL (for podcasts/remote audio)
+  String? get audioStreamUrl;
+
+  /// Audio MIME type (e.g. "audio/mpeg")
+  String? get mimeType;
+
+  /// Local file path (if downloaded/cached)
   String? get localPath;
 
   /// Whether this track is marked as favorite
   bool get isFavorite;
+
+  /// Lyrics or episode transcript
+  String? get lyrics;
 
   /// Platform-specific metadata
   Map<String, dynamic> get platformMetadata;

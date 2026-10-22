@@ -14,12 +14,24 @@ abstract class MediaModel extends BaseModel implements MediaInterface {
   @override
   final String? imageUrl;
 
+  @override
+  final MediaType mediaType;
+
+  @override
+  final String? description;
+
+  @override
+  final List<String>? tags;
+
   /// Create a new media model
   const MediaModel({
     required super.id,
     required super.platform,
     required this.name,
     this.imageUrl,
+    this.mediaType = MediaType.musicTrack,
+    this.description,
+    this.tags,
   });
 
   @override
@@ -27,6 +39,9 @@ abstract class MediaModel extends BaseModel implements MediaInterface {
         ...super.toJson(),
         'name': name,
         'imageUrl': imageUrl,
+        'mediaType': mediaType.name,
+        'description': description,
+        'tags': tags,
       };
 
   @override
@@ -35,6 +50,9 @@ abstract class MediaModel extends BaseModel implements MediaInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
+    String? description,
+    List<String>? tags,
   });
 
   @override
@@ -44,8 +62,17 @@ abstract class MediaModel extends BaseModel implements MediaInterface {
           other is MediaModel &&
           runtimeType == other.runtimeType &&
           name == other.name &&
-          imageUrl == other.imageUrl;
+          imageUrl == other.imageUrl &&
+          mediaType == other.mediaType &&
+          description == other.description &&
+          listEquals(tags, other.tags);
 
   @override
-  int get hashCode => super.hashCode ^ name.hashCode ^ imageUrl.hashCode;
+  int get hashCode =>
+      super.hashCode ^
+      name.hashCode ^
+      imageUrl.hashCode ^
+      mediaType.hashCode ^
+      description.hashCode ^
+      tags.hashCode;
 }

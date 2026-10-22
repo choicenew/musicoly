@@ -16,6 +16,7 @@ abstract class ArtistInterface extends MediaInterface {
   int? get followersCount;
 
   /// Artist description or biography
+  @override
   String? get description;
 
   /// Platform-specific metadata

@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import '../interfaces/media/artist_interface.dart';
+import '../interfaces/media/media_interface.dart';
 import 'media_model.dart';
 
-/// Model class for artists
+/// Model class for artists, podcast hosts, creators
 ///
-/// Implements the ArtistInterface and extends MediaModel
+/// Implements ArtistInterface and extends MediaModel
 @immutable
 class ArtistModel extends MediaModel implements ArtistInterface {
-  /// Genres associated with this artist
   @override
   final List<String>? genres;
 
@@ -18,9 +18,6 @@ class ArtistModel extends MediaModel implements ArtistInterface {
   final int? followersCount;
 
   @override
-  final String? description;
-
-  @override
   final Map<String, dynamic> platformMetadata;
 
   /// Create a new artist model
@@ -29,10 +26,12 @@ class ArtistModel extends MediaModel implements ArtistInterface {
     required super.platform,
     required super.name,
     super.imageUrl,
+    super.mediaType = MediaType.artist,
+    super.description,
+    super.tags,
     this.genres,
     this.popularity,
     this.followersCount,
-    this.description,
     this.platformMetadata = const {},
   });
 
@@ -42,7 +41,6 @@ class ArtistModel extends MediaModel implements ArtistInterface {
         'genres': genres,
         'popularity': popularity,
         'followersCount': followersCount,
-        'description': description,
         'platformMetadata': platformMetadata,
       };
 
@@ -52,10 +50,12 @@ class ArtistModel extends MediaModel implements ArtistInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
+    String? description,
+    List<String>? tags,
     List<String>? genres,
     int? popularity,
     int? followersCount,
-    String? description,
     Map<String, dynamic>? platformMetadata,
   }) {
     return ArtistModel(
@@ -63,10 +63,12 @@ class ArtistModel extends MediaModel implements ArtistInterface {
       platform: platform ?? this.platform,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
+      mediaType: mediaType ?? this.mediaType,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
       genres: genres ?? this.genres,
       popularity: popularity ?? this.popularity,
       followersCount: followersCount ?? this.followersCount,
-      description: description ?? this.description,
       platformMetadata: platformMetadata ?? this.platformMetadata,
     );
   }
@@ -77,16 +79,14 @@ class ArtistModel extends MediaModel implements ArtistInterface {
       super == other &&
           other is ArtistModel &&
           runtimeType == other.runtimeType &&
-          genres == other.genres &&
+          listEquals(genres, other.genres) &&
           popularity == other.popularity &&
-          followersCount == other.followersCount &&
-          description == other.description;
+          followersCount == other.followersCount;
 
   @override
   int get hashCode =>
       super.hashCode ^
       genres.hashCode ^
       popularity.hashCode ^
-      followersCount.hashCode ^
-      description.hashCode;
+      followersCount.hashCode;
 }

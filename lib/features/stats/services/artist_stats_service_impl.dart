@@ -1,4 +1,5 @@
 import 'package:pyro_music/core/base/interfaces/media/artist_interface.dart';
+import 'package:pyro_music/core/base/interfaces/media/media_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/stats/artist_stats_interface.dart';
 import 'package:pyro_music/core/base/interfaces/stats/play_stats_interface.dart';
@@ -191,6 +192,12 @@ class SimpleArtistModel implements ArtistInterface {
 
   @override
   String get platform => 'default';
+
+  @override
+  MediaType get mediaType => MediaType.artist;
+
+  @override
+  List<String>? get tags => null;
 
   @override
   final Map<String, dynamic> platformMetadata = {};

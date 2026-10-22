@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide RepeatMode;
 import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
@@ -60,37 +60,24 @@ class PlayerControls extends StatelessWidget {
           tooltip: l10n.shuffle,
         ),
 
-        // Previous track button
+        // Previous button
         IconButton(
           icon: const Icon(Icons.skip_previous),
-          iconSize: 40,
           onPressed: onPrevious,
           tooltip: l10n.previous,
         ),
 
         // Play/Pause button
-        Container(
-          width: 64,
-          height: 64,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: primaryColor,
-          ),
-          child: IconButton(
-            icon: Icon(
-              isPlaying ? Icons.pause : Icons.play_arrow,
-              color: Colors.white,
-            ),
-            iconSize: 32,
-            onPressed: onPlayPause,
-            tooltip: isPlaying ? l10n.pause : l10n.play,
+        FloatingActionButton(
+          onPressed: onPlayPause,
+          child: Icon(
+            isPlaying ? Icons.pause : Icons.play_arrow,
           ),
         ),
 
-        // Next track button
+        // Next button
         IconButton(
           icon: const Icon(Icons.skip_next),
-          iconSize: 40,
           onPressed: onNext,
           tooltip: l10n.next,
         ),

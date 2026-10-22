@@ -1,41 +1,40 @@
 import 'package:flutter/foundation.dart';
 import '../interfaces/media/album_interface.dart';
+import '../interfaces/media/media_interface.dart';
 import 'media_model.dart';
 
-/// Model class for albums
+/// Model class for albums, podcast shows, or audiobooks
 ///
-/// Implements the AlbumInterface and extends MediaModel
+/// Implements AlbumInterface and extends MediaModel
 @immutable
 class AlbumModel extends MediaModel implements AlbumInterface {
-  /// List of artist IDs associated with this album
   @override
   final List<String> artistIds;
 
-  /// List of artist names associated with this album
   @override
   final List<String> artistNames;
 
-  /// Release date of the album
   @override
   final DateTime? releaseDate;
 
-  /// Total number of tracks in the album
   @override
   final int totalTracks;
 
-  /// Album type (album, single, compilation, etc.)
   @override
   final String? albumType;
 
-  /// Genres associated with this album
+  @override
+  final String? publisher;
+
+  @override
+  final String? feedUrl;
+
   @override
   final List<String>? genres;
 
-  /// Popularity score (0-100)
   @override
   final int? popularity;
 
-  /// Platform-specific metadata
   @override
   final Map<String, dynamic> platformMetadata;
 
@@ -45,11 +44,16 @@ class AlbumModel extends MediaModel implements AlbumInterface {
     required super.platform,
     required super.name,
     super.imageUrl,
+    super.mediaType = MediaType.album,
+    super.description,
+    super.tags,
     required this.artistIds,
     required this.artistNames,
     this.releaseDate,
     required this.totalTracks,
     this.albumType,
+    this.publisher,
+    this.feedUrl,
     this.genres,
     this.popularity,
     this.platformMetadata = const {},
@@ -63,6 +67,8 @@ class AlbumModel extends MediaModel implements AlbumInterface {
         'releaseDate': releaseDate?.toIso8601String(),
         'totalTracks': totalTracks,
         'albumType': albumType,
+        'publisher': publisher,
+        'feedUrl': feedUrl,
         'genres': genres,
         'popularity': popularity,
         'platformMetadata': platformMetadata,
@@ -74,11 +80,16 @@ class AlbumModel extends MediaModel implements AlbumInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
+    String? description,
+    List<String>? tags,
     List<String>? artistIds,
     List<String>? artistNames,
     DateTime? releaseDate,
     int? totalTracks,
     String? albumType,
+    String? publisher,
+    String? feedUrl,
     List<String>? genres,
     int? popularity,
     Map<String, dynamic>? platformMetadata,
@@ -88,11 +99,16 @@ class AlbumModel extends MediaModel implements AlbumInterface {
       platform: platform ?? this.platform,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
+      mediaType: mediaType ?? this.mediaType,
+      description: description ?? this.description,
+      tags: tags ?? this.tags,
       artistIds: artistIds ?? this.artistIds,
       artistNames: artistNames ?? this.artistNames,
       releaseDate: releaseDate ?? this.releaseDate,
       totalTracks: totalTracks ?? this.totalTracks,
       albumType: albumType ?? this.albumType,
+      publisher: publisher ?? this.publisher,
+      feedUrl: feedUrl ?? this.feedUrl,
       genres: genres ?? this.genres,
       popularity: popularity ?? this.popularity,
       platformMetadata: platformMetadata ?? this.platformMetadata,
@@ -110,7 +126,9 @@ class AlbumModel extends MediaModel implements AlbumInterface {
           releaseDate == other.releaseDate &&
           totalTracks == other.totalTracks &&
           albumType == other.albumType &&
-          genres == other.genres &&
+          publisher == other.publisher &&
+          feedUrl == other.feedUrl &&
+          listEquals(genres, other.genres) &&
           popularity == other.popularity;
 
   @override
@@ -121,6 +139,8 @@ class AlbumModel extends MediaModel implements AlbumInterface {
       releaseDate.hashCode ^
       totalTracks.hashCode ^
       albumType.hashCode ^
+      publisher.hashCode ^
+      feedUrl.hashCode ^
       genres.hashCode ^
       popularity.hashCode;
 }

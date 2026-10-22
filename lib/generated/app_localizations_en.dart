@@ -349,7 +349,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save_as_favorite => 'Save as favorite';
 
   @override
-  String get add_to_playlist => 'Add to Playlist';
+  String get add_to_playlist => 'Add to playlist';
 
   @override
   String get remove_from_playlist => 'Remove from playlist';
@@ -667,6 +667,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sleep_timer => 'Sleep Timer';
 
   @override
+  String get sleep_timer_description => 'Stop playback after a set time';
+
+  @override
   String minutes_remaining(Object minutes) {
     return '$minutes minutes remaining';
   }
@@ -681,7 +684,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get connected => 'Connected';
 
   @override
-  String get not_connected => 'Not connected';
+  String get not_connected => 'Not Connected';
 
   @override
   String get scrobbler => 'Scrobbler';
@@ -948,80 +951,111 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enable_equalizer => 'Enable Equalizer';
 
   @override
-  String get minutes => 'minutes';
-
-  @override
-  String get sleep_timer_description => 'Stop playback after a set time';
-
-  @override
-  String get accounts => 'Accounts';
-
-  @override
-  String get track_details => 'Track Details';
+  String minutes(Object count) {
+    return '$count minutes';
+  }
 
   @override
   String get cancel_timer => 'Cancel Timer';
 
   @override
-  String get login => 'Login';
+  String get track_details => 'Track Details';
 
   @override
-  String get scrobbler_description =>
-      'Sync your playback history to external services';
+  String added_to_playlist_success(Object playlist) {
+    return 'Added to $playlist';
+  }
 
   @override
-  String get enable_scrobbler => 'Enable Scrobbler';
+  String get details => 'Details';
 
   @override
-  String get lastfm_scrobbler_description =>
-      'Sync your listening history to Last.fm';
+  String get go_back => 'Go back';
+
+  @override
+  String get release_date => 'Release Date';
+
+  @override
+  String get see_all => 'See All';
+
+  @override
+  String followers_count(Object count) {
+    return '$count Followers';
+  }
+
+  @override
+  String get featured_playlists => 'Featured Playlists';
+
+  @override
+  String get no_featured_playlists => 'No featured playlists available';
+
+  @override
+  String welcome_back(Object username) {
+    return 'Welcome back, $username';
+  }
+
+  @override
+  String get good_morning => 'Good Morning';
+
+  @override
+  String get good_afternoon => 'Good Afternoon';
+
+  @override
+  String get good_evening => 'Good Evening';
+
+  @override
+  String get recent_tracks => 'Recent Tracks';
+
+  @override
+  String get no_recent_tracks => 'No recent tracks';
+
+  @override
+  String get start_listening_hint =>
+      'Start listening to some music to see them here';
+
+  @override
+  String get recommended_artists => 'Recommended Artists';
+
+  @override
+  String get no_recommended_artists => 'No recommended artists';
+
+  @override
+  String get login_with_lastfm => 'Login with Last.fm';
 
   @override
   String get backup_restore => 'Backup & Restore';
 
   @override
-  String get developers_options => 'Developer Options';
+  String get export_backup => 'Export Backup';
 
   @override
-  String get cookie_management => 'Cookie Management';
+  String get backup_description => 'Export user preferences and data';
 
   @override
-  String by_author(Object author) {
-    return 'By $author';
+  String get backup_success => 'Backup exported successfully';
+
+  @override
+  String backup_failed(Object error) {
+    return 'Backup failed: $error';
   }
 
   @override
-  String selected_count(Object count) {
-    return '$count selected';
+  String get import_backup => 'Import Backup';
+
+  @override
+  String get restore_description =>
+      'Restore user preferences and data from file';
+
+  @override
+  String get restore_success => 'Data restored successfully';
+
+  @override
+  String restore_failed(Object error) {
+    return 'Restore failed: $error';
   }
 
   @override
-  String get pause => 'Pause';
-
-  @override
-  String get repeat => 'Repeat';
-
-  @override
-  String get queue_is_empty => 'Queue is empty';
-
-  @override
-  String get add_tracks_to_get_started => 'Add some tracks to get started';
-
-  @override
-  String queue_count(Object count) {
-    return '$count tracks in queue';
-  }
-
-  @override
-  String get no_tracks => 'No tracks';
-
-  @override
-  String get removed_from_playlist => 'Removed from playlist';
-
-  @override
-  String import_success(Object count) {
-    return 'Successfully imported $count items';
-  }
+  String get cookie_import_success => 'Cookies imported successfully';
 
   @override
   String import_failed(Object error) {
@@ -1029,9 +1063,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String export_success(Object path) {
-    return 'Successfully exported to $path';
-  }
+  String get cookie_export_success => 'Cookies exported successfully';
 
   @override
   String export_failed(Object error) {
@@ -1039,7 +1071,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get cookie_cleared => 'Cookie cleared';
+  String get cookie_cleared => 'Cookies cleared successfully';
 
   @override
   String clear_failed(Object error) {
@@ -1050,11 +1082,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clear => 'Clear';
 
   @override
-  String get cache_cleared => 'Cache cleared';
+  String get pause => 'Pause';
+
+  @override
+  String get repeat => 'Repeat';
+
+  @override
+  String get cache_cleared => 'Cache cleared successfully';
 
   @override
   String clearing_failed(Object error) {
-    return 'Clearing failed: $error';
+    return 'Clearing cache failed: $error';
   }
 
   @override
@@ -1075,17 +1113,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get debug_mode => 'Debug Mode';
 
   @override
-  String get debug_mode_description => 'Enable debug features and logging';
+  String get debug_mode_description =>
+      'Enable extra diagnostic logs and UI overlays';
 
   @override
   String get verbose_logging => 'Verbose Logging';
 
   @override
   String get verbose_logging_description =>
-      'Show detailed logs for troubleshooting';
+      'Log network and playback events in detail';
 
   @override
-  String get use_default_server => 'Use default server';
+  String get use_default_server => 'Use Default Server';
 
   @override
   String get configure => 'Configure';
@@ -1095,134 +1134,70 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cache_management_description =>
-      'Manage application cache and temporary files';
+      'Manage disk cache and temporary files';
 
   @override
-  String logged_in(Object name) {
-    return 'Logged in as $name';
-  }
-
-  @override
-  String get not_logged_in => 'Not logged in';
-
-  @override
-  String get choose_theme_mode => 'Choose Theme Mode';
-
-  @override
-  String get follow_system => 'Follow System';
-
-  @override
-  String get light_mode => 'Light Mode';
-
-  @override
-  String get dark_mode => 'Dark Mode';
-
-  @override
-  String get amoled_mode => 'AMOLED Mode';
-
-  @override
-  String get amoled_mode_description => 'Pure black theme for AMOLED screens';
-
-  @override
-  String get choose_accent_color => 'Choose Accent Color';
-
-  @override
-  String get export_backup => 'Export Backup';
-
-  @override
-  String get backup_description => 'Create a backup of your data';
-
-  @override
-  String get backup_success => 'Backup created successfully';
-
-  @override
-  String backup_failed(Object error) {
-    return 'Backup failed: $error';
-  }
-
-  @override
-  String get import_backup => 'Import Backup';
-
-  @override
-  String get restore_description => 'Restore data from a backup file';
-
-  @override
-  String get restore_success => 'Restore completed successfully';
-
-  @override
-  String restore_failed(Object error) {
-    return 'Restore failed: $error';
-  }
-
-  @override
-  String get cookie_import_success => 'Cookie imported successfully';
-
-  @override
-  String get cookie_export_success => 'Cookie exported successfully';
-
-  @override
-  String get text_size => 'Text Size';
-
-  @override
-  String get line_spacing => 'Line Spacing';
-
-  @override
-  String get playlist_not_found => 'Playlist not found';
-
-  @override
-  String get something_went_wrong => 'Something went wrong';
-
-  @override
-  String get edit_playlist => 'Edit Playlist';
-
-  @override
-  String get delete_playlist => 'Delete Playlist';
-
-  @override
-  String delete_playlist_confirm(Object name) {
-    return 'Are you sure you want to delete the playlist \'$name\'?';
-  }
-
-  @override
-  String get details => 'Details';
-
-  @override
-  String get search_for_music => 'Search for music';
-
-  @override
-  String get search_hint => 'Search for tracks, artists, or albums';
-
-  @override
-  String get all => 'All';
+  String get scrobbler_description =>
+      'Scrobble played music to external tracking services';
 
   @override
   String no_results_found(Object query) {
-    return 'No results found for \'$query\'';
+    return 'No results found for \"$query\"';
   }
 
   @override
-  String logged_out(Object platform) {
-    return 'Logged out from $platform';
+  String get login => 'Login';
+
+  @override
+  String get accounts => 'Accounts';
+
+  @override
+  String get developers_options => 'Developer Options';
+
+  @override
+  String get cookie_management => 'Cookie Management';
+
+  @override
+  String by_author(Object author) {
+    return 'By $author';
   }
 
   @override
-  String logout_failed(Object error) {
-    return 'Logout failed: $error';
+  String selected_count(Object count) {
+    return '$count selected';
   }
 
   @override
-  String get account_management => 'Account Management';
+  String get queue_is_empty => 'Queue is empty';
 
   @override
-  String logged_in_on(Object name, Object platform) {
-    return 'Logged in as $name on $platform';
+  String get add_tracks_to_get_started => 'Add tracks to get started';
+
+  @override
+  String queue_count(Object count) {
+    return '$count tracks in queue';
   }
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get recently_played => 'Recently Played';
 
   @override
   String get paste_lrc_here => 'Paste LRC lyrics here...';
 
   @override
   String get lyrics_content_cannot_be_empty => 'Lyrics content cannot be empty';
+
+  @override
+  String get lyrics_imported_successfully => 'Lyrics imported successfully';
+
+  @override
+  String get failed_to_import_lyrics => 'Failed to import lyrics';
 
   @override
   String get input_search_keywords => 'Input search keywords...';
@@ -1253,84 +1228,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get font_size => 'Font Size';
 
   @override
-  String get username => 'Username';
+  String get line_spacing => 'Line Spacing';
 
   @override
-  String get password => 'Password';
+  String get no_tracks => 'No tracks';
 
   @override
-  String get recently_played => 'Recently Played';
+  String get playlist_not_found => 'Playlist not found';
 
   @override
-  String get lyrics_imported_successfully => 'Lyrics imported successfully';
+  String get something_went_wrong => 'Something went wrong';
 
   @override
-  String get failed_to_import_lyrics => 'Failed to import lyrics';
+  String get edit_playlist => 'Edit Playlist';
 
   @override
-  String get recent_tracks => 'Recent Tracks';
+  String get delete_playlist => 'Delete Playlist';
 
   @override
-  String get see_all => 'See All';
-
-  @override
-  String get no_recent_tracks => 'No recent tracks';
-
-  @override
-  String get start_listening_hint =>
-      'Start listening to some music to see your history here!';
-
-  @override
-  String get login_with_lastfm => 'Login with Last.fm';
-
-  @override
-  String get go_back => 'Go Back';
-
-  @override
-  String get release_date => 'Release Date';
-
-  @override
-  String followers_count(Object count) {
-    return '$count Followers';
+  String delete_playlist_confirm(Object name) {
+    return 'Are you sure you want to delete $name?';
   }
 
   @override
-  String get featured_playlists => 'Featured Playlists';
+  String get removed_from_playlist => 'Removed from playlist';
 
   @override
-  String get no_featured_playlists => 'No featured playlists';
+  String get search_for_music => 'Search for music, artists, albums...';
 
   @override
-  String welcome_back(Object name) {
-    return 'Welcome back, $name';
+  String get search_hint => 'Type something to search';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String logged_out(Object platform) {
+    return 'Logged out from $platform';
   }
 
   @override
-  String get good_morning => 'Good morning';
-
-  @override
-  String get good_afternoon => 'Good afternoon';
-
-  @override
-  String get good_evening => 'Good evening';
-
-  @override
-  String get recommended_artists => 'Recommended Artists';
-
-  @override
-  String get no_recommended_artists => 'No recommended artists';
-
-  @override
-  String get lastfm_settings => 'Last.fm Settings';
-
-  @override
-  String get enable_lastfm_scrobbling => 'Enable Last.fm Scrobbling';
-
-  @override
-  String added_to_playlist_success(Object playlist) {
-    return 'Added to $playlist';
+  String logout_failed(Object error) {
+    return 'Logout failed: $error';
   }
 
   @override
-  String get added_to_playlist_error => 'Failed to add to playlist';
+  String get account_management => 'Account Management';
+
+  @override
+  String logged_in(Object name) {
+    return 'Logged in as $name';
+  }
+
+  @override
+  String get not_logged_in => 'Not logged in';
+
+  @override
+  String get choose_theme_mode => 'Choose Theme Mode';
+
+  @override
+  String get follow_system => 'Follow System';
+
+  @override
+  String get light_mode => 'Light Mode';
+
+  @override
+  String get dark_mode => 'Dark Mode';
+
+  @override
+  String get amoled_mode => 'AMOLED Black';
+
+  @override
+  String get amoled_mode_description =>
+      'Use pure black for OLED/AMOLED screens';
+
+  @override
+  String get choose_accent_color => 'Choose Accent Color';
 }

@@ -21,7 +21,7 @@ import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
 import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
 import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
-import 'package:pyro_music/core/base/services/playlist_service.dart';
+
 
 /// 全屏播放器页面
 class PlayerPage extends ConsumerStatefulWidget {

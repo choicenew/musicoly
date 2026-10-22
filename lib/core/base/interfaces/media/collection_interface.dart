@@ -8,6 +8,7 @@ import 'media_interface.dart';
 @immutable
 abstract class CollectionInterface extends MediaInterface {
   /// Description of the collection
+  @override
   String? get description;
 
   /// Type of the collection (e.g., "featured", "new-releases", "genres")

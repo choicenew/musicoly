@@ -1,5 +1,5 @@
 import 'package:pyro_music/features/language/config/locale_config.dart';
-import 'package:config_package/config_package.dart';
+import 'package:pyro_music/core/services/config_repository.dart';
 
 class LocaleService {
   final ConfigRepository _configRepository;

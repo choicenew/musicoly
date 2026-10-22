@@ -1,16 +1,13 @@
 import 'package:flutter/foundation.dart';
 import '../interfaces/media/collection_interface.dart';
+import '../interfaces/media/media_interface.dart';
 import 'media_model.dart';
 
-/// Model class for collections
+/// Model class for generic media collections
 ///
-/// Implements the CollectionInterface and extends MediaModel
+/// Implements CollectionInterface and extends MediaModel
 @immutable
 class CollectionModel extends MediaModel implements CollectionInterface {
-  /// Description of the collection
-  @override
-  final String? description;
-
   @override
   final String collectionType;
 
@@ -26,7 +23,9 @@ class CollectionModel extends MediaModel implements CollectionInterface {
     required super.platform,
     required super.name,
     super.imageUrl,
-    this.description,
+    super.mediaType = MediaType.collection,
+    super.description,
+    super.tags,
     required this.collectionType,
     required this.totalItems,
     this.platformMetadata = const {},
@@ -35,7 +34,6 @@ class CollectionModel extends MediaModel implements CollectionInterface {
   @override
   Map<String, dynamic> toJson() => {
         ...super.toJson(),
-        'description': description,
         'collectionType': collectionType,
         'totalItems': totalItems,
         'platformMetadata': platformMetadata,
@@ -47,7 +45,9 @@ class CollectionModel extends MediaModel implements CollectionInterface {
     String? platform,
     String? name,
     String? imageUrl,
+    MediaType? mediaType,
     String? description,
+    List<String>? tags,
     String? collectionType,
     int? totalItems,
     Map<String, dynamic>? platformMetadata,
@@ -57,7 +57,9 @@ class CollectionModel extends MediaModel implements CollectionInterface {
       platform: platform ?? this.platform,
       name: name ?? this.name,
       imageUrl: imageUrl ?? this.imageUrl,
+      mediaType: mediaType ?? this.mediaType,
       description: description ?? this.description,
+      tags: tags ?? this.tags,
       collectionType: collectionType ?? this.collectionType,
       totalItems: totalItems ?? this.totalItems,
       platformMetadata: platformMetadata ?? this.platformMetadata,
@@ -70,14 +72,12 @@ class CollectionModel extends MediaModel implements CollectionInterface {
       super == other &&
           other is CollectionModel &&
           runtimeType == other.runtimeType &&
-          description == other.description &&
           collectionType == other.collectionType &&
           totalItems == other.totalItems;
 
   @override
   int get hashCode =>
       super.hashCode ^
-      description.hashCode ^
       collectionType.hashCode ^
       totalItems.hashCode;
 }
