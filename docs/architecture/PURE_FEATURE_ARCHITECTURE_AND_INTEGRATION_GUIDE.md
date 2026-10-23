@@ -1,8 +1,19 @@
 # Musicoly 100% Pure Feature-Driven 架构升级与二次开发/插件接入指南
 
-> **文档版本**: 2.0.0  
+> **文档版本**: 2.1.0  
 > **更新时间**: 2026-10-23  
 > **适用对象**: 后续接手开发者、AI Agent、第三方动态插件开发者  
+
+---
+
+> [!CAUTION]
+> **重大警告：Service 数据服务层重写须知 (CRITICAL WARNING ON SERVICES)**
+> 
+> 当前 `lib/features/*/services/` 目录下的服务实现（如 `album_service.dart`、`artist_service.dart`、`search_service.dart` 等），部分数据逻辑是从项目历史旧备份 (`参考/old_backup/`) 中紧急搬运与充实的脚手架骨架。
+> 
+> **请后续接手开发者与 AI Agent 务必注意**：
+> 1. **现状定位**：当前的 Service 代码仅保证了方法签名、数据模型（`TrackModel` 等）与 Riverpod 状态流转在编译期和架构物理层面的闭环对齐，**其内部具体的 API 请求与数据解析逻辑属于需要彻底重写的临时骨架**。
+> 2. **核心任务**：后续开发者接入时，**必须从头到尾重新整合并全面重写各个 Feature 内部的 Service 逻辑**，将其统一规范对接至 `PluginRuntimeContainer` 沙盒与 `Isar` 数据库底座，严禁直接依赖旧逻辑！
 
 ---
 
@@ -54,8 +65,8 @@ lib/
     ├── search/                  # 搜索 Feature (SearchPage, SearchProvider, SearchResults)
     ├── local_music/             # 本地音乐 Feature (LocalMusicPage, LocalScanner, MultiSelect)
     ├── playlist/                # 歌单 Feature (PlaylistPage, PlaylistProvider, LocalPlaylistService)
-    ├── album/                   # 专辑 Feature (AlbumPage, AlbumHeader)
-    ├── artist/                  # 歌手 Feature (ArtistPage, ArtistHeader)
+    ├── album/                   # 专辑 Feature (AlbumPage, AlbumHeader, AlbumService [待完全重写])
+    ├── artist/                  # 歌手 Feature (ArtistPage, ArtistHeader, ArtistService [待完全重写])
     ├── settings/                # 设置 Feature (SettingsPage, UserPreferences)
     ├── language/                # 语言 Feature (LanguageSettingsPage, LocaleService)
     ├── statistics/              # 听歌数据分析 Feature (PlayStats, ArtistStats)
@@ -66,91 +77,48 @@ lib/
 
 ---
 
-## 4. 后续开发者二次开发指南 (Developer Integration Guide)
+## 4. 后续开发者重构与接入任务指南 (Developer Task Guide)
 
-### 4.1 新增一个 UI 业务 Feature 规范
-当需要开发一个新的业务功能（例如`podcast`或`live`）：
-1. 在 `lib/features/` 下创建子目录：`lib/features/podcast/`。
-2. 保持模块内连与自包含，严禁将 Provider 写在 `core/`：
-   ```text
-   lib/features/podcast/
-   ├── presentation/           # UI 页面与小组件
-   ├── providers/              # Riverpod Notifier 状态提供者
-   └── services/               # 专属服务实现
-   ```
-3. 状态管理统一遵守 **Riverpod 3.0** 规范（使用 `@riverpod` 生成 Notifier / AsyncNotifier）。
+### 4.1 Service 层重构与重新整合要求
+后续接手者在实现具体业务时：
+1. **清理临时逻辑**：全面替换 `features/*/services/` 内部继承自旧逻辑的临时数据填充。
+2. **接入插件总线**：通过 `PluginRuntimeContainer` 调度已启用的动态插件 `fetchAudioStream` 与 `search` 方法。
+3. **结构统一**：保持 `presentation/` -> `providers/` -> `services/` 物理三层不变。
 
-### 4.2 使用大一统通用领域实体
-- **单曲 / 节目 / 章节**：统一使用 `TrackModel`，无需创建自定义类。
-- **专辑 / 播客 Show / 系列**：统一使用 `AlbumModel`。
-- **创作者 / 播客 Host**：统一使用 `ArtistModel`。
-- **歌单 / 播放队列**：统一使用 `PlaylistModel`。
-
----
-
-## 5. 动态扩展插件开发与接入指南 (Plugin Integration Guide)
-
-### 5.1 动态插件契约标准 (`PluginSourceContract`)
-任何第三方插件或新音频源，只需实现 `PluginSourceContract` ABI：
+### 4.2 动态插件契约标准 (`PluginSourceContract`)
+第三方插件或新音频源实现 `PluginSourceContract` ABI：
 
 ```dart
 import 'package:pyro_music/core/models/home_section_model.dart';
 import 'package:pyro_music/core/models/media_model.dart';
 
 abstract class PluginSourceContract {
-  /// 插件唯一标识符 (例如 'org.pyromusic.yt', 'org.pyromusic.subsonic')
   String get pluginId;
-
-  /// 插件人类可读显示名称
   String get pluginName;
-
-  /// 语义化版本号
   String get version;
-
-  /// 插件描述信息
   String? get description;
 
-  /// 获取插件提供的首页动态板块列表
   Future<List<HomeSectionModel>> fetchHomeSections();
-
-  /// 搜索媒体内容
   Future<List<MediaModel>> search(String query, {List<String>? types});
-
-  /// 获取播放音频流句柄 (URL, Headers, Quality)
   Future<AudioStreamInfo> fetchAudioStream(String trackId);
 }
 ```
 
-### 5.2 首页动态推荐板块渲染红线 (`fetchHomeSections`)
-- 插件返回包含组件类型的 `HomeSectionModel`（支持 `carousel` 轮播、`grid` 网格、`trackList` 列表、`quickActions` 快捷操作）。
-- 宿主的 `HomePage` 渲染器根据已启用的插件数据驱动动态排版渲染，无需改动宿主 UI 代码。
-
-### 5.3 插件注册与沙盒容器 (`PluginRuntimeContainer`)
-在插件启动或动态加载时，通过沙盒管理器注入注册：
-
-```dart
-final container = PluginRuntimeContainer();
-container.registerPlugin(MyCustomAudioPlugin());
-```
-
 ---
 
-## 6. 多源融合去重与无感广告渗透引擎 (`MediaAggregator`)
+## 5. 多源融合去重与无感广告渗透引擎 (`MediaAggregator`)
 
-### 6.1 指纹去重算法
-当多个插件返回相同的作品时，`MediaAggregator` 执行去重计算：
+### 5.1 指纹去重算法
 - **标准化指纹**：`generateCanonicalFingerprint(artist, title)`
-- **降级降频**：将多源归一生成 `CompositeTrackModel`，按音质品质（Lossless > High > Medium）降序排序可用流列表，主源失败无感切备用源。
+- **复合曲目**：归一生成 `CompositeTrackModel`，按品质排序流列表。
 
-### 6.2 无感广告自然渗透规则
-- **广告卡片自然融合**：赞助广告 (`AdMediaModel`) 伪装为原生方形卡片、圆形卡片或列表行混入内容流。
-- **1:6 渗透比例**：平均每 6~8 个常规内容项混入 1 个赞助推荐项。
+### 5.2 无感广告自然渗透规则
+- **广告卡片自然融合**：赞助广告 (`AdMediaModel`) 混入内容流，比例 1:6。
 - **首屏绝对保护**：**首页 Index 0/1（顶部前 2 项）绝对禁止展示广告**。
-- **禁止硬编码文字遮罩**：绝对禁止在广告卡片上强加 `"AD / 赞助"` 等悬浮盖层。
 
 ---
 
-## 7. 版本控制与发布流规范 (Git & Delivery Rules)
+## 6. 版本控制与发布流规范 (Git Rules)
 
-- **唯一的锁文件**：全 Monorepo 工程统一遵照 Dart 3.5+ **Pub Workspaces** 治理体系，仅保留根目录唯一的 `pubspec.lock`。
-- **Commit 规范**：遵循 Conventional Commits（如 `refactor(arch): complete 100% pure feature-driven clean architecture migration`）。
+- **唯一锁文件**：Dart 3.5+ Pub Workspaces 标准，根目录唯一 `pubspec.lock`。
+- **Commit 规范**：Conventional Commits。
