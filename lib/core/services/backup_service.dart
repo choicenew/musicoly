@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:isar_community/isar.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
-import 'package:pyro_music/core/storage/isar/entities/playlist_entity.dart';
-import 'package:pyro_music/core/storage/isar/entities/lyrics_entity.dart';
+import 'package:pyro_music/core/services/base_service.dart';
+import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/database/isar/entities/playlist_entity.dart';
+import 'package:pyro_music/core/database/isar/entities/lyrics_entity.dart';
 import 'package:get_it/get_it.dart';
 
 class BackupService extends BaseService {

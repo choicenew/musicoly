@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/album_model.dart';
+import 'package:pyro_music/core/models/album_model.dart';
 
 /// A reusable card widget for displaying album information
 class AlbumCard extends StatelessWidget {

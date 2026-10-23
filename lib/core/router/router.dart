@@ -1,14 +1,14 @@
 import 'package:go_router/go_router.dart';
-import 'package:pyro_music/presentation/pages/home/home_page.dart';
-import 'package:pyro_music/presentation/pages/search/search_page.dart';
-import 'package:pyro_music/presentation/pages/settings/settings_page.dart';
-import 'package:pyro_music/presentation/pages/lyrics/lyrics_page.dart';
-import 'package:pyro_music/presentation/pages/player/player_page.dart';
-import 'package:pyro_music/presentation/pages/album/album_page.dart';
-import 'package:pyro_music/presentation/pages/artist/artist_page.dart';
-import 'package:pyro_music/presentation/pages/playlist/playlist_page.dart';
-import 'package:pyro_music/presentation/pages/local_music/local_music_page.dart';
-import 'package:pyro_music/presentation/pages/favorites/favorites_page.dart';
+import 'package:pyro_music/features/album/presentation/album_page.dart';
+import 'package:pyro_music/features/artist/presentation/artist_page.dart';
+import 'package:pyro_music/features/favorites/presentation/favorites_page.dart';
+import 'package:pyro_music/features/home/presentation/home_page.dart';
+import 'package:pyro_music/features/local_music/presentation/local_music_page.dart';
+import 'package:pyro_music/features/lyric/presentation/lyrics_page.dart';
+import 'package:pyro_music/features/player/presentation/player_page.dart';
+import 'package:pyro_music/features/playlist/presentation/playlist_page.dart';
+import 'package:pyro_music/features/search/presentation/search_page.dart';
+import 'package:pyro_music/features/settings/presentation/settings_page.dart';
 import 'package:pyro_music/presentation/widgets/layout/main_layout.dart';
 
 final router = GoRouter(
@@ -39,26 +39,27 @@ final router = GoRouter(
             ),
             GoRoute(
               path: 'album/:id',
-              builder: (context, state) => AlbumPage(albumId: state.pathParameters['id']!),
+              builder: (context, state) =>
+                  AlbumPage(albumId: state.pathParameters['id']!),
             ),
             GoRoute(
               path: 'artist/:id',
-              builder: (context, state) => ArtistPage(artistId: state.pathParameters['id']!),
+              builder: (context, state) =>
+                  ArtistPage(artistId: state.pathParameters['id']!),
             ),
             GoRoute(
               path: 'playlist/:id',
-              builder: (context, state) => PlaylistPage(playlistId: state.pathParameters['id']!),
+              builder: (context, state) =>
+                  PlaylistPage(playlistId: state.pathParameters['id']!),
             ),
           ],
         ),
       ],
     ),
-    // 歌词页通常是全屏的，不包含在 MainLayout 中
     GoRoute(
       path: '/lyrics',
       builder: (context, state) => const LyricsPage(),
     ),
-    // 全屏播放器页
     GoRoute(
       path: '/player',
       builder: (context, state) => const PlayerPage(),

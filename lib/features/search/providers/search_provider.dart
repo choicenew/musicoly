@@ -1,15 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:isar_community/isar.dart';
-import 'package:get_it/get_it.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
-import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/features/plugin/plugin_source_contract.dart';
+import 'package:pyro_music/features/player/services/playback_service_impl.dart';
+import 'package:pyro_music/features/track_source/services/track_source_manager_impl.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
-import 'package:pyro_music/features/player/providers/playback_provider.dart';
 
 part 'search_provider.freezed.dart';
-part 'search_provider.g.dart';
 
 /// Search state data class
 @freezed
@@ -22,18 +18,20 @@ abstract class SearchStateData with _$SearchStateData {
   }) = _SearchStateData;
 }
 
+/// Provider for SearchNotifier
+final searchProvider = NotifierProvider<SearchNotifier, SearchStateData>(() {
+  return SearchNotifier();
+});
+
 /// Notifier for search state
-@Riverpod(keepAlive: true)
-class SearchNotifier extends _$SearchNotifier {
+class SearchNotifier extends Notifier<SearchStateData> {
   late final TrackSourceManager _trackSourceManager;
-  late final Isar _isar;
 
   @override
   SearchStateData build() {
     final registry = ServiceRegistry();
     _trackSourceManager =
         registry.getService<TrackSourceManager>('track_source_manager')!;
-    _isar = GetIt.instance<Isar>();
     return const SearchStateData();
   }
 
@@ -47,7 +45,7 @@ class SearchNotifier extends _$SearchNotifier {
     if (query != null) {
       updateQuery(query);
     }
-    
+
     if (state.query.isEmpty) return;
 
     state = state.copyWith(isSearching: true, error: null);
@@ -67,31 +65,10 @@ class SearchNotifier extends _$SearchNotifier {
 
   /// Play a search result
   Future<void> playResult(SourceInfo result) async {
-    // 1. Check if track already exists in Isar
-    var entity = await _isar.trackEntitys
-        .filter()
-        .trackIdEqualTo(result.id)
-        .findFirst();
-
-    // 2. If not, create and save it
-    if (entity == null) {
-      entity = TrackEntity()
-        ..trackId = result.id
-        ..name = result.title
-        ..platform = result.sourceId
-        ..imageUrl = result.thumbnailUrl
-        ..artistNames = [result.artist]
-        ..artistIds = []
-        ..durationMs = result.duration.inMilliseconds
-        ..isPlayable = true
-        ..createdAt = DateTime.now();
-
-      await _isar.writeTxn(() async {
-        await _isar.trackEntitys.put(entity!);
-      });
+    final playbackService =
+        ServiceRegistry().getService<PlaybackService>('playback_service');
+    if (playbackService != null) {
+      await playbackService.playTrack(result.id);
     }
-
-    // 3. Play the track
-    await ref.read(playbackStateProvider.notifier).playTrack(result.id);
   }
 }

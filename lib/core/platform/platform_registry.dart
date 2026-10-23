@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
-import '../base/services/base_service.dart';
+import '../services/base_service.dart';
 import '../services/service_registry.dart';
 
 /// 平台注册表 - 负责管理所有平台服务的注册和发现

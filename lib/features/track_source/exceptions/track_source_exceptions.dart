@@ -1,8 +1,8 @@
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 
 /// 轨道未找到异常
 class TrackNotFoundError extends Error {
-  final TrackInterface track;
+  final TrackModel track;
   final String message;
 
   TrackNotFoundError(this.track, [this.message = '未找到匹配的音源']);
@@ -14,7 +14,7 @@ class TrackNotFoundError extends Error {
 
 /// 音源获取失败异常
 class SourceFetchError extends Error {
-  final TrackInterface track;
+  final TrackModel track;
   final String source;
   final String message;
 

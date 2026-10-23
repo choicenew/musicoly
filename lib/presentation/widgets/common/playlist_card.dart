@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/playlist_model.dart';
+import 'package:pyro_music/core/models/playlist_model.dart';
 
 import 'package:pyro_music/generated/app_localizations.dart';
 

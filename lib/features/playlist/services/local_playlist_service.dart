@@ -1,11 +1,8 @@
 import 'package:isar_community/isar.dart';
-import 'package:pyro_music/core/base/services/playlist_service.dart';
-import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/storage/isar/entities/playlist_entity.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
-import 'package:pyro_music/core/base/models/playlist_model.dart';
-import 'package:pyro_music/core/base/models/track_model.dart';
+import 'package:pyro_music/core/database/isar/entities/playlist_entity.dart';
+import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/models/playlist_model.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 
 class LocalPlaylistService extends PlaylistService {
   final Isar _isar;

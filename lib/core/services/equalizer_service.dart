@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 import 'dart:async';
 
 class EqualizerService extends BaseService {

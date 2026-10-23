@@ -1,7 +1,5 @@
-import 'package:pyro_music/core/base/services/base_service.dart';
-import 'package:pyro_music/core/base/services/playlist_service.dart';
-import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
+import 'package:pyro_music/core/models/playlist_model.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 
 /// Implementation of the playlist service
 ///

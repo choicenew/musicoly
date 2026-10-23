@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:pyro_music/core/providers/user_preferences_provider.dart';
+import 'package:pyro_music/features/settings/providers/user_preferences_provider.dart';
 import 'package:pyro_music/features/language/provider/language_provider.dart';
 import 'package:pyro_music/features/language/language_data.dart';
 import 'package:pyro_music/features/language/widgets/language_selection_widget.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/core/base/interfaces/download_manager/download_manager_interface.dart';
+import 'package:pyro_music/features/download_manager/models/download_models.dart';
 import 'package:pyro_music/features/download_manager/services/download_service_impl.dart';
 
 part 'download_provider.freezed.dart';

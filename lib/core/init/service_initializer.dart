@@ -2,12 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:isar_community/isar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
-import 'package:pyro_music/core/base/interfaces/scrobbler/scrobbler_interface.dart';
-import 'package:pyro_music/core/base/interfaces/player/queue_interface.dart';
 import 'package:pyro_music/features/player/services/queue_service_impl.dart';
 import 'package:pyro_music/features/player/services/playback_service_impl.dart';
-import 'package:pyro_music/core/base/services/track_source_service.dart';
-import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
 import 'package:pyro_music/features/lyric/services/lyric_manager_impl.dart';
 import 'package:pyro_music/features/track_source/services/track_source_manager_impl.dart';
 import 'package:pyro_music/features/track_source/sources/local.dart';
@@ -18,16 +14,13 @@ import 'package:pyro_music/core/services/equalizer_service.dart';
 import 'package:pyro_music/core/services/desktop_service.dart';
 import 'package:pyro_music/core/services/scrobbler_manager.dart';
 import 'package:pyro_music/features/scrobbler/plugins/lastfm_scrobbler.dart';
-import 'package:pyro_music/features/stats/services/play_stats_service_impl.dart';
-import 'package:pyro_music/core/base/services/stats_service.dart';
+import 'package:pyro_music/features/statistics/services/play_stats_service_impl.dart';
 import 'package:metadata_god/metadata_god.dart';
 
-import 'package:pyro_music/core/base/services/player_service.dart';
 import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 
 import 'package:pyro_music/features/playlist/services/local_playlist_service.dart';
-import 'package:pyro_music/core/base/services/playlist_service.dart' as base_playlist;
 import 'package:pyro_music/features/playlist/services/playlist_service_impl.dart' as playlist_impl;
 
 /// 系统服务初始化器
@@ -44,63 +37,63 @@ class ServiceInitializer {
     GetIt.instance.registerSingleton<Isar>(isar);
 
     // 1. 注册基础核心插件 (如本地音源)
-    registry.registerPlatformService<TrackSourceService>(
+    registry.registerPlatformService(
       'local',
       () => LocalTrackSourceService(isar),
     );
 
     // 2. 注册核心服务工厂
-    registry.registerServiceFactory<QueueInterface>(
+    registry.registerServiceFactory(
       'queue_service',
       () => QueueServiceImpl(),
     );
 
     // 3. 注册音源管理器 (初始为空，等待插件注入)
-    registry.registerServiceFactory<TrackSourceManager>(
+    registry.registerServiceFactory(
       'track_source_manager',
       () => TrackSourceManagerImpl(),
     );
 
     // 4. 注册歌词管理器
-    registry.registerServiceFactory<LyricManager>(
+    registry.registerServiceFactory(
       'lyric_manager',
       () => LyricManagerImpl(),
     );
 
     // 4.5 注册睡眠定时器
-    registry.registerServiceFactory<SleepTimerService>(
+    registry.registerServiceFactory(
       'sleep_timer',
       () => SleepTimerService(),
     );
 
     // 4.6 注册本地扫描器
-    registry.registerServiceFactory<LocalScannerService>(
+    registry.registerServiceFactory(
       'local_scanner',
       () => LocalScannerService(),
     );
 
     // 4.7 注册备份服务
-    registry.registerServiceFactory<BackupService>(
+    registry.registerServiceFactory(
       'backup_service',
       () => BackupService(),
     );
 
     // 4.8 注册均衡器服务
-    registry.registerServiceFactory<EqualizerService>(
+    registry.registerServiceFactory(
       'equalizer_service',
       () => EqualizerService(),
     );
 
     // 4.9 注册播放列表服务
-    registry.registerPlatformService<base_playlist.PlaylistService>(
+    registry.registerPlatformService(
       'local',
       () => LocalPlaylistService(isar),
     );
 
-    registry.registerServiceFactory<base_playlist.PlaylistService>(
+    registry.registerServiceFactory(
       'playlist_service',
       () {
-        final localService = registry.getService<base_playlist.PlaylistService>('local');
+        final localService = registry.getService<LocalPlaylistService>('local');
         return playlist_impl.PlaylistServiceImpl(
           platformServices: [if (localService != null) localService],
         );
@@ -108,22 +101,16 @@ class ServiceInitializer {
     );
 
     // 5. 注册播放器平台服务 (Native)
-    registry.registerPlatformService<PlayerService>(
+    registry.registerPlatformService(
       'native',
       () => PlaybackServiceImpl(),
     );
 
     // 6. 注册统一播放器服务
-    registry.registerServiceFactory<PlayerService>(
+    registry.registerServiceFactory(
       'player_service',
       () => PlayerServiceImpl(),
     );
-
-    // 设置默认活跃平台
-    if (platformRegistry.activePlatformId.isEmpty) {
-      // 临时直接设置，因为 platformRegistry.activePlatformId 需要 availablePlatforms 包含它
-      // 我们先完成 autoDiscoverAndRegister
-    }
 
     // 自动发现并注册（会调用 initialize 方法）
     await registry.autoDiscoverAndRegister();
@@ -132,31 +119,31 @@ class ServiceInitializer {
     platformRegistry.activePlatformId = 'native';
 
     // 4.10 注册桌面集成服务
-    registry.registerServiceFactory<DesktopService>(
+    registry.registerServiceFactory(
       'desktop_service',
       () => DesktopService(),
     );
 
     // 4.11 注册播放统计服务
-    registry.registerServiceFactory<StatsService>(
+    registry.registerServiceFactory(
       'play_stats_service',
       () => PlayStatsServiceImpl(),
     );
 
     // 4.12 注册 Scrobbler 管理器
-    registry.registerServiceFactory<ScrobblerManager>(
+    registry.registerServiceFactory(
       'scrobbler_manager',
       () => ScrobblerManager(),
     );
 
     // 4.13 注册 Scrobbler 插件 (将来可动态加载)
-    registry.registerPlatformService<ScrobblerPlugin>(
+    registry.registerPlatformService(
       'lastfm',
       () => LastfmScrobbler(),
     );
 
     // 5. 启动基础服务
-    final playerService = registry.getService<PlayerService>('player_service');
+    final playerService = registry.getService<PlayerServiceImpl>('player_service');
     if (playerService != null) {
       await playerService.initialize();
     }
@@ -168,7 +155,7 @@ class ServiceInitializer {
     }
 
     // 初始化统计服务
-    final statsService = registry.getService<StatsService>('play_stats_service');
+    final statsService = registry.getService<PlayStatsServiceImpl>('play_stats_service');
     if (statsService != null) {
       await statsService.initialize();
     }

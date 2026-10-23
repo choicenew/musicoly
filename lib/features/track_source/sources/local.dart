@@ -1,9 +1,7 @@
 import 'package:isar_community/isar.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
-import 'package:pyro_music/core/base/models/track_source_model.dart';
-import 'package:pyro_music/core/base/services/track_source_service.dart';
-import 'package:pyro_music/core/storage/isar/entities/index.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/features/plugin/plugin_source_contract.dart';
+import 'package:pyro_music/core/database/isar/entities/index.dart';
 
 /// 本地音源插件 - 负责从本地数据库和文件系统读取音源
 class LocalTrackSourceService extends TrackSourceService {
@@ -30,7 +28,7 @@ class LocalTrackSourceService extends TrackSourceService {
   Future<void> initialize() async {}
 
   @override
-  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) async {
+  Future<SourcedTrack> fetchFromTrack({required TrackModel track}) async {
     // 检查是否有本地路径
     if (track.previewUrl != null && track.previewUrl!.startsWith('file://')) {
       return SourcedTrackModel(

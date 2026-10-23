@@ -3,16 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:isar_community/isar.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
-import 'package:pyro_music/core/base/services/player_service.dart';
-import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
-import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/core/services/desktop_service.dart';
 import 'package:pyro_music/core/services/scrobbler_manager.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
 
 /// 播放器服务实现 - 整合多平台播放功能
 ///

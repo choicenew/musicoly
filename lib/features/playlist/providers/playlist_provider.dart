@@ -1,9 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/core/base/providers/base_provider.dart';
-import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/services/playlist_service.dart';
+import 'package:pyro_music/core/models/playlist_model.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 import '../services/playlist_service_impl.dart';
 
 import 'package:pyro_music/core/services/service_registry.dart';
@@ -23,8 +21,8 @@ PlaylistServiceImpl playlistService(Ref ref) {
 @freezed
 abstract class PlaylistStateData with _$PlaylistStateData {
   const factory PlaylistStateData({
-    PlaylistInterface? selectedPlaylist,
-    List<TrackInterface>? playlistTracks,
+    PlaylistModel? selectedPlaylist,
+    List<TrackModel>? playlistTracks,
     @Default(false) bool isLoading,
     Object? error,
   }) = _PlaylistStateData;
@@ -173,7 +171,7 @@ class PlaylistNotifier extends _$PlaylistNotifier with BaseProviderMixin<Playlis
   }
 
   /// Get user playlists
-  Future<List<PlaylistInterface>> getUserPlaylists({int limit = 20, int offset = 0}) async {
+  Future<List<PlaylistModel>> getUserPlaylists({int limit = 20, int offset = 0}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final playlists = await _playlistService.getUserPlaylists(limit: limit, offset: offset);
@@ -186,7 +184,7 @@ class PlaylistNotifier extends _$PlaylistNotifier with BaseProviderMixin<Playlis
   }
 
   /// Get featured playlists
-  Future<List<PlaylistInterface>> getFeaturedPlaylists({int limit = 20, int offset = 0}) async {
+  Future<List<PlaylistModel>> getFeaturedPlaylists({int limit = 20, int offset = 0}) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final playlists = await _playlistService.getFeaturedPlaylists(limit: limit, offset: offset);

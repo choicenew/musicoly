@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
 /// 服务注册表 - 负责管理所有服务的注册和发现
 ///

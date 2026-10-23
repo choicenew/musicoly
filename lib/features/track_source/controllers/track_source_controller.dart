@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/features/track_source/providers/track_source_provider.dart';
 
 final trackSourceControllerProvider = Provider((ref) => TrackSourceController(ref));
@@ -45,7 +44,7 @@ class TrackSourceController {
   }
 
   /// 从轨道获取音源
-  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) {
+  Future<SourcedTrack> fetchFromTrack({required TrackModel track}) {
     return _notifier.fetchFromTrack(track: track);
   }
 

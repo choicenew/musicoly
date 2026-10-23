@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/models/track_model.dart';
-import 'package:pyro_music/core/providers/multi_select_provider.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/features/local_music/providers/multi_select_provider.dart';
 import 'package:pyro_music/features/playlist/providers/playlist_provider.dart';
-import 'package:pyro_music/presentation/pages/local_music/local_music_page.dart';
+import 'package:pyro_music/features/local_music/presentation/local_music_page.dart';
 import 'package:pyro_music/presentation/widgets/dialogs/tag_editor_dialog.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
@@ -139,9 +139,6 @@ class TrackTile extends ConsumerWidget {
           ),
           onPressed: () async {
             await playlistService.toggleFavorite(track.id);
-            // Since this is a stateless-like component in terms of the track model,
-            // the parent will need to rebuild or we need a way to notify.
-            // For now, we rely on the fact that most pages will refresh on data changes.
           },
         ),
         if (showDuration)

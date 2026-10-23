@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/media/playlist_interface.dart';
+import 'package:pyro_music/core/models/playlist_model.dart';
 import '../providers/playlist_provider.dart';
 
 /// Controller for playlist functionality
@@ -36,7 +36,7 @@ class PlaylistController {
   }
 
   /// Create a new playlist
-  Future<PlaylistInterface?> createPlaylist({
+  Future<PlaylistModel?> createPlaylist({
     required String name,
     String? description,
     bool public = false,
@@ -102,19 +102,19 @@ class PlaylistController {
   }
 
   /// Get user playlists
-  Future<List<PlaylistInterface>> getUserPlaylists(
+  Future<List<PlaylistModel>> getUserPlaylists(
       {int limit = 20, int offset = 0}) async {
     return await _provider.getUserPlaylists(limit: limit, offset: offset);
   }
 
   /// Get featured playlists
-  Future<List<PlaylistInterface>> getFeaturedPlaylists(
+  Future<List<PlaylistModel>> getFeaturedPlaylists(
       {int limit = 20, int offset = 0}) async {
     return await _provider.getFeaturedPlaylists(limit: limit, offset: offset);
   }
 
   /// Get category playlists
-  Future<List<PlaylistInterface>> getCategoryPlaylists(String categoryId,
+  Future<List<PlaylistModel>> getCategoryPlaylists(String categoryId,
       {int limit = 20, int offset = 0}) async {
     // Since the provider doesn't have this method yet, we'll implement a workaround
     // by directly accessing the playlist service

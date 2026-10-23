@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/download_manager/download_manager_interface.dart';
+import 'package:pyro_music/features/download_manager/models/download_models.dart';
 import 'package:pyro_music/features/download_manager/providers/download_provider.dart';
 
 final downloadControllerProvider = Provider<DownloadController>((ref) {

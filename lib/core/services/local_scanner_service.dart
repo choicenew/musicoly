@@ -5,8 +5,8 @@ import 'package:metadata_god/metadata_god.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/services/base_service.dart';
+import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
 import 'package:get_it/get_it.dart';
 
 class LocalScannerService extends BaseService {

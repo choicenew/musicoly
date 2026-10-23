@@ -1,10 +1,10 @@
 import 'package:audio_service/audio_service.dart' hide PlaybackState;
 import 'package:isar_community/isar.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
-import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
+import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
-import 'package:pyro_music/core/storage/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
 
 class PyroAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   late final PlayerService _playerService;

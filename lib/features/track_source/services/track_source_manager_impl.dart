@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
-import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/features/plugin/plugin_source_contract.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 /// 音源管理器实现 - 负责音源插件的动态加载与发现
@@ -61,7 +60,7 @@ class TrackSourceManagerImpl extends TrackSourceManager {
   }
 
   @override
-  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) async {
+  Future<SourcedTrack> fetchFromTrack({required TrackModel track}) async {
     final plugin = activePlugin;
     if (plugin != null) {
       return await plugin.fetchFromTrack(track: track);

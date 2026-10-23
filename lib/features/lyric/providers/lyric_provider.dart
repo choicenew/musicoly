@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
+import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 part 'lyric_provider.freezed.dart';

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/scrobbler/scrobbler_interface.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
+import 'package0/pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 part 'scrobbler_manager.g.dart';

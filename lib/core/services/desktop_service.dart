@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
@@ -9,8 +9,8 @@ import 'package:local_notifier/local_notifier.dart';
 import 'package:smtc_windows/smtc_windows.dart';
 import 'package:win32_registry/win32_registry.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
-import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
-import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
+import 'package:pyro_music/features/player/services/player_service_impl.dart';
 
 class DesktopService extends BaseService with TrayListener, WindowListener {
   @override

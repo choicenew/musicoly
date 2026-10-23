@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide RepeatMode;
-import 'package:pyro_music/core/base/interfaces/player/player_interface.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 /// A widget that displays playback controls (play/pause, next, previous, etc.)

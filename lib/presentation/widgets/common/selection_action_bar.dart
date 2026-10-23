@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/providers/multi_select_provider.dart';
+import 'package:pyro_music/features/local_music/providers/multi_select_provider.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 class SelectionActionBar extends ConsumerWidget {

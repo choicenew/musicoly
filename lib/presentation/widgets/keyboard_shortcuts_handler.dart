@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pyro_music/core/base/interfaces/player/playback_interface.dart';
-import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 class KeyboardShortcutsHandler extends ConsumerStatefulWidget {

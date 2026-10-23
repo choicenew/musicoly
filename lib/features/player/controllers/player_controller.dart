@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../core/base/interfaces/player/player_interface.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
 import '../providers/player_state_provider.dart';
 import '../providers/playback_provider.dart';
 import '../providers/queue_provider.dart';

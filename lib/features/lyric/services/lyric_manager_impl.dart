@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
+import 'package:pyro_music/core/models/lyric_data_model.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 /// 歌词管理器实现

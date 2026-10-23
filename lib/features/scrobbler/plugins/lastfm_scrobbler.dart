@@ -5,9 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pyro_music/core/config/scrobbler_config.dart';
-import 'package:pyro_music/core/base/interfaces/scrobbler/scrobbler_interface.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/services/base_service.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
 /// Last.fm Scrobbler 插件实现
 class LastfmScrobbler extends ScrobblerPlugin {

@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/core/base/interfaces/media/track_interface.dart';
-import 'package:pyro_music/core/base/interfaces/track_source/track_source_interface.dart';
-import 'package:pyro_music/core/base/services/track_source_service.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/features/track_source/services/track_source_manager_impl.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 part 'track_source_provider.freezed.dart';
@@ -58,7 +57,7 @@ class TrackSourceNotifier extends _$TrackSourceNotifier {
   }
 
   /// 从轨道获取音源
-  Future<SourcedTrack> fetchFromTrack({required TrackInterface track}) {
+  Future<SourcedTrack> fetchFromTrack({required TrackModel track}) {
     return _manager.fetchFromTrack(track: track);
   }
 }

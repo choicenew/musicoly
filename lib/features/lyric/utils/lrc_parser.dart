@@ -1,4 +1,4 @@
-import 'package:pyro_music/core/base/interfaces/lyric/lyric_interface.dart';
+import 'package:pyro_music/core/models/lyric_data_model.dart';
 
 /// LRC 歌词解析与导出工具
 class LrcParser {

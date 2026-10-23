@@ -1,8 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
-import '../../../core/base/interfaces/player/playback_interface.dart';
-import '../../../core/base/interfaces/player/player_interface.dart';
+import 'package:pyro_music/core/models/playback_state.dart';
 import '../providers/playback_provider.dart';
 
 /// 播放控制控制器 - 提供播放控制功能

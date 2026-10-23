@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:pyro_music/core/providers/locale_service_provider.dart';
+import 'package:pyro_music/features/language/providers/locale_service_provider.dart';
 
 part 'language_provider.g.dart';
 

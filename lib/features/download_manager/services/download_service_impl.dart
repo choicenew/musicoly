@@ -5,8 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
-import 'package:pyro_music/core/base/interfaces/download_manager/download_manager_interface.dart';
-import 'package:pyro_music/core/base/services/download_manager_service.dart';
+import 'package:pyro_music/features/download_manager/models/download_models.dart';
 import 'package:pyro_music/features/download_manager/services/chunked_download.dart';
 import 'package:pyro_music/services/logger/logger.dart';
 

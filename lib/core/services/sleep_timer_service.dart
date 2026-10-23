@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:pyro_music/core/base/services/base_service.dart';
-import 'package:pyro_music/core/base/services/player_service.dart';
+import 'package:pyro_music/core/services/base_service.dart';
+import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 /// 睡眠定时器服务

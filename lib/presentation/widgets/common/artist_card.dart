@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pyro_music/core/base/models/artist_model.dart';
+import 'package:pyro_music/core/models/artist_model.dart';
 
 /// A reusable card widget for displaying artist information
 class ArtistCard extends StatelessWidget {

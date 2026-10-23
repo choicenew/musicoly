@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:metadata_god/metadata_god.dart';
-import 'package:pyro_music/core/base/models/track_model.dart';
-import 'package:pyro_music/core/providers/local_scanner_provider.dart';
+import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/features/local_music/providers/local_scanner_provider.dart';
 import 'package:pyro_music/generated/app_localizations.dart';
 
 class TagEditorDialog extends ConsumerStatefulWidget {
