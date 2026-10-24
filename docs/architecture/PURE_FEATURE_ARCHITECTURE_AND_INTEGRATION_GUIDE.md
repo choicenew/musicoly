@@ -1,8 +1,32 @@
 # Musicoly 100% Pure Feature-Driven 架构极简设计与二次开发/插件接入指南
 
-> **文档版本**: 3.1.0  
+> **文档版本**: 3.2.0  
 > **更新时间**: 2026-10-24  
 > **适用对象**: 后续接手开发者、AI Agent、第三方动态插件开发者  
+
+---
+
+## 📌 Git Commit Hash 历史溯源与对比基准 (Git Traceability Baseline)
+
+为了让后续接手的开发者与 AI Agent 能够准确查阅修改前的原始代码、核对变动细节，特此记录前任 AI 开始变动的**精准 Git Commit ID 基准**：
+
+- **AI 重构前原始代码基准 (Baseline Commit ID)**: [`fa51381`](https://github.com/choicenew/musicoly/commit/fa51381)  
+  *(对应提交信息: `docs(architecture): add dynamic plugin host architecture & homepage decoupling design`)*
+- **AI 变更 Commit Hash 范围 (AI Modified Commit Range)**: `fa51381..0f84d1a`
+
+### 🔍 常用查阅与对比命令 (Git Commands for Inspection)
+1. **查看 AI 重构引入的所有代码差异**：
+   ```bash
+   git diff fa51381 HEAD
+   ```
+2. **查看 AI 提交的变更日志树**：
+   ```bash
+   git log fa51381..HEAD --oneline
+   ```
+3. **检出到 AI 修改前的原始基准状态**：
+   ```bash
+   git checkout fa51381
+   ```
 
 ---
 
