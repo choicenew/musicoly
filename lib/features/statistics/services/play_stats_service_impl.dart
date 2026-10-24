@@ -3,9 +3,22 @@ import 'package:isar_community/isar.dart';
 import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/models/stats_model.dart';
 import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
 /// 播放统计服务实现 - 使用 Isar 持久化
-class PlayStatsServiceImpl {
+class PlayStatsServiceImpl extends BaseService {
+  @override
+  String get serviceId => 'play_stats_service';
+
+  @override
+  String get serviceName => 'Play Stats Service';
+
+  @override
+  String get serviceVersion => '1.0.0';
+
+  @override
+  String? get platform => null;
+
   static final PlayStatsServiceImpl _instance = PlayStatsServiceImpl._();
   factory PlayStatsServiceImpl() => _instance;
   PlayStatsServiceImpl._();

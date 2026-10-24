@@ -4,10 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/services/base_service.dart';
-import 'package0/pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
-part 'scrobbler_manager.g.dart';
+import 'package:pyro_music/features/scrobbler/plugins/lastfm_scrobbler.dart';
 
 /// Scrobbler 管理器 - 负责管理和分发播放记录到各个插件
 @Riverpod(keepAlive: true)
@@ -19,13 +18,12 @@ class ScrobblerManager extends BaseService {
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
   
   /// 获取所有已注册的 Scrobbler 插件
-  List<ScrobblerPlugin> getScrobblers() => _scrobblers;
+  List<LastfmScrobbler> getScrobblers() => _scrobblers;
 
-  /// 获取所有已注册的 Scrobbler 插件 (私有)
-  List<ScrobblerPlugin> get _scrobblers {
-    return _serviceRegistry.getAvailablePlatforms<ScrobblerPlugin>()
-        .map((id) => _serviceRegistry.getService<ScrobblerPlugin>(id))
-        .whereType<ScrobblerPlugin>()
+  List<LastfmScrobbler> get _scrobblers {
+    return _serviceRegistry.getAvailablePlatforms<LastfmScrobbler>()
+        .map((id) => _serviceRegistry.getService<LastfmScrobbler>(id))
+        .whereType<LastfmScrobbler>()
         .toList();
   }
 
@@ -59,7 +57,7 @@ class ScrobblerManager extends BaseService {
   }
 
   /// 通知所有已启用的 Scrobbler 正在播放
-  Future<void> notifyNowPlaying(TrackInterface track) async {
+  Future<void> notifyNowPlaying(TrackModel track) async {
     for (var scrobbler in _scrobblers) {
       if (scrobbler.isEnabled) {
         try {
@@ -72,7 +70,7 @@ class ScrobblerManager extends BaseService {
   }
 
   /// 通知所有已启用的 Scrobbler 记录播放
-  Future<void> notifyScrobble(TrackInterface track, {required int duration, required bool isComplete}) async {
+  Future<void> notifyScrobble(TrackModel track, {required int duration, required bool isComplete}) async {
     for (var scrobbler in _scrobblers) {
       if (scrobbler.isEnabled) {
         try {
@@ -91,7 +89,7 @@ class ScrobblerManager extends BaseService {
       if (segments.length < 3) return;
       
       final pluginId = segments[2];
-      final scrobbler = _serviceRegistry.getService<ScrobblerPlugin>(pluginId);
+      final scrobbler = _serviceRegistry.getService<LastfmScrobbler>(pluginId);
       
       if (scrobbler != null) {
         final token = uri.queryParameters['token'];

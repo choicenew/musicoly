@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/models/track_model.dart';
-import 'package:pyro_music/features/plugin/plugin_source_contract.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 /// 音源管理器实现 - 负责音源插件的动态加载与发现
-class TrackSourceManagerImpl extends TrackSourceManager {
+class TrackSourceManagerImpl extends BaseService {
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
   
   String _activePluginId = '';

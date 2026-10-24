@@ -1,16 +1,28 @@
 import 'package:isar_community/isar.dart';
 import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/models/media_model.dart';
+import 'package:pyro_music/core/models/home_section_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/features/plugin/plugin_source_contract.dart';
 import 'package:pyro_music/core/database/isar/entities/index.dart';
 
 /// 本地音源插件 - 负责从本地数据库和文件系统读取音源
-class LocalTrackSourceService extends TrackSourceService {
+class LocalTrackSourceService extends BaseService implements PluginSourceContract {
   final Isar _isar;
 
   LocalTrackSourceService(this._isar);
 
   @override
-  String get pluginId => 'local';
+  String get pluginId => 'org.pyromusic.local';
+
+  @override
+  String get pluginName => 'Local Track Source';
+
+  @override
+  String get version => '1.0.0';
+
+  @override
+  String? get description => 'Local music database track source';
 
   @override
   String get serviceId => 'track_source_local';
@@ -28,53 +40,10 @@ class LocalTrackSourceService extends TrackSourceService {
   Future<void> initialize() async {}
 
   @override
-  Future<SourcedTrack> fetchFromTrack({required TrackModel track}) async {
-    // 检查是否有本地路径
-    if (track.previewUrl != null && track.previewUrl!.startsWith('file://')) {
-      return SourcedTrackModel(
-        track: track,
-        sourceId: pluginId,
-        sourceInfo: SourceInfoModel(
-          id: track.id,
-          title: track.name,
-          artist: track.artistNames.join(', '),
-          thumbnailUrl: track.imageUrl ?? '',
-          duration: Duration(milliseconds: track.durationMs),
-          sourceId: pluginId,
-          url: track.previewUrl,
-        ),
-        siblings: [],
-        codec: SourceCodecs.m4a, // 默认 codec，实际应根据文件判断
-      );
-    }
-
-    // 从数据库查找
-    final trackEntity = await _isar.trackEntitys.filter().trackIdEqualTo(track.id).findFirst();
-    if (trackEntity != null && trackEntity.localPath != null) {
-      final path = trackEntity.localPath!;
-      return SourcedTrackModel(
-        track: track,
-        sourceId: pluginId,
-        sourceInfo: SourceInfoModel(
-          id: track.id,
-          title: track.name,
-          artist: track.artistNames.join(', '),
-          thumbnailUrl: track.imageUrl ?? '',
-          duration: Duration(milliseconds: track.durationMs),
-          sourceId: pluginId,
-          url: 'file://$path',
-        ),
-        siblings: [],
-        codec: _determineCodec(path),
-      );
-    }
-
-    throw Exception('未找到本地音源: ${track.name}');
-  }
+  Future<List<HomeSectionModel>> fetchHomeSections() async => [];
 
   @override
-  Future<List<SourceInfo>> search(String query) async {
-    // 从本地数据库搜索
+  Future<List<MediaModel>> search(String query, {List<String>? types}) async {
     final results = await _isar.trackEntitys
         .filter()
         .nameContains(query, caseSensitive: false)
@@ -82,23 +51,15 @@ class LocalTrackSourceService extends TrackSourceService {
         .artistNamesElementContains(query, caseSensitive: false)
         .findAll();
 
-    return results.map((e) => SourceInfoModel(
-      id: e.trackId,
-      title: e.name,
-      artist: e.artistNames?.join(', ') ?? '',
-      thumbnailUrl: e.imageUrl ?? '',
-      duration: Duration(milliseconds: e.durationMs),
-      sourceId: pluginId,
-      url: e.localPath != null ? 'file://${e.localPath}' : null,
-    )).toList();
+    return results.map((e) => e.toModel()).toList();
   }
 
-  SourceCodecs _determineCodec(String path) {
-    if (path.endsWith('.mp3')) return SourceCodecs.mp3;
-    if (path.endsWith('.m4a')) return SourceCodecs.m4a;
-    if (path.endsWith('.flac')) return SourceCodecs.flac;
-    if (path.endsWith('.wav')) return SourceCodecs.wav;
-    if (path.endsWith('.ogg') || path.endsWith('.opus')) return SourceCodecs.opus;
-    return SourceCodecs.m4a;
+  @override
+  Future<AudioStreamInfo> fetchAudioStream(String trackId) async {
+    final trackEntity = await _isar.trackEntitys.filter().trackIdEqualTo(trackId).findFirst();
+    if (trackEntity != null && trackEntity.localPath != null) {
+      return AudioStreamInfo(url: 'file://${trackEntity.localPath}');
+    }
+    throw Exception('未找到本地音源文件: $trackId');
   }
 }

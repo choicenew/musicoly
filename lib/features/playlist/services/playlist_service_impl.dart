@@ -1,10 +1,11 @@
 import 'package:pyro_music/core/models/playlist_model.dart';
 import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
 /// Implementation of the playlist service
 ///
 /// Provides cross-platform playlist management functionality
-class PlaylistServiceImpl extends PlaylistService {
+class PlaylistServiceImpl extends BaseService {
   /// The list of platform-specific playlist services
   final List<PlaylistService> platformServices;
 

@@ -8,11 +8,10 @@ import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
-import 'package:pyro_music/core/services/equalizer_service.dart';
-import 'package:pyro_music/core/services/desktop_service.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
 /// 播放服务实现 - 使用 just_audio
-class PlaybackServiceImpl extends PlayerService {
+class PlaybackServiceImpl extends BaseService {
   final AndroidEqualizer _equalizer = AndroidEqualizer();
   late final AudioPlayer _player;
   final ConcatenatingAudioSource _playlist = ConcatenatingAudioSource(children: []);

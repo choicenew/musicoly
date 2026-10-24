@@ -3,8 +3,9 @@ import 'package:pyro_music/core/database/isar/entities/playlist_entity.dart';
 import 'package:pyro_music/core/database/isar/entities/track_entity.dart';
 import 'package:pyro_music/core/models/playlist_model.dart';
 import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 
-class LocalPlaylistService extends PlaylistService {
+class LocalPlaylistService extends BaseService {
   final Isar _isar;
 
   LocalPlaylistService(this._isar);

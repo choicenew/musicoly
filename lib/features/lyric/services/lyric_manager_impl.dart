@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/models/lyric_data_model.dart';
+import 'package:pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 
 /// 歌词管理器实现
-class LyricManagerImpl extends LyricManager {
+class LyricManagerImpl extends BaseService {
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
 
   @override

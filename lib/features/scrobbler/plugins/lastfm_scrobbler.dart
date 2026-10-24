@@ -9,7 +9,7 @@ import 'package:pyro_music/core/models/track_model.dart';
 import 'package:pyro_music/core/services/base_service.dart';
 
 /// Last.fm Scrobbler 插件实现
-class LastfmScrobbler extends ScrobblerPlugin {
+class LastfmScrobbler extends BaseService {
   bool _enabled = true;
   String? _sessionKey;
   String? _username;
@@ -20,21 +20,18 @@ class LastfmScrobbler extends ScrobblerPlugin {
   static const String _apiSecret = ScrobblerConfig.lastfmApiSecret;
 
   @override
-  ScrobblerPluginInfo get pluginInfo => const ScrobblerPluginInfo(
-        id: 'lastfm',
-        name: 'Last.fm',
-        author: 'PyroMusic',
-        version: '1.0.0',
-        description: 'Official Last.fm scrobbling support.',
-      );
+  String get serviceId => 'lastfm';
+
+  @override
+  String get serviceName => 'Last.fm';
+
+  @override
+  String get serviceVersion => '1.0.0';
 
   @override
   String? get platform => 'lastfm';
 
-  @override
   bool get isEnabled => _enabled;
-
-  @override
   bool get isAuthenticated => _sessionKey != null;
 
   @override
@@ -92,7 +89,7 @@ class LastfmScrobbler extends ScrobblerPlugin {
   }
 
   @override
-  Future<void> onNowPlaying(TrackInterface track) async {
+  Future<void> onNowPlaying(TrackModel track) async {
     if (!isEnabled || !isAuthenticated) return;
 
     try {
@@ -119,7 +116,7 @@ class LastfmScrobbler extends ScrobblerPlugin {
   }
 
   @override
-  Future<void> onScrobble(TrackInterface track, {required int duration, required bool isComplete}) async {
+  Future<void> onScrobble(TrackModel track, {required int duration, required bool isComplete}) async {
     if (!isEnabled || !isAuthenticated) return;
 
     try {
