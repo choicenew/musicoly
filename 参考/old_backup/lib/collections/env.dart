@@ -1,0 +1,4 @@
+enum ReleaseChannel {
+  stable,
+  nightly
+}

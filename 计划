@@ -1,0 +1,47 @@
+### PyroMusic 全功能补完路线图 (Roadmap)
+
+**核心理念**：主应用（Core App）作为纯粹、极致的播放器核心。涉及第三方平台或扩展性的功能通过插件系统（Plugin System）实现，确保主程序轻量且合规。
+
+---
+
+#### 第一阶段：核心音频引擎与播放机制 (Core Audio)
+- **真实引擎接入**：引入 `just_audio` 彻底替换 `playback_service_impl.dart` 中的 Timer 模拟。
+- **播放质量**：实现 无缝播放 (Gapless) 、 淡入淡出 (Crossfade) 和 音量一致性 (ReplayGain/Normalization) 。
+- **音效系统**：集成 10 阶 均衡器 (Equalizer) 、低音增强、混响控制。
+- **流处理**：实现 音频流代理 (Audio Proxy) 以支持更稳定的网络音频缓存与预加载。
+- **睡眠定时器 (Sleep Timer)**：支持倒计时或播完当前曲目停止。
+- **网络质量自适应**：根据网络状况（WiFi/流量）自动切换音频质量。
+
+#### 第二阶段：本地媒体库与数据管理 (Library & Data)
+- **本地扫描器**：实现深度文件夹扫描，支持自动索引歌手、专辑、流派。
+- **标签编辑器 (Tag Editor)**：支持修改 ID3 标签、封面图及元数据。
+- **智能库 (Smart Library)**：实现 智能歌单 (Smart Playlists) （如：最近最常听）、 黑名单 (Blacklist) 机制。
+- **数据安全**：构建完整的 备份与恢复 (Backup & Restore) 系统，支持导出 M3U/JSON。
+- **缓存策略**：精细化缓存管理，支持自动清理与上限限制。
+- **多库支持**：区分并无缝切换在线库与本地离线库。
+
+#### 第三阶段：桌面与平台深度集成 (Desktop & Platform)
+- **系统媒体控制 (SMTC/MPRIS)**：完善 Windows (SMTC)、Linux (MPRIS) 和 macOS 控制，支持任务栏预览。
+- **系统集成**：实现 单实例运行 、 系统托盘 (Tray) 菜单、 全局快捷键 (Global Shortcuts) 。
+- **移动端增强**：开发 Android/iOS 桌面小部件 (Widgets) 。
+- **投屏支持 (Casting)**：集成 DLNA/Chromecast/AirPlay 协议。
+- **远程访问**：内置微型 Web 服务器，支持 WebDAV 或 Subsonic 协议访问库。
+
+#### 第四阶段：UI/UX 与视觉盛宴 (Visuals & Customization)
+- **视觉增强**：实现 动态取色 (Dynamic Theming) （随封面变色）和 音频可视化 (Visualizer/Waveform) 。
+- **高级动效**：加入 弹性滚动 (Bouncy Scroll) 、 共享元素动画 (Hero) 、页面平滑过渡。
+- **自定义皮肤 (Skins)**：支持用户自定义背景、字体及主题色调。
+- **多选操作 (Multi-select)**：支持批量添加到歌单、下载或删除。
+- **画中画/迷你播放器 (Mini Player)**：桌面端常驻小窗控制模式。
+
+#### 第五阶段：插件系统架构 (Plugin Architecture)
+- **脚本引擎集成**：引入 `pyro_hetu_script_engine`，搭建基于 Delegate 注入的执行环境。
+- **插件加载器**：实现热插拔管理界面，支持用户手动导入 `.ht` 插件。
+- **音源解耦**：将 Spotify、YouTube Music 等平台实现迁移至独立插件。
+
+#### 第六阶段：插件功能生态 (Plugin Ecosystem)
+- **第三方音源**：Spotify, YouTube, SoundCloud, NetEase 等音源插件。
+- **YouTube 增强**：集成 SponsorBlock 自动跳过非音乐片段（片头、广告）。
+- **歌词交互**：多源歌词聚合、内嵌歌词支持、歌词同步编辑器 (LRC Editor) 。
+- **社区同步 (Scrobbling)**：支持 Last.fm / ListenBrainz / Libre.fm 的播放记录同步。
+- **性能监控 (Benchmark)**：内置工具查看 App 资源占用与运行效率。
