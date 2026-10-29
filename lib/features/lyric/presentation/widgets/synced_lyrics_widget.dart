@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
 import 'package:pyro_music/features/player/providers/playback_provider.dart';
 
-/// 时间同步歌词展示组件
+/// YesPlayMusic & Musify Style High-Performance Smooth Auto-Scrolling Synced Lyrics Widget
 class SyncedLyricsWidget extends ConsumerStatefulWidget {
   final LyricData lyrics;
 
@@ -18,6 +18,21 @@ class SyncedLyricsWidget extends ConsumerStatefulWidget {
 
 class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
   final ScrollController _scrollController = ScrollController();
+  int _previousIndex = -1;
+
+  void _scrollToIndex(int index, double lineSpacing) {
+    if (!_scrollController.hasClients || index < 0) return;
+    
+    // Approximate item height based on spacing
+    final itemHeight = 60.0 * lineSpacing;
+    final targetOffset = index * itemHeight;
+
+    _scrollController.animateTo(
+      targetOffset,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutCubic,
+    );
+  }
 
   @override
   void dispose() {
@@ -32,60 +47,90 @@ class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
 
     if (widget.lyrics.syncedLines.isEmpty) {
       return const Center(
-        child: Text('无同步歌词数据'),
+        child: Text(
+          '无同步歌词数据',
+          style: TextStyle(color: Colors.white54, fontSize: 16),
+        ),
       );
+    }
+
+    final currentIndex = lyricController.currentLyricIndex.value;
+    final autoScroll = lyricController.autoScroll.value;
+    final lineSpacing = lyricController.lineSpacing.value;
+
+    if (autoScroll && currentIndex != _previousIndex) {
+      _previousIndex = currentIndex;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToIndex(currentIndex, lineSpacing);
+      });
     }
 
     return ValueListenableBuilder<double>(
       valueListenable: lyricController.fontSize,
       builder: (context, fontSize, _) {
-        return ValueListenableBuilder<double>(
-          valueListenable: lyricController.lineSpacing,
-          builder: (context, lineSpacing, _) {
-            return ValueListenableBuilder<bool>(
-              valueListenable: lyricController.showTranslation,
-              builder: (context, showTranslation, _) {
-                return ListView.builder(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.symmetric(vertical: 200, horizontal: 24),
-                  itemCount: widget.lyrics.syncedLines.length,
-                  itemBuilder: (context, index) {
-                    final lyricLine = widget.lyrics.syncedLines[index];
-                    final isCurrentLine = index == lyricController.currentLyricIndex.value;
+        return ValueListenableBuilder<bool>(
+          valueListenable: lyricController.showTranslation,
+          builder: (context, showTranslation, _) {
+            return ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.symmetric(vertical: 220, horizontal: 28),
+              itemCount: widget.lyrics.syncedLines.length,
+              itemBuilder: (context, index) {
+                final lyricLine = widget.lyrics.syncedLines[index];
+                final isCurrentLine = index == currentIndex;
 
-                    return GestureDetector(
-                      onTap: () {
-                        ref.read(playbackStateProvider.notifier).seekTo(lyricLine.startTime);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0 * lineSpacing),
-                        child: Column(
-                          children: [
-                            Text(
-                              lyricLine.text,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: isCurrentLine ? fontSize + 4 : fontSize,
-                                fontWeight: isCurrentLine ? FontWeight.bold : FontWeight.normal,
-                                color: isCurrentLine ? theme.colorScheme.primary : Colors.white70,
-                              ),
-                            ),
-                            if (showTranslation && lyricLine.translation != null) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                lyricLine.translation!,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: fontSize - 2,
-                                  color: isCurrentLine ? theme.colorScheme.primary.withValues(alpha: 0.8) : Colors.white54,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    );
+                return GestureDetector(
+                  onTap: () {
+                    ref.read(playbackStateProvider.notifier).seekTo(lyricLine.startTime);
                   },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOut,
+                    padding: EdgeInsets.symmetric(vertical: 10.0 * lineSpacing),
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: [
+                        AnimatedDefaultTextStyle(
+                          duration: const Duration(milliseconds: 250),
+                          style: TextStyle(
+                            fontSize: isCurrentLine ? fontSize + 6 : fontSize,
+                            fontWeight: isCurrentLine ? FontWeight.bold : FontWeight.w500,
+                            color: isCurrentLine
+                                ? theme.colorScheme.primary
+                                : Colors.white.withValues(alpha: 0.6),
+                            shadows: isCurrentLine
+                                ? [
+                                    Shadow(
+                                      color: theme.colorScheme.primary.withValues(alpha: 0.6),
+                                      blurRadius: 16,
+                                    )
+                                  ]
+                                : [],
+                          ),
+                          child: Text(
+                            lyricLine.text,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        if (showTranslation && lyricLine.translation != null && lyricLine.translation!.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 250),
+                            style: TextStyle(
+                              fontSize: isCurrentLine ? fontSize : fontSize - 3,
+                              color: isCurrentLine
+                                  ? theme.colorScheme.primary.withValues(alpha: 0.85)
+                                  : Colors.white38,
+                            ),
+                            child: Text(
+                              lyricLine.translation!,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 );
               },
             );

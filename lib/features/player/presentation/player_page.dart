@@ -66,6 +66,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                   child: AnimatedCrossFade(
                     firstChild: PlayerArtwork(
                       imageUrl: track.imageUrl,
+                      isPlaying: playbackState.isPlaying,
                       onTap: () => setState(() => _showLyrics = true),
                     ),
                     secondChild: GestureDetector(
