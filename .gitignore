@@ -47,3 +47,4 @@ app.*.map.json
 # Agents and temporary artifacts
 .agents/
 .artifacts/
+references/
