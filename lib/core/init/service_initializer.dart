@@ -18,6 +18,9 @@ import 'package:pyro_music/features/scrobbler/plugins/lastfm_scrobbler.dart';
 import 'package:pyro_music/features/statistics/services/play_stats_service_impl.dart';
 import 'package:metadata_god/metadata_god.dart';
 
+import 'package:pyro_music/features/plugin/registry/plugin_dispatcher.dart';
+import 'package:pyro_music/features/plugin/runtime/default_system_plugin.dart';
+import 'package:pyro_music/features/plugin/runtime/subsonic_plugin.dart';
 import 'package:pyro_music/features/player/services/player_service_impl.dart';
 import 'package:pyro_music/core/platform/platform_registry.dart';
 
@@ -166,6 +169,17 @@ class ServiceInitializer {
     if (scrobblerManager != null) {
       await scrobblerManager.initialize();
     }
+
+    // 4.14 注册通用插件注册中心与调度分发引擎
+    final pluginRegistry = PluginRegistry();
+    final systemPlugin = DefaultSystemPlugin();
+    final subsonicPlugin = SubsonicPlugin();
+
+    pluginRegistry.registerPlugin(systemPlugin);
+    pluginRegistry.registerPlugin(subsonicPlugin);
+
+    GetIt.instance.registerSingleton<PluginRegistry>(pluginRegistry);
+    GetIt.instance.registerSingleton<PluginDispatcher>(PluginDispatcher(registry: pluginRegistry));
 
     debugPrint('核心服务初始化完成 (Pure Core)');
   }
