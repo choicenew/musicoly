@@ -2,18 +2,36 @@ import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/services/base_service.dart';
 import 'dart:async';
 
+/// 预设均衡器枚举
+enum EqualizerPreset {
+  flat('Flat', [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+  pop('Pop', [-1, 1, 3, 4, 3, 0, -1, -2, -1, -1]),
+  rock('Rock', [4, 3, 2, 0, -1, -1, 1, 2, 3, 4]),
+  bassBoost('Bass Boost', [6, 5, 4, 2, 0, 0, 0, 0, 0, 0]),
+  vocalBoost('Vocal Boost', [-2, -2, 0, 3, 5, 4, 2, 0, -1, -2]),
+  classical('Classical', [4, 3, 2, 2, -1, -1, 0, 2, 3, 3]),
+  electronic('Electronic', [4, 3, 0, -2, 2, 1, 0, 2, 4, 4]),
+  jazz('Jazz', [3, 2, 0, 2, -1, -1, 0, 1, 2, 3]);
+
+  final String name;
+  final List<double> levels;
+  const EqualizerPreset(this.name, this.levels);
+}
+
 class EqualizerService extends BaseService {
   bool _isEnabled = false;
-  final List<double> _bandLevels = List.filled(10, 0.0);
-  
+  List<double> _bandLevels = List.filled(10, 0.0);
+  EqualizerPreset _currentPreset = EqualizerPreset.flat;
+
   final _enabledController = StreamController<bool>.broadcast();
   final _bandsController = StreamController<List<double>>.broadcast();
 
   Stream<bool> get enabledStream => _enabledController.stream;
   Stream<List<double>> get bandsStream => _bandsController.stream;
-  
+
   bool get isEnabled => _isEnabled;
   List<double> get bandLevels => _bandLevels;
+  EqualizerPreset get currentPreset => _currentPreset;
 
   @override
   String get serviceId => 'equalizer_service';
@@ -33,6 +51,13 @@ class EqualizerService extends BaseService {
     debugPrint('Equalizer enabled: $enabled');
   }
 
+  Future<void> applyPreset(EqualizerPreset preset) async {
+    _currentPreset = preset;
+    _bandLevels = List<double>.from(preset.levels);
+    _bandsController.add(List.from(_bandLevels));
+    debugPrint('Equalizer preset applied: ${preset.name}');
+  }
+
   Future<void> setBandLevel(int band, double level) async {
     if (band >= 0 && band < _bandLevels.length) {
       _bandLevels[band] = level;
@@ -48,3 +73,4 @@ class EqualizerService extends BaseService {
     await super.dispose();
   }
 }
+

@@ -23,6 +23,14 @@ class EqualizerNotifier extends _$EqualizerNotifier {
     state = state.copyWith(isEnabled: enabled);
   }
 
+  Future<void> applyPreset(EqualizerPreset preset) async {
+    await _service.applyPreset(preset);
+    state = state.copyWith(
+      currentPreset: preset,
+      bandLevels: _service.bandLevels,
+    );
+  }
+
   Future<void> setBandLevel(int band, double level) async {
     await _service.setBandLevel(band, level);
     final newLevels = List<double>.from(state.bandLevels);
@@ -34,13 +42,24 @@ class EqualizerNotifier extends _$EqualizerNotifier {
 class EqualizerState {
   final bool isEnabled;
   final List<double> bandLevels;
+  final EqualizerPreset currentPreset;
 
-  EqualizerState({required this.isEnabled, required this.bandLevels});
+  EqualizerState({
+    required this.isEnabled,
+    required this.bandLevels,
+    this.currentPreset = EqualizerPreset.flat,
+  });
 
-  EqualizerState copyWith({bool? isEnabled, List<double>? bandLevels}) {
+  EqualizerState copyWith({
+    bool? isEnabled,
+    List<double>? bandLevels,
+    EqualizerPreset? currentPreset,
+  }) {
     return EqualizerState(
       isEnabled: isEnabled ?? this.isEnabled,
       bandLevels: bandLevels ?? this.bandLevels,
+      currentPreset: currentPreset ?? this.currentPreset,
     );
   }
 }
+

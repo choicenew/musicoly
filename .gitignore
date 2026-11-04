@@ -48,3 +48,6 @@ app.*.map.json
 .agents/
 .artifacts/
 references/
+ref/
+参考/
+

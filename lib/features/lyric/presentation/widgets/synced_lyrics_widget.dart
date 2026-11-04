@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/lyric/controllers/lyric_controller.dart';
+import 'package:pyro_music/features/lyric/presentation/widgets/word_by_word_lyric_widget.dart';
 import 'package:pyro_music/features/player/providers/playback_provider.dart';
 
-/// YesPlayMusic & Musify Style High-Performance Smooth Auto-Scrolling Synced Lyrics Widget
+/// YesPlayMusic, Namida & Musify Style High-Performance Smooth Auto-Scrolling Synced Lyrics Widget
 class SyncedLyricsWidget extends ConsumerStatefulWidget {
   final LyricData lyrics;
 
@@ -23,8 +24,7 @@ class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
   void _scrollToIndex(int index, double lineSpacing) {
     if (!_scrollController.hasClients || index < 0) return;
     
-    // Approximate item height based on spacing
-    final itemHeight = 60.0 * lineSpacing;
+    final itemHeight = 68.0 * lineSpacing;
     final targetOffset = index * itemHeight;
 
     _scrollController.animateTo(
@@ -43,6 +43,7 @@ class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
   @override
   Widget build(BuildContext context) {
     final lyricController = ref.watch(LyricController.provider);
+    final currentPosition = ref.watch(playbackStateProvider).position;
     final theme = Theme.of(context);
 
     if (widget.lyrics.syncedLines.isEmpty) {
@@ -90,34 +91,38 @@ class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
                     alignment: Alignment.center,
                     child: Column(
                       children: [
-                        AnimatedDefaultTextStyle(
-                          duration: const Duration(milliseconds: 250),
-                          style: TextStyle(
-                            fontSize: isCurrentLine ? fontSize + 6 : fontSize,
-                            fontWeight: isCurrentLine ? FontWeight.bold : FontWeight.w500,
-                            color: isCurrentLine
-                                ? theme.colorScheme.primary
-                                : Colors.white.withValues(alpha: 0.6),
-                            shadows: isCurrentLine
-                                ? [
-                                    Shadow(
-                                      color: theme.colorScheme.primary.withValues(alpha: 0.6),
-                                      blurRadius: 16,
-                                    )
-                                  ]
-                                : [],
-                          ),
-                          child: Text(
-                            lyricLine.text,
+                        // 罗马音 / 拼音标注
+                        if (lyricLine.romanization != null && lyricLine.romanization!.isNotEmpty) ...[
+                          Text(
+                            lyricLine.romanization!,
                             textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: isCurrentLine ? fontSize - 6 : fontSize - 8,
+                              color: isCurrentLine
+                                  ? theme.colorScheme.primary.withValues(alpha: 0.8)
+                                  : Colors.white30,
+                            ),
                           ),
+                          const SizedBox(height: 2),
+                        ],
+
+                        // 主歌词行 (支持逐字与普通歌词)
+                        WordByWordLyricWidget(
+                          line: lyricLine,
+                          currentPosition: currentPosition,
+                          isCurrentLine: isCurrentLine,
+                          fontSize: fontSize,
+                          activeColor: theme.colorScheme.primary,
+                          inactiveColor: Colors.white.withValues(alpha: 0.6),
                         ),
+
+                        // 翻译歌词
                         if (showTranslation && lyricLine.translation != null && lyricLine.translation!.isNotEmpty) ...[
                           const SizedBox(height: 6),
                           AnimatedDefaultTextStyle(
                             duration: const Duration(milliseconds: 250),
                             style: TextStyle(
-                              fontSize: isCurrentLine ? fontSize : fontSize - 3,
+                              fontSize: isCurrentLine ? fontSize - 2 : fontSize - 5,
                               color: isCurrentLine
                                   ? theme.colorScheme.primary.withValues(alpha: 0.85)
                                   : Colors.white38,
@@ -140,3 +145,4 @@ class _SyncedLyricsWidgetState extends ConsumerState<SyncedLyricsWidget> {
     );
   }
 }
+
