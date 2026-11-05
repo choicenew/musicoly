@@ -26,7 +26,27 @@ class DesktopService extends BaseService with TrayListener, WindowListener {
   String? get platform => 'desktop';
 
   bool _isInitialized = false;
+  bool _isMiniPlayer = false;
+  Size _savedWindowSize = const Size(1280, 800);
   SMTCWindows? _smtc;
+
+  bool get isMiniPlayer => _isMiniPlayer;
+
+  Future<void> toggleMiniPlayer() async {
+    if (!Platform.isWindows && !Platform.isLinux && !Platform.isMacOS) return;
+    _isMiniPlayer = !_isMiniPlayer;
+    if (_isMiniPlayer) {
+      _savedWindowSize = await windowManager.getSize();
+      await windowManager.setSize(const Size(380, 180));
+      await windowManager.setAlwaysOnTop(true);
+      await windowManager.setResizable(false);
+    } else {
+      await windowManager.setAlwaysOnTop(false);
+      await windowManager.setResizable(true);
+      await windowManager.setSize(_savedWindowSize);
+    }
+    _updateTrayMenu();
+  }
 
   @override
   Future<void> initialize() async {

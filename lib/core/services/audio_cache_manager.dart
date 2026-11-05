@@ -8,6 +8,13 @@ class AudioCacheManager extends BaseService {
   Directory? _cacheDir;
   int _maxCacheSizeBytes = 2 * 1024 * 1024 * 1024; // 默认最大 2GB 缓存
 
+  int get maxCacheSizeBytes => _maxCacheSizeBytes;
+
+  void setMaxCacheSize(int bytes) {
+    _maxCacheSizeBytes = bytes;
+    _enforceMaxCacheSize();
+  }
+
   @override
   String get serviceId => 'audio_cache_manager';
 
@@ -63,6 +70,25 @@ class AudioCacheManager extends BaseService {
       }
     }
     return totalSize;
+  }
+
+  /// 预加载/预缓存下一首歌曲的音频 (Next Track Pre-fetching)
+  Future<void> prefetchTrackAudio(String trackId, String downloadUrl) async {
+    final existing = await getCachedAudioFile(trackId);
+    if (existing != null) return; // 已存在缓存
+
+    try {
+      final client = HttpClient();
+      final request = await client.getUrl(Uri.parse(downloadUrl));
+      final response = await request.close();
+      if (response.statusCode == 200) {
+        final bytes = await response.fold<List<int>>([], (previous, element) => previous..addAll(element));
+        await saveAudioToCache(trackId, bytes);
+        debugPrint('Pre-fetched audio successfully for track: $trackId');
+      }
+    } catch (e) {
+      debugPrint('Pre-fetch audio failed for track $trackId: $e');
+    }
   }
 
   /// 清空所有音频缓存
