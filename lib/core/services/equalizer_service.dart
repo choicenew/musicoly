@@ -18,10 +18,25 @@ enum EqualizerPreset {
   const EqualizerPreset(this.name, this.levels);
 }
 
+enum ReverbPreset {
+  none('None'),
+  smallRoom('Small Room'),
+  largeHall('Large Hall'),
+  concertHall('Concert Hall'),
+  stadium('Stadium');
+
+  final String label;
+  const ReverbPreset(this.label);
+}
+
 class EqualizerService extends BaseService {
   bool _isEnabled = false;
   List<double> _bandLevels = List.filled(10, 0.0);
   EqualizerPreset _currentPreset = EqualizerPreset.flat;
+  double _bassBoost = 0.0;
+  double _playbackSpeed = 1.0;
+  double _pitchShift = 1.0;
+  ReverbPreset _reverbPreset = ReverbPreset.none;
 
   final _enabledController = StreamController<bool>.broadcast();
   final _bandsController = StreamController<List<double>>.broadcast();
@@ -32,6 +47,10 @@ class EqualizerService extends BaseService {
   bool get isEnabled => _isEnabled;
   List<double> get bandLevels => _bandLevels;
   EqualizerPreset get currentPreset => _currentPreset;
+  double get bassBoost => _bassBoost;
+  double get playbackSpeed => _playbackSpeed;
+  double get pitchShift => _pitchShift;
+  ReverbPreset get reverbPreset => _reverbPreset;
 
   @override
   String get serviceId => 'equalizer_service';
@@ -58,6 +77,26 @@ class EqualizerService extends BaseService {
     debugPrint('Equalizer preset applied: ${preset.name}');
   }
 
+  Future<void> setBassBoost(double boost) async {
+    _bassBoost = boost.clamp(0.0, 1.0);
+    debugPrint('Bass boost set: $_bassBoost');
+  }
+
+  Future<void> setPlaybackSpeed(double speed) async {
+    _playbackSpeed = speed.clamp(0.5, 2.0);
+    debugPrint('Playback speed set: $_playbackSpeed');
+  }
+
+  Future<void> setPitchShift(double pitch) async {
+    _pitchShift = pitch.clamp(0.5, 2.0);
+    debugPrint('Pitch shift set: $_pitchShift');
+  }
+
+  Future<void> setReverbPreset(ReverbPreset reverb) async {
+    _reverbPreset = reverb;
+    debugPrint('Reverb preset set: ${reverb.label}');
+  }
+
   Future<void> setBandLevel(int band, double level) async {
     if (band >= 0 && band < _bandLevels.length) {
       _bandLevels[band] = level;
@@ -65,6 +104,7 @@ class EqualizerService extends BaseService {
       debugPrint('Equalizer band $band level: $level');
     }
   }
+
 
   @override
   Future<void> dispose() async {

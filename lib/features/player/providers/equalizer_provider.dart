@@ -31,6 +31,26 @@ class EqualizerNotifier extends _$EqualizerNotifier {
     );
   }
 
+  Future<void> setBassBoost(double boost) async {
+    await _service.setBassBoost(boost);
+    state = state.copyWith(bassBoost: boost);
+  }
+
+  Future<void> setPlaybackSpeed(double speed) async {
+    await _service.setPlaybackSpeed(speed);
+    state = state.copyWith(playbackSpeed: speed);
+  }
+
+  Future<void> setPitchShift(double pitch) async {
+    await _service.setPitchShift(pitch);
+    state = state.copyWith(pitchShift: pitch);
+  }
+
+  Future<void> setReverbPreset(ReverbPreset reverb) async {
+    await _service.setReverbPreset(reverb);
+    state = state.copyWith(reverbPreset: reverb);
+  }
+
   Future<void> setBandLevel(int band, double level) async {
     await _service.setBandLevel(band, level);
     final newLevels = List<double>.from(state.bandLevels);
@@ -43,23 +63,40 @@ class EqualizerState {
   final bool isEnabled;
   final List<double> bandLevels;
   final EqualizerPreset currentPreset;
+  final double bassBoost;
+  final double playbackSpeed;
+  final double pitchShift;
+  final ReverbPreset reverbPreset;
 
   EqualizerState({
     required this.isEnabled,
     required this.bandLevels,
     this.currentPreset = EqualizerPreset.flat,
+    this.bassBoost = 0.0,
+    this.playbackSpeed = 1.0,
+    this.pitchShift = 1.0,
+    this.reverbPreset = ReverbPreset.none,
   });
 
   EqualizerState copyWith({
     bool? isEnabled,
     List<double>? bandLevels,
     EqualizerPreset? currentPreset,
+    double? bassBoost,
+    double? playbackSpeed,
+    double? pitchShift,
+    ReverbPreset? reverbPreset,
   }) {
     return EqualizerState(
       isEnabled: isEnabled ?? this.isEnabled,
       bandLevels: bandLevels ?? this.bandLevels,
       currentPreset: currentPreset ?? this.currentPreset,
+      bassBoost: bassBoost ?? this.bassBoost,
+      playbackSpeed: playbackSpeed ?? this.playbackSpeed,
+      pitchShift: pitchShift ?? this.pitchShift,
+      reverbPreset: reverbPreset ?? this.reverbPreset,
     );
   }
 }
+
 
