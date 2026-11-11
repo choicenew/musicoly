@@ -1,12 +1,15 @@
+import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/models/lyric_data_model.dart';
 import 'package:pyro_music/core/services/base_service.dart';
 import 'package:pyro_music/core/services/service_registry.dart';
 import 'lyric_service.dart';
 
-/// 歌词管理器实现
+/// OuterTune Inspired LRU Cached & Priority-Resolved Lyric Manager Implementation
 class LyricManagerImpl extends BaseService implements LyricManager {
   final ServiceRegistry _serviceRegistry = ServiceRegistry();
+  final LinkedHashMap<String, LyricData> _lruCache = LinkedHashMap<String, LyricData>();
+  final int _maxCacheSize = 10;
 
   @override
   String get serviceId => 'lyric_manager';
@@ -28,14 +31,25 @@ class LyricManagerImpl extends BaseService implements LyricManager {
   @override
   Future<LyricData?> getLyric(String trackId,
       {Map<String, dynamic>? metadata}) async {
+    // 1. 优先从 LRU 内存缓存中读取 (OuterTune 架构标准)
+    if (_lruCache.containsKey(trackId)) {
+      final cached = _lruCache.remove(trackId)!;
+      _lruCache[trackId] = cached; // Refresh LRU order
+      debugPrint('Lyric hit in LRU cache for: $trackId');
+      return cached;
+    }
+
+    // 2. 依次查询可用插件
     final plugins = availablePlugins;
-    
     for (final pluginId in plugins) {
       try {
         final plugin = _serviceRegistry.getService<LyricPlugin>(pluginId);
         if (plugin != null) {
           final lyric = await plugin.fetchLyric(trackId, metadata: metadata);
-          if (lyric != null) return lyric;
+          if (lyric != null) {
+            _addToCache(trackId, lyric);
+            return lyric;
+          }
         }
       } catch (e) {
         debugPrint('歌词插件 $pluginId 获取失败: $e');
@@ -44,9 +58,17 @@ class LyricManagerImpl extends BaseService implements LyricManager {
     return null;
   }
 
+  void _addToCache(String trackId, LyricData lyric) {
+    if (_lruCache.length >= _maxCacheSize) {
+      final oldestKey = _lruCache.keys.first;
+      _lruCache.remove(oldestKey);
+    }
+    _lruCache[trackId] = lyric;
+  }
+
   @override
   Future<void> initialize() async {
-    debugPrint('初始化歌词管理器...');
+    debugPrint('初始化歌词管理器 (OuterTune LRU Cache Enabled)...');
   }
 
   @override
@@ -70,6 +92,8 @@ class LyricManagerImpl extends BaseService implements LyricManager {
 
   @override
   Future<bool> saveLyric(String trackId, LyricData lyric) async {
-    return false;
+    _addToCache(trackId, lyric);
+    return true;
   }
 }
+
