@@ -17,9 +17,14 @@ import 'package:pyro_music/features/player/presentation/widgets/player_progress_
 import 'package:pyro_music/features/player/presentation/widgets/player_artwork.dart';
 import 'package:pyro_music/features/player/presentation/widgets/player_header.dart';
 import 'package:pyro_music/features/player/presentation/widgets/player_queue_sheet.dart';
+import 'package:pyro_music/features/player/presentation/widgets/audio_effects_dialog.dart';
+import 'package:pyro_music/features/player/presentation/widgets/share_to_device_dialog.dart';
+import 'package:pyro_music/features/player/presentation/widgets/ambient_mesh_background.dart';
+import 'package:pyro_music/features/player/presentation/widgets/music_visualizer_widget.dart';
 import 'package:pyro_music/features/settings/presentation/widgets/equalizer_settings.dart';
 import 'package:pyro_music/features/lyric/presentation/widgets/synced_lyrics_widget.dart';
 import 'package:pyro_music/features/lyric/presentation/widgets/plain_lyrics_widget.dart';
+
 
 /// 全屏播放器页面
 class PlayerPage extends ConsumerStatefulWidget {
@@ -176,8 +181,20 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
+                leading: const Icon(Icons.devices),
+                title: const Text('跨设备 / 局域网设备分享'),
+                subtitle: const Text('通过二维码或 HTTP 链接向手机/TV同步播放'),
+                onTap: () {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    builder: (context) => ShareToDeviceDialog(currentTrack: track),
+                  );
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.equalizer),
-                title: Text(l10n.equalizer),
+                title: const Text('音效中枢 (Equalizer & Reverb)'),
                 onTap: () {
                   Navigator.pop(context);
                   _showEqualizer(context);
@@ -185,6 +202,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
               ),
               ListTile(
                 leading: const Icon(Icons.timer),
+
                 title: Text(l10n.sleep_timer),
                 subtitle: ref.watch(sleepTimerProvider) != null
                     ? Text(l10n.minutes_remaining(ref.watch(sleepTimerProvider)!.inMinutes.toString()))
@@ -242,11 +260,10 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
   void _showEqualizer(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => const AlertDialog(
-        content: EqualizerSettings(),
-      ),
+      builder: (context) => const AudioEffectsDialog(),
     );
   }
+
 
   void _showSleepTimerDialog(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -473,29 +490,34 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
   }
 
   Widget _buildBackground(String? imageUrl) {
-    return Stack(
-      children: [
-        if (imageUrl != null)
+    return AmbientMeshBackground(
+      primaryColor: Theme.of(context).colorScheme.primary,
+      secondaryColor: Theme.of(context).colorScheme.secondary,
+      child: Stack(
+        children: [
+          if (imageUrl != null)
+            Positioned.fill(
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Container(color: Colors.black),
+              ),
+            )
+          else
+            Container(color: Colors.black),
           Positioned.fill(
-            child: CachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) => Container(color: Colors.black),
-            ),
-          )
-        else
-          Container(color: Colors.black),
-        Positioned.fill(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-            child: Container(
-              color: Colors.black.withValues(alpha: 0.5),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 45, sigmaY: 45),
+              child: Container(
+                color: Colors.black.withValues(alpha: 0.55),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
+
 
   Widget _buildLyricsView() {
     final lyricController = ref.watch(LyricController.provider);
