@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/local_music/providers/local_scanner_provider.dart';
@@ -97,7 +99,14 @@ class _DownloadsSettingsState extends ConsumerState<DownloadsSettings> {
               ),
             ),
             ListTile(
+              title: const Text('音频缓存管理与预加载'),
+              subtitle: const Text('配置在线试听自动缓存上限与清理机制'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.go('/cache-settings'),
+            ),
+            ListTile(
               title: Text(l10n.download_format),
+
               trailing: DropdownButton<String>(
                 value: _downloadFormat,
                 items: const [

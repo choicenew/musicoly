@@ -9,6 +9,8 @@ import 'package:pyro_music/features/player/presentation/player_page.dart';
 import 'package:pyro_music/features/playlist/presentation/playlist_page.dart';
 import 'package:pyro_music/features/search/presentation/search_page.dart';
 import 'package:pyro_music/features/settings/presentation/settings_page.dart';
+import 'package:pyro_music/features/settings/presentation/cache_settings_page.dart';
+import 'package:pyro_music/features/stats/presentation/listening_stats_page.dart';
 import 'package:pyro_music/presentation/widgets/layout/main_layout.dart';
 
 final router = GoRouter(
@@ -28,6 +30,14 @@ final router = GoRouter(
             GoRoute(
               path: 'settings',
               builder: (context, state) => const SettingsPage(),
+            ),
+            GoRoute(
+              path: 'cache-settings',
+              builder: (context, state) => const CacheSettingsPage(),
+            ),
+            GoRoute(
+              path: 'stats',
+              builder: (context, state) => const ListeningStatsPage(),
             ),
             GoRoute(
               path: 'local-music',
@@ -66,3 +76,4 @@ final router = GoRouter(
     ),
   ],
 );
+

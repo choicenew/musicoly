@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pyro_music/features/settings/presentation/widgets/about_settings.dart';
 import 'package:pyro_music/features/settings/presentation/widgets/accounts_settings.dart';
 import 'package:pyro_music/features/settings/presentation/widgets/appearance_settings.dart';
@@ -19,29 +20,40 @@ class SettingsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      children: const [
-        AccountsSettings(),
-        Divider(),
-        AppearanceSettings(),
-        Divider(),
-        PlaybackSettings(),
-        Divider(),
-        EqualizerSettings(),
-        Divider(),
-        DownloadsSettings(),
-        Divider(),
-        ScrobblerSettings(),
-        Divider(),
-        BackupRestoreSettings(),
-        Divider(),
-        CookieImportExportSettings(),
-        Divider(),
-        DesktopSettings(),
-        Divider(),
-        DevelopersSettings(),
-        Divider(),
-        AboutSettings(),
+      children: [
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: ListTile(
+            leading: const Icon(Icons.bar_chart, color: Colors.purpleAccent),
+            title: const Text('听歌统计与个人回顾报告'),
+            subtitle: const Text('查看听歌总时长、播放次数与最热 Top 歌手/曲目'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go('/stats'),
+          ),
+        ),
+        const AccountsSettings(),
+        const Divider(),
+        const AppearanceSettings(),
+        const Divider(),
+        const PlaybackSettings(),
+        const Divider(),
+        const EqualizerSettings(),
+        const Divider(),
+        const DownloadsSettings(),
+        const Divider(),
+        const ScrobblerSettings(),
+        const Divider(),
+        const BackupRestoreSettings(),
+        const Divider(),
+        const CookieImportExportSettings(),
+        const Divider(),
+        const DesktopSettings(),
+        const Divider(),
+        const DevelopersSettings(),
+        const Divider(),
+        const AboutSettings(),
       ],
     );
   }
 }
+
