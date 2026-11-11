@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:pyro_music/core/config/route_tokens.dart';
 import 'package:pyro_music/features/album/presentation/album_page.dart';
 import 'package:pyro_music/features/artist/presentation/artist_page.dart';
 import 'package:pyro_music/features/favorites/presentation/favorites_page.dart';
@@ -14,13 +15,13 @@ import 'package:pyro_music/features/stats/presentation/listening_stats_page.dart
 import 'package:pyro_music/presentation/widgets/layout/main_layout.dart';
 
 final router = GoRouter(
-  initialLocation: '/',
+  initialLocation: RouteTokens.home,
   routes: [
     ShellRoute(
       builder: (context, state, child) => MainLayout(child: child),
       routes: [
         GoRoute(
-          path: '/',
+          path: RouteTokens.home,
           builder: (context, state) => const HomePage(),
           routes: [
             GoRoute(
@@ -67,13 +68,14 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
-      path: '/lyrics',
+      path: RouteTokens.lyrics,
       builder: (context, state) => const LyricsPage(),
     ),
     GoRoute(
-      path: '/player',
+      path: RouteTokens.player,
       builder: (context, state) => const PlayerPage(),
     ),
   ],
 );
+
 
