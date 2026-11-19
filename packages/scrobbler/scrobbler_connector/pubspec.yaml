@@ -1,0 +1,15 @@
+name: scrobbler_connector
+description: Scrobbler Connector Package - Wiring Scrobbler Drivers to Hub
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  scrobbler_protocol:
+    path: ../scrobbler_protocol
+  scrobbler_hub:
+    path: ../scrobbler_hub
+  scrobbler_driver:
+    path: ../scrobbler_driver

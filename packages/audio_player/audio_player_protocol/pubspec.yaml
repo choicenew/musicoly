@@ -1,0 +1,10 @@
+name: audio_player_protocol
+description: Audio Player Protocol Package - Player Contracts and Audio Entities
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  meta: ^1.9.0

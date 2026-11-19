@@ -1,0 +1,17 @@
+name: audio_player_ui
+description: Audio Player UI Package - Mini Player, Full Player Page & Equalizer Views
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  audio_player_protocol:
+    path: ../audio_player_protocol
+  audio_player_hub:
+    path: ../audio_player_hub
+  audio_player_connector:
+    path: ../audio_player_connector

@@ -1,0 +1,17 @@
+name: music_source_ui
+description: Music Source UI Package - Pages and Widgets for Source Settings & Plugin Management
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  music_source_protocol:
+    path: ../music_source_protocol
+  music_source_hub:
+    path: ../music_source_hub
+  music_source_connector:
+    path: ../music_source_connector

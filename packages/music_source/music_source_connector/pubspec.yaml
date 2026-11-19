@@ -1,0 +1,15 @@
+name: music_source_connector
+description: Music Source Connector Package - Assembly Line Wiring Drivers to Hub
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  music_source_protocol:
+    path: ../music_source_protocol
+  music_source_hub:
+    path: ../music_source_hub
+  music_source_driver:
+    path: ../music_source_driver

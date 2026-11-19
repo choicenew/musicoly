@@ -118,6 +118,39 @@ dependencies:
   window_manager: ^0.4.3
   windows_taskbar: ^1.1.2
 
+  music_source_protocol:
+    path: packages/music_source/music_source_protocol
+  music_source_hub:
+    path: packages/music_source/music_source_hub
+  music_source_driver:
+    path: packages/music_source/music_source_driver
+  music_source_connector:
+    path: packages/music_source/music_source_connector
+  music_source_ui:
+    path: packages/music_source/music_source_ui
+
+  audio_player_protocol:
+    path: packages/audio_player/audio_player_protocol
+  audio_player_hub:
+    path: packages/audio_player/audio_player_hub
+  audio_player_driver:
+    path: packages/audio_player/audio_player_driver
+  audio_player_connector:
+    path: packages/audio_player/audio_player_connector
+  audio_player_ui:
+    path: packages/audio_player/audio_player_ui
+
+  scrobbler_protocol:
+    path: packages/scrobbler/scrobbler_protocol
+  scrobbler_hub:
+    path: packages/scrobbler/scrobbler_hub
+  scrobbler_driver:
+    path: packages/scrobbler/scrobbler_driver
+  scrobbler_connector:
+    path: packages/scrobbler/scrobbler_connector
+  scrobbler_ui:
+    path: packages/scrobbler/scrobbler_ui
+
   http_parser: ^4.1.2
   otp_util: ^1.0.2
   dio_http2_adapter: ^2.6.0

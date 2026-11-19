@@ -1,0 +1,12 @@
+name: scrobbler_hub
+description: Scrobbler Hub Package - Scrobbler Dispatcher & Offline Queue Engine
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  meta: ^1.9.0
+  scrobbler_protocol:
+    path: ../scrobbler_protocol

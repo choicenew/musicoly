@@ -27,6 +27,10 @@ import 'package:pyro_music/core/platform/platform_registry.dart';
 import 'package:pyro_music/features/playlist/services/local_playlist_service.dart';
 import 'package:pyro_music/features/playlist/services/playlist_service_impl.dart' as playlist_impl;
 
+import 'package:music_source_connector/music_source_connector.dart';
+import 'package:audio_player_connector/audio_player_connector.dart';
+import 'package:scrobbler_connector/scrobbler_connector.dart';
+
 /// 系统服务初始化器
 class ServiceInitializer {
   /// 初始化所有核心服务
@@ -39,6 +43,11 @@ class ServiceInitializer {
 
     // 0. 注册底层数据库
     GetIt.instance.registerSingleton<Isar>(isar);
+
+    // 0.1 注册五层架构子包连接器 (Connector Assembly Line)
+    MusicSourceConnector.registerAll();
+    AudioPlayerConnector.registerAll();
+    ScrobblerConnector.registerAll();
 
     // 1. 注册基础核心插件 (如本地音源)
     registry.registerPlatformService<LocalTrackSourceService>(
