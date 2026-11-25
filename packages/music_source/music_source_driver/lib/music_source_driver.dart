@@ -9,6 +9,8 @@ export 'src/tag_editor_driver.dart';
 export 'src/multi_platform_playlist_parser.dart';
 export 'src/sponsor_block_driver.dart';
 export 'src/subsonic_api_client.dart';
+export 'src/regional_trending_charts_driver.dart';
+
 
 
 
