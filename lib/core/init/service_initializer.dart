@@ -31,6 +31,8 @@ import 'package:music_source_connector/music_source_connector.dart';
 import 'package:audio_player_connector/audio_player_connector.dart';
 import 'package:scrobbler_connector/scrobbler_connector.dart';
 import 'package:lyric_connector/lyric_connector.dart';
+import 'package:storage_backup_connector/storage_backup_connector.dart';
+import 'package:player_effects_connector/player_effects_connector.dart';
 
 /// 系统服务初始化器
 class ServiceInitializer {
@@ -50,6 +52,10 @@ class ServiceInitializer {
     AudioPlayerConnector.registerAll();
     ScrobblerConnector.registerAll();
     LyricConnector.initialize();
+    StorageBackupConnector.registerAll();
+    PlayerEffectsConnector.registerAll();
+
+
 
 
     // 1. 注册基础核心插件 (如本地音源)

@@ -1,0 +1,15 @@
+name: storage_backup_connector
+description: Connector for Storage Backup Subsystem
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  storage_backup_hub:
+    path: ../storage_backup_hub
+  storage_backup_driver:
+    path: ../storage_backup_driver

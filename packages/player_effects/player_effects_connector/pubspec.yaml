@@ -1,0 +1,15 @@
+name: player_effects_connector
+description: Connector for Player Effects Subsystem
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  player_effects_hub:
+    path: ../player_effects_hub
+  player_effects_driver:
+    path: ../player_effects_driver

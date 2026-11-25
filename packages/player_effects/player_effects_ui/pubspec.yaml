@@ -1,0 +1,13 @@
+name: player_effects_ui
+description: UI controls for Player Effects Subsystem
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  player_effects_protocol:
+    path: ../player_effects_protocol

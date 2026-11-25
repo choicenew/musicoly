@@ -162,6 +162,30 @@ dependencies:
   lyric_ui:
     path: packages/lyric/lyric_ui
 
+  storage_backup_protocol:
+    path: packages/storage_backup/storage_backup_protocol
+  storage_backup_driver:
+    path: packages/storage_backup/storage_backup_driver
+  storage_backup_hub:
+    path: packages/storage_backup/storage_backup_hub
+  storage_backup_connector:
+    path: packages/storage_backup/storage_backup_connector
+  storage_backup_ui:
+    path: packages/storage_backup/storage_backup_ui
+
+  player_effects_protocol:
+    path: packages/player_effects/player_effects_protocol
+  player_effects_driver:
+    path: packages/player_effects/player_effects_driver
+  player_effects_hub:
+    path: packages/player_effects/player_effects_hub
+  player_effects_connector:
+    path: packages/player_effects/player_effects_connector
+  player_effects_ui:
+    path: packages/player_effects/player_effects_ui
+
+
+
 
   http_parser: ^4.1.2
   otp_util: ^1.0.2

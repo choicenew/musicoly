@@ -1,0 +1,13 @@
+name: storage_backup_ui
+description: UI pages and widgets for Storage and Backup Subsystem
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  storage_backup_protocol:
+    path: ../storage_backup_protocol
