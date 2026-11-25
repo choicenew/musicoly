@@ -151,6 +151,18 @@ dependencies:
   scrobbler_ui:
     path: packages/scrobbler/scrobbler_ui
 
+  lyric_protocol:
+    path: packages/lyric/lyric_protocol
+  lyric_driver:
+    path: packages/lyric/lyric_driver
+  lyric_hub:
+    path: packages/lyric/lyric_hub
+  lyric_connector:
+    path: packages/lyric/lyric_connector
+  lyric_ui:
+    path: packages/lyric/lyric_ui
+
+
   http_parser: ^4.1.2
   otp_util: ^1.0.2
   dio_http2_adapter: ^2.6.0

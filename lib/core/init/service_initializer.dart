@@ -30,6 +30,7 @@ import 'package:pyro_music/features/playlist/services/playlist_service_impl.dart
 import 'package:music_source_connector/music_source_connector.dart';
 import 'package:audio_player_connector/audio_player_connector.dart';
 import 'package:scrobbler_connector/scrobbler_connector.dart';
+import 'package:lyric_connector/lyric_connector.dart';
 
 /// 系统服务初始化器
 class ServiceInitializer {
@@ -48,6 +49,8 @@ class ServiceInitializer {
     MusicSourceConnector.registerAll();
     AudioPlayerConnector.registerAll();
     ScrobblerConnector.registerAll();
+    LyricConnector.initialize();
+
 
     // 1. 注册基础核心插件 (如本地音源)
     registry.registerPlatformService<LocalTrackSourceService>(
