@@ -5,4 +5,7 @@ export 'src/youtube_music_driver.dart';
 export 'src/hetu_plugin_driver.dart';
 export 'src/local_file_driver.dart';
 export 'src/subsonic_driver.dart';
+export 'src/tag_editor_driver.dart';
+export 'src/multi_platform_playlist_parser.dart';
+
 
