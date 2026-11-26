@@ -47,7 +47,7 @@ class DtoConverter {
       lyrics: model.lyrics,
       mediaUrl: model.audioStreamUrl,
       description: model.description,
-      tags: model.tags,
+      tags: model.tags ?? const [],
       extra: model.platformMetadata,
     );
   }

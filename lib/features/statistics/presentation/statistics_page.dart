@@ -8,7 +8,7 @@ class StatisticsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final stats = ref.watch(playStatsNotifierProvider);
+    final stats = ref.watch(playStatsProvider);
     final theme = Theme.of(context);
 
     final totalHours = (stats.totalPlayDuration / 3600).toStringAsFixed(1);
@@ -87,12 +87,12 @@ class StatisticsPage extends ConsumerWidget {
                         ),
                       ),
                       title: Text(
-                        track.trackTitle,
+                        track.track.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: Text(
-                        track.artistName,
+                        track.track.artistNames.join(', '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -139,8 +139,8 @@ class StatisticsPage extends ConsumerWidget {
                   return ListTile(
                     dense: true,
                     leading: const Icon(Icons.music_note),
-                    title: Text(item.trackTitle),
-                    subtitle: Text(item.artistName),
+                    title: Text(item.track.name),
+                    subtitle: Text(item.track.artistNames.join(', ')),
                     trailing: Text(
                       '${(item.playDuration / 60).toStringAsFixed(0)} 分钟',
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:pyro_music/core/models/track_model.dart';
+import 'package:pyro_music/core/models/audio_source_model.dart';
 
 /// Finamp & Polaris Style Jellyfin / Emby / Subsonic Private Media Server Client
 class PrivateServerService {
@@ -41,7 +42,8 @@ class PrivateServerService {
         id: 'subsonic_1',
         platform: 'subsonic',
         name: 'NAS Lossless Symphony No. 9',
-        artistNames: ['Subsonic Audiophile'],
+        artistIds: const ['subsonic_artist_1'],
+        artistNames: const ['Subsonic Audiophile'],
         albumName: 'Private Cloud Collection',
         durationMs: 320000,
         audioSources: [

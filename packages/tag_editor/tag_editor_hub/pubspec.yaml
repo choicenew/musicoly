@@ -1,0 +1,15 @@
+name: tag_editor_hub
+description: Tag editor hub & controller
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  tag_editor_protocol:
+    path: ../tag_editor_protocol
+  tag_editor_driver:
+    path: ../tag_editor_driver

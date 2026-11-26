@@ -105,6 +105,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.13.0"
+  audio_player_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/audio_player/audio_player_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  audio_player_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/audio_player/audio_player_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  audio_player_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/audio_player/audio_player_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  audio_player_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/audio_player/audio_player_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  audio_player_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/audio_player/audio_player_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   audio_service:
     dependency: "direct main"
     description:
@@ -1476,6 +1511,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  lyric_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/lyric/lyric_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  lyric_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/lyric/lyric_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  lyric_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/lyric/lyric_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  lyric_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/lyric/lyric_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  lyric_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/lyric/lyric_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   matcher:
     dependency: transitive
     description:
@@ -1588,6 +1658,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.6.4"
+  music_source_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/music_source/music_source_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  music_source_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/music_source/music_source_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  music_source_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/music_source/music_source_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  music_source_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/music_source/music_source_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  music_source_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/music_source/music_source_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   nested:
     dependency: transitive
     description:
@@ -1868,6 +1973,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.6"
+  player_effects_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/player_effects/player_effects_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  player_effects_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/player_effects/player_effects_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  player_effects_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/player_effects/player_effects_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  player_effects_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/player_effects/player_effects_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  player_effects_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/player_effects/player_effects_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -2052,6 +2192,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  scrobbler_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/scrobbler/scrobbler_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  scrobbler_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/scrobbler/scrobbler_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  scrobbler_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/scrobbler/scrobbler_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  scrobbler_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/scrobbler/scrobbler_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  scrobbler_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/scrobbler/scrobbler_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   scroll_to_index:
     dependency: "direct main"
     description:
@@ -2281,6 +2456,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.2"
+  sponsor_block_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/sponsor_block/sponsor_block_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  sponsor_block_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/sponsor_block/sponsor_block_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  sponsor_block_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/sponsor_block/sponsor_block_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  sponsor_block_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/sponsor_block/sponsor_block_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  sponsor_block_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/sponsor_block/sponsor_block_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   sqflite:
     dependency: transitive
     description:
@@ -2336,6 +2546,41 @@ packages:
       sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
       url: "https://pub.dev"
     source: hosted
+    version: "1.0.0"
+  storage_backup_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/storage_backup/storage_backup_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  storage_backup_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/storage_backup/storage_backup_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  storage_backup_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/storage_backup/storage_backup_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  storage_backup_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/storage_backup/storage_backup_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  storage_backup_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/storage_backup/storage_backup_ui"
+      relative: true
+    source: path
     version: "1.0.0"
   stream_channel:
     dependency: transitive
@@ -2409,6 +2654,41 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.4"
+  tag_editor_connector:
+    dependency: "direct main"
+    description:
+      path: "packages/tag_editor/tag_editor_connector"
+      relative: true
+    source: path
+    version: "1.0.0"
+  tag_editor_driver:
+    dependency: "direct main"
+    description:
+      path: "packages/tag_editor/tag_editor_driver"
+      relative: true
+    source: path
+    version: "1.0.0"
+  tag_editor_hub:
+    dependency: "direct main"
+    description:
+      path: "packages/tag_editor/tag_editor_hub"
+      relative: true
+    source: path
+    version: "1.0.0"
+  tag_editor_protocol:
+    dependency: "direct main"
+    description:
+      path: "packages/tag_editor/tag_editor_protocol"
+      relative: true
+    source: path
+    version: "1.0.0"
+  tag_editor_ui:
+    dependency: "direct main"
+    description:
+      path: "packages/tag_editor/tag_editor_ui"
+      relative: true
+    source: path
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:

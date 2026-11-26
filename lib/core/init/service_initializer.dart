@@ -33,6 +33,8 @@ import 'package:scrobbler_connector/scrobbler_connector.dart';
 import 'package:lyric_connector/lyric_connector.dart';
 import 'package:storage_backup_connector/storage_backup_connector.dart';
 import 'package:player_effects_connector/player_effects_connector.dart';
+import 'package:sponsor_block_connector/sponsor_block_connector.dart';
+import 'package:tag_editor_connector/tag_editor_connector.dart';
 
 /// 系统服务初始化器
 class ServiceInitializer {
@@ -54,6 +56,10 @@ class ServiceInitializer {
     LyricConnector.initialize();
     StorageBackupConnector.registerAll();
     PlayerEffectsConnector.registerAll();
+    // 注入 SponsorBlock & TagEditor 集群连接器
+    final _sbConnector = SponsorBlockConnector.instance;
+    final _teConnector = TagEditorConnector.instance;
+    debugPrint('SponsorBlock and TagEditor connectors initialized: $_sbConnector, $_teConnector');
 
 
 

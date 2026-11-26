@@ -184,6 +184,28 @@ dependencies:
   player_effects_ui:
     path: packages/player_effects/player_effects_ui
 
+  sponsor_block_protocol:
+    path: packages/sponsor_block/sponsor_block_protocol
+  sponsor_block_driver:
+    path: packages/sponsor_block/sponsor_block_driver
+  sponsor_block_hub:
+    path: packages/sponsor_block/sponsor_block_hub
+  sponsor_block_connector:
+    path: packages/sponsor_block/sponsor_block_connector
+  sponsor_block_ui:
+    path: packages/sponsor_block/sponsor_block_ui
+
+  tag_editor_protocol:
+    path: packages/tag_editor/tag_editor_protocol
+  tag_editor_driver:
+    path: packages/tag_editor/tag_editor_driver
+  tag_editor_hub:
+    path: packages/tag_editor/tag_editor_hub
+  tag_editor_connector:
+    path: packages/tag_editor/tag_editor_connector
+  tag_editor_ui:
+    path: packages/tag_editor/tag_editor_ui
+
 
 
 

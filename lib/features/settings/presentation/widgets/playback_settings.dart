@@ -25,14 +25,14 @@ class _PlaybackSettingsState extends ConsumerState<PlaybackSettings> {
             ListTile(
               title: Text(l10n.off),
               onTap: () {
-                ref.read(sleepTimerProvider.notifier).stop();
+                ref.read(sleepTimerProvider.notifier).cancelTimer();
                 Navigator.pop(context);
               },
             ),
             ...[15, 30, 45, 60, 90].map((mins) => ListTile(
               title: Text(l10n.minutes(mins)),
               onTap: () {
-                ref.read(sleepTimerProvider.notifier).start(Duration(minutes: mins));
+                ref.read(sleepTimerProvider.notifier).startTimer(Duration(minutes: mins));
                 Navigator.pop(context);
               },
             )),
@@ -47,7 +47,7 @@ class _PlaybackSettingsState extends ConsumerState<PlaybackSettings> {
     final l10n = AppLocalizations.of(context);
     final preferencesAsync = ref.watch(userPreferencesProvider);
     final audioService = provider.Provider.of<AudioService>(context, listen: false);
-    final remainingTime = ref.watch(sleepTimerProvider);
+    final sleepTimerState = ref.watch(sleepTimerProvider);
 
     return Card(
       child: Padding(
@@ -92,8 +92,8 @@ class _PlaybackSettingsState extends ConsumerState<PlaybackSettings> {
               ),
               ListTile(
                 title: Text(l10n.sleep_timer),
-                subtitle: Text(remainingTime != null 
-                  ? '${l10n.sleep_timer_description} (${remainingTime.inMinutes}:${(remainingTime.inSeconds % 60).toString().padLeft(2, '0')})'
+                subtitle: Text(sleepTimerState.isActive
+                  ? '${l10n.sleep_timer_description} (${sleepTimerState.remainingTime.inMinutes}:${(sleepTimerState.remainingTime.inSeconds % 60).toString().padLeft(2, '0')})'
                   : l10n.sleep_timer_description),
                 trailing: const Icon(Icons.timer),
                 onTap: () => _showSleepTimerDialog(context, l10n),

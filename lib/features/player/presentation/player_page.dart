@@ -71,7 +71,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                   child: AnimatedCrossFade(
                     firstChild: PlayerArtwork(
                       imageUrl: track.imageUrl,
-                      isPlaying: playbackState.isPlaying,
+                      isPlaying: playerState.isPlaying,
                       onTap: () => setState(() => _showLyrics = true),
                     ),
                     secondChild: GestureDetector(
@@ -202,10 +202,9 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
               ),
               ListTile(
                 leading: const Icon(Icons.timer),
-
                 title: Text(l10n.sleep_timer),
-                subtitle: ref.watch(sleepTimerProvider) != null
-                    ? Text(l10n.minutes_remaining(ref.watch(sleepTimerProvider)!.inMinutes.toString()))
+                subtitle: ref.watch(sleepTimerProvider).isActive
+                    ? Text(l10n.minutes_remaining(ref.watch(sleepTimerProvider).remainingTime.inMinutes.toString()))
                     : null,
                 onTap: () {
                   Navigator.pop(context);
@@ -286,7 +285,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
               ...minutes.map((m) => ListTile(
                 title: Text('$m ${l10n.minutes}'),
                 onTap: () {
-                  ref.read(sleepTimerProvider.notifier).start(Duration(minutes: m));
+                  ref.read(sleepTimerProvider.notifier).startTimer(Duration(minutes: m));
                   Navigator.pop(context);
                 },
               )),
@@ -294,7 +293,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                 title: Text(l10n.cancel_timer),
                 textColor: Colors.red,
                 onTap: () {
-                  ref.read(sleepTimerProvider.notifier).stop();
+                  ref.read(sleepTimerProvider.notifier).cancelTimer();
                   Navigator.pop(context);
                 },
               ),
@@ -559,11 +558,11 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
           children: [
             IconButton(
               icon: const Icon(Icons.timer_outlined),
-              color: sleepTimer != null ? Theme.of(context).colorScheme.primary : Colors.white70,
+              color: sleepTimer.isActive ? Theme.of(context).colorScheme.primary : Colors.white70,
               onPressed: () => _showSleepTimerDialog(context, ref),
               tooltip: l10n.sleep_timer,
             ),
-            if (sleepTimer != null)
+            if (sleepTimer.isActive)
               Positioned(
                 right: 0,
                 top: 0,
@@ -574,7 +573,7 @@ class _PlayerPageState extends ConsumerState<PlayerPage> {
                     shape: BoxShape.circle,
                   ),
                   child: Text(
-                    '${sleepTimer.inMinutes}',
+                    '${sleepTimer.remainingTime.inMinutes}',
                     style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),

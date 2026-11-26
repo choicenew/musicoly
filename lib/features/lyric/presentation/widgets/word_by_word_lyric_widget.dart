@@ -38,7 +38,7 @@ class WordByWordLyricWidget extends StatelessWidget {
     // 逐字/逐音节歌词流式填色与缩放动效
     return Wrap(
       alignment: WrapAlignment.center,
-      cross: WrapCrossAlignment.center,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: line.words.map((syllable) {
         final isPassed = currentPosition >= syllable.endTime;
         final isPlaying = currentPosition >= syllable.startTime && currentPosition < syllable.endTime;

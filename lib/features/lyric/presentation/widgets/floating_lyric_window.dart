@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pyro_music/features/lyric/services/floating_lyrics_service.dart';
 import 'package:pyro_music/features/player/providers/player_state_provider.dart';
-import 'package:pyro_music/features/player/providers/playback_provider.dart';
 
 /// 桌面/系统置顶悬浮歌词条组件 (Floating / Overlay Desktop Lyric Strip)
 class FloatingLyricWindow extends ConsumerStatefulWidget {
@@ -19,7 +18,7 @@ class _FloatingLyricWindowState extends ConsumerState<FloatingLyricWindow> {
   @override
   Widget build(BuildContext context) {
     final lyricService = ref.watch(floatingLyricsServiceProvider);
-    final isPlaying = ref.watch(playbackNotifierProvider);
+    final isPlaying = ref.watch(playerStateProvider).isPlaying;
 
     if (!lyricService.isEnabled) {
       return const SizedBox.shrink();
@@ -80,7 +79,7 @@ class _FloatingLyricWindowState extends ConsumerState<FloatingLyricWindow> {
                       icon: const Icon(Icons.skip_previous_rounded, size: 20, color: Colors.white70),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: () => ref.read(playerStateNotifierProvider.notifier).previousTrack(),
+                      onPressed: () => ref.read(playerStateProvider.notifier).previous(),
                     ),
                     const SizedBox(width: 12),
                     IconButton(
@@ -93,9 +92,9 @@ class _FloatingLyricWindowState extends ConsumerState<FloatingLyricWindow> {
                       constraints: const BoxConstraints(),
                       onPressed: () {
                         if (isPlaying) {
-                          ref.read(playbackNotifierProvider.notifier).pause();
+                          ref.read(playerStateProvider.notifier).pause();
                         } else {
-                          ref.read(playbackNotifierProvider.notifier).resume();
+                          ref.read(playerStateProvider.notifier).resume();
                         }
                       },
                     ),
@@ -104,7 +103,7 @@ class _FloatingLyricWindowState extends ConsumerState<FloatingLyricWindow> {
                       icon: const Icon(Icons.skip_next_rounded, size: 20, color: Colors.white70),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: () => ref.read(playerStateNotifierProvider.notifier).nextTrack(),
+                      onPressed: () => ref.read(playerStateProvider.notifier).next(),
                     ),
                     const SizedBox(width: 16),
                     IconButton(
@@ -112,7 +111,7 @@ class _FloatingLyricWindowState extends ConsumerState<FloatingLyricWindow> {
                       tooltip: '关闭悬浮歌词',
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      onPressed: () => ref.read(floatingLyricsServiceProvider).setEnabled(false),
+                      onPressed: () => ref.read(floatingLyricsServiceProvider.notifier).setEnabled(false),
                     ),
                   ],
                 ),

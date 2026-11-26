@@ -30,11 +30,16 @@ class SleepTimerState {
   }
 }
 
-class SleepTimerNotifier extends StateNotifier<SleepTimerState> {
-  final Ref _ref;
+class SleepTimerNotifier extends Notifier<SleepTimerState> {
   Timer? _timer;
 
-  SleepTimerNotifier(this._ref) : super(const SleepTimerState());
+  @override
+  SleepTimerState build() {
+    ref.onDispose(() {
+      _timer?.cancel();
+    });
+    return const SleepTimerState();
+  }
 
   void startTimer(Duration duration, {bool stopAtEndOfTrack = false, bool fadeOut = true}) {
     cancelTimer();
@@ -59,9 +64,9 @@ class SleepTimerNotifier extends StateNotifier<SleepTimerState> {
         
         // 最后 15 秒渐隐音量
         if (state.fadeOut && newRemaining.inSeconds <= 15) {
-          final currentVol = _ref.read(playbackStateProvider).volume;
+          final currentVol = ref.read(playbackStateProvider).volume;
           final targetVol = (currentVol * (newRemaining.inSeconds / 15.0)).clamp(0.0, 1.0);
-          _ref.read(playbackStateProvider.notifier).setVolume(targetVol);
+          ref.read(playbackStateProvider.notifier).setVolume(targetVol);
         }
 
         state = state.copyWith(remainingTime: newRemaining);
@@ -71,7 +76,7 @@ class SleepTimerNotifier extends StateNotifier<SleepTimerState> {
 
   Future<void> _triggerStop() async {
     cancelTimer();
-    await _ref.read(playbackStateProvider.notifier).pause();
+    await ref.read(playbackStateProvider.notifier).pause();
     state = const SleepTimerState();
   }
 
@@ -80,14 +85,8 @@ class SleepTimerNotifier extends StateNotifier<SleepTimerState> {
     _timer = null;
     state = const SleepTimerState();
   }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
 }
 
-final sleepTimerProvider = StateNotifierProvider<SleepTimerNotifier, SleepTimerState>((ref) {
-  return SleepTimerNotifier(ref);
+final sleepTimerProvider = NotifierProvider<SleepTimerNotifier, SleepTimerState>(() {
+  return SleepTimerNotifier();
 });

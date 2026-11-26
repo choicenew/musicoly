@@ -18,7 +18,7 @@ class ListeningStatsPage extends ConsumerWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Overall Summary Cards Row
             Row(
@@ -101,7 +101,7 @@ class ListeningStatsPage extends ConsumerWidget {
                       height: 120,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           _buildBarItem(context, '周一', 0.4),
                           _buildBarItem(context, '周二', 0.65),
@@ -139,7 +139,7 @@ class ListeningStatsPage extends ConsumerWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
-        crossAxisAlignment: CrossAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: onColor, size: 28),
           const SizedBox(height: 12),
@@ -216,7 +216,7 @@ class ListeningStatsPage extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
 
     return Column(
-      mainAxisAlignment: MainAxisSize.end,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),

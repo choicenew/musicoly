@@ -72,7 +72,7 @@ class _CacheSettingsPageState extends ConsumerState<CacheSettingsPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
-                      crossAxisAlignment: CrossAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

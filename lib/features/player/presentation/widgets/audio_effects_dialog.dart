@@ -9,8 +9,8 @@ class AudioEffectsDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eqState = ref.watch(equalizerNotifierProvider);
-    final eqNotifier = ref.read(equalizerNotifierProvider.notifier);
+    final eqState = ref.watch(equalizerProvider);
+    final eqNotifier = ref.read(equalizerProvider.notifier);
     final theme = Theme.of(context);
 
     return Dialog(

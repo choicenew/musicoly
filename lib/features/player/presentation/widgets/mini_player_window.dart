@@ -12,12 +12,14 @@ class MiniPlayerWindow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playerState = ref.watch(playerStateNotifierProvider);
-    final isPlaying = ref.watch(playbackNotifierProvider);
+    final playerState = ref.watch(playerStateProvider);
+    final playbackState = ref.watch(playbackStateProvider);
+    final isPlaying = playerState.isPlaying;
     final track = playerState.currentTrack;
 
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final durationMs = playbackState.duration.inMilliseconds;
 
     return GestureDetector(
       onPanStart: (_) => windowManager.startDragging(),
@@ -86,9 +88,9 @@ class MiniPlayerWindow extends ConsumerWidget {
                 // Artwork
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: track?.albumArtUrl != null && track!.albumArtUrl.isNotEmpty
+                  child: track?.imageUrl != null && track!.imageUrl!.isNotEmpty
                       ? Image.network(
-                          track.albumArtUrl,
+                          track.imageUrl!,
                           width: 48,
                           height: 48,
                           fit: BoxFit.cover,
@@ -100,7 +102,7 @@ class MiniPlayerWindow extends ConsumerWidget {
                 // Title & Artist
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
@@ -126,7 +128,7 @@ class MiniPlayerWindow extends ConsumerWidget {
                 // Controls: Prev, Play/Pause, Next
                 IconButton(
                   icon: const Icon(Icons.skip_previous_rounded, size: 22),
-                  onPressed: () => ref.read(playerStateNotifierProvider.notifier).previousTrack(),
+                  onPressed: () => ref.read(playerStateProvider.notifier).previous(),
                 ),
                 IconButton(
                   icon: Icon(
@@ -136,15 +138,15 @@ class MiniPlayerWindow extends ConsumerWidget {
                   ),
                   onPressed: () {
                     if (isPlaying) {
-                      ref.read(playbackNotifierProvider.notifier).pause();
+                      ref.read(playerStateProvider.notifier).pause();
                     } else if (track != null) {
-                      ref.read(playbackNotifierProvider.notifier).resume();
+                      ref.read(playerStateProvider.notifier).resume();
                     }
                   },
                 ),
                 IconButton(
                   icon: const Icon(Icons.skip_next_rounded, size: 22),
-                  onPressed: () => ref.read(playerStateNotifierProvider.notifier).nextTrack(),
+                  onPressed: () => ref.read(playerStateProvider.notifier).next(),
                 ),
               ],
             ),
@@ -153,8 +155,8 @@ class MiniPlayerWindow extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(2),
               child: LinearProgressIndicator(
-                value: playerState.duration.inMilliseconds > 0
-                    ? playerState.position.inMilliseconds / playerState.duration.inMilliseconds
+                value: durationMs > 0
+                    ? (playerState.position / durationMs).clamp(0.0, 1.0)
                     : 0.0,
                 minHeight: 3,
                 backgroundColor: colorScheme.surfaceContainerHighest,

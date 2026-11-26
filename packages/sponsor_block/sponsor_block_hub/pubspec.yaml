@@ -1,0 +1,15 @@
+name: sponsor_block_hub
+description: SponsorBlock hub & controller
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.8.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sponsor_block_protocol:
+    path: ../sponsor_block_protocol
+  sponsor_block_driver:
+    path: ../sponsor_block_driver

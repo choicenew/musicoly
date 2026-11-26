@@ -15,6 +15,8 @@ class AudioPlayerHub {
   SleepTimerConfigEntity _sleepTimer = const SleepTimerConfigEntity();
 
   Timer? _sleepTimerCountdown;
+  bool _shuffleMode = false;
+  int _repeatMode = 0; // 0: off, 1: all, 2: one
 
   void registerPlayerDriver(AudioPlayerDriver driver) {
     _playerDriver = driver;
@@ -31,6 +33,8 @@ class AudioPlayerHub {
   QueueEntity get currentQueue => _queue;
   EqualizerConfigEntity get currentEqualizer => _equalizer;
   SleepTimerConfigEntity get currentSleepTimer => _sleepTimer;
+  bool get shuffleMode => _shuffleMode;
+  int get repeatMode => _repeatMode;
 
   Future<void> setQueue(List<String> trackIds, {int initialIndex = 0}) async {
     _queue = QueueEntity(trackIds: trackIds, currentIndex: initialIndex);
@@ -48,6 +52,15 @@ class AudioPlayerHub {
   Future<void> pause() async => await _playerDriver?.pause();
   Future<void> resume() async => await _playerDriver?.resume();
   Future<void> stop() async => await _playerDriver?.stop();
+  Future<void> seek(Duration position) async => await _playerDriver?.seek(position);
+
+  void toggleShuffle() {
+    _shuffleMode = !_shuffleMode;
+  }
+
+  void cycleRepeatMode() {
+    _repeatMode = (_repeatMode + 1) % 3;
+  }
 
   void setSleepTimer(Duration duration) {
     _sleepTimerCountdown?.cancel();
